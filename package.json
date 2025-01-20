@@ -1,0 +1,52 @@
+{
+	"name": "todizzle",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"start": "vite",
+		"build": "vite build",
+		"dev": "vite dev",
+		"serve": "vite preview"
+	},
+	"dependencies": {
+		"@instantdb/react": "^0.17.9",
+		"@radix-ui/react-dialog": "^1.1.4",
+		"@radix-ui/react-dropdown-menu": "^2.1.4",
+		"@radix-ui/react-popover": "^1.1.4",
+		"@uidotdev/usehooks": "^2.4.1",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"date-fns": "^4.1.0",
+		"lodash-es": "^4.17.21",
+		"lucide-react": "^0.473.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"react-icons": "^5.4.0",
+		"tailwind-merge": "^2.6.0",
+		"tailwindcss-animate": "^1.0.7",
+		"temporal-polyfill": "^0.2.5"
+	},
+	"devDependencies": {
+		"@babel/types": "^7.26.5",
+		"@biomejs/biome": "1.9.4",
+		"@types/lodash-es": "^4.17.12",
+		"@types/react": "^19.0.7",
+		"@types/react-dom": "^19.0.3",
+		"@vitejs/plugin-react": "^4.3.4",
+		"autoprefixer": "^10.4.20",
+		"postcss": "^8.5.1",
+		"tailwindcss": "^3.4.17",
+		"typescript": "^5.7.3",
+		"vite": "^6.0.7",
+		"vite-plugin-svgr": "^4.3.0"
+	},
+	"browserslist": {
+		"production": [">0.2%", "not dead", "not op_mini all"],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
+}
