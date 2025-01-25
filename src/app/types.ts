@@ -1,12 +1,6 @@
-interface TodoItem {
-	id: string;
-	categoryId?: string;
-	title: string;
-	description?: string;
-	dueDate?: Date;
-}
+import type { AppSchema } from '@/components/lib/db';
+import type { InstaQLEntity } from '@instantdb/react';
 
-interface Category {
-	id: string;
-	name: string;
-}
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
+export type Todo = InstaQLEntity<AppSchema, 'todos', { category: {} }>;
+export type Category = InstaQLEntity<AppSchema, 'categories'>;

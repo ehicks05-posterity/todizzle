@@ -1,8 +1,9 @@
 import { db } from '@/components/lib/db';
 import { Layout } from '../Layout';
+import { TodoForm } from '../dashboard/TodoForm';
 
 export function Todo({ id }: { id: string }) {
-	const { data } = db.useQuery({ todos: { $: { where: { id } } } });
+	const { data } = db.useQuery({ todos: { $: { where: { id } }, category: {} } });
 
 	const todo = data?.todos[0];
 	if (!todo) return null;
@@ -17,6 +18,9 @@ export function Todo({ id }: { id: string }) {
 			>
 				delete
 			</button>
+
+			<div className="h-32" />
+			<TodoForm todo={todo} />
 		</Layout>
 	);
 }
