@@ -1,7 +1,7 @@
 import { db } from '@/components/lib/db';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
-import type { Todo } from '../types';
+import type { Todo } from '../../components/lib/types';
 
 export const TodoForm = ({ todo }: { todo?: Todo }) => {
 	const { data: categories, isLoading } = db.useQuery({ categories: {} });

@@ -1,7 +1,7 @@
 import { db } from '@/components/lib/db';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
-import type { Category } from '../types';
+import type { Category } from '../../components/lib/types';
 
 export const CategoryForm = ({ category }: { category?: Category }) => {
 	const [name, setName] = useState(category?.name || '');
