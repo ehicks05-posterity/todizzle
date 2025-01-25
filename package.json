@@ -30,7 +30,8 @@
 		"react-icons": "^5.4.0",
 		"tailwind-merge": "^2.6.0",
 		"tailwindcss-animate": "^1.0.7",
-		"temporal-polyfill": "^0.2.5"
+		"temporal-polyfill": "^0.2.5",
+		"wouter": "^3.3.5"
 	},
 	"devDependencies": {
 		"@babel/types": "^7.26.5",

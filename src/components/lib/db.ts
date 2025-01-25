@@ -1,22 +1,23 @@
 import { i, init } from '@instantdb/react';
 
 const _schema = i.schema({
-	entities: {},
-	rooms: {
-		// 1. `chat` is the `roomType`
-		chat: {
-			// 2. Choose what presence looks like here
-			presence: i.entity({
-				name: i.string(),
-				status: i.string(),
-				color: i.string(),
-			}),
-			topics: {
-				// 3. You can define payloads for different topics here
-				sendEmoji: i.entity({
-					emoji: i.string(),
-				}),
-			},
+	entities: {
+		$users: i.entity({
+			email: i.string().unique().indexed(),
+		}),
+		todos: i.entity({
+			title: i.string(),
+			description: i.string(),
+			dueDate: i.date(),
+		}),
+		categories: i.entity({
+			name: i.string(),
+		}),
+	},
+	links: {
+		todoCategory: {
+			forward: { on: 'todos', has: 'one', label: 'category' },
+			reverse: { on: 'categories', has: 'many', label: 'todos' },
 		},
 	},
 });
@@ -29,5 +30,5 @@ const schema: AppSchema = _schema;
 export type { AppSchema };
 export default schema;
 
-const APP_ID = import.meta.env.VITE_APP_ID;
+const APP_ID = import.meta.env.VITE_INSTANT_APP_ID;
 export const db = init({ appId: APP_ID, schema: _schema });

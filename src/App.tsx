@@ -1,11 +1,19 @@
+import { Route, Switch } from 'wouter';
 import { Main } from './app/Main';
-import { Footer } from './components/layout';
+import { Todo } from './app/todo/Todo';
 import { ThemeProvider } from './components/theme-provider';
 
 function MyApp() {
 	return (
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-			<Main />
+			<Switch>
+				<Route path="/" component={Main} />
+
+				<Route path="/todos/:id">{(params) => <Todo id={params.id} />}</Route>
+
+				{/* Default route in a switch */}
+				<Route>404: No such page!</Route>
+			</Switch>
 		</ThemeProvider>
 	);
 }
