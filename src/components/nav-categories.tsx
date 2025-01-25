@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, LucideCircle } from 'lucide-react';
 
 import {
 	Collapsible,
@@ -40,7 +40,7 @@ export function NavCategories() {
 						<SidebarMenuItem>
 							<CollapsibleTrigger asChild>
 								<SidebarMenuButton tooltip={category.name}>
-									{category.icon && <category.icon />}
+									{category.icon ? <category.icon /> : <LucideCircle />}
 									<span>{category.name}</span>
 									<ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
 								</SidebarMenuButton>
