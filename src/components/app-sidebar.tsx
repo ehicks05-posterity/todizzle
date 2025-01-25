@@ -5,7 +5,7 @@ import {
 	Command,
 	Frame,
 	GalleryVerticalEnd,
-	Map,
+	MapIcon,
 	PieChart,
 	Settings2,
 	SquareTerminal,
@@ -21,10 +21,9 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
-	SidebarMenuButton,
 	SidebarRail,
 } from '@/components/ui/sidebar';
-import { ThemeToggle } from './theme-toggle';
+import { NavCategories } from './nav-categories';
 
 // This is sample data.
 const data = {
@@ -151,7 +150,7 @@ const data = {
 		{
 			name: 'Travel',
 			url: '#',
-			icon: Map,
+			icon: MapIcon,
 		},
 	],
 };
@@ -163,6 +162,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<TeamSwitcher teams={data.teams} />
 			</SidebarHeader>
 			<SidebarContent>
+				<NavCategories />
 				<NavMain items={data.navMain} />
 				<NavProjects projects={data.projects} />
 			</SidebarContent>
