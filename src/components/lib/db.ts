@@ -12,6 +12,7 @@ const _schema = i.schema({
 		}),
 		categories: i.entity({
 			name: i.string(),
+			icon: i.string(),
 		}),
 	},
 	links: {
