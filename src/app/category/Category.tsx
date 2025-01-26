@@ -1,4 +1,5 @@
 import { db } from '@/components/lib/db';
+import { Button } from '@/components/ui/button';
 import { Layout } from '../Layout';
 import { CategoryForm } from '../dashboard/CategoryForm';
 
@@ -11,13 +12,13 @@ export function Category({ id }: { id: string }) {
 	return (
 		<Layout>
 			<pre className="text-sm">{JSON.stringify(category, null, 2)} </pre>
-			<button
+			<Button
 				type="button"
 				className="p-2 border border-black"
 				onClick={() => db.transact(db.tx.categories[category.id].delete())}
 			>
 				delete
-			</button>
+			</Button>
 
 			<div className="h-32" />
 			<CategoryForm category={category} />

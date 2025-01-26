@@ -1,10 +1,12 @@
 import { db } from '@/components/lib/db';
+import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
 import type { Category } from '../../components/lib/types';
@@ -51,15 +53,15 @@ export const CategoryForm = ({ category }: { category?: Category }) => {
 
 	return (
 		<div className="flex flex-col gap-2">
-			<input
+			<Input
 				value={name}
 				placeholder="name"
 				onChange={(e) => setName(e.target.value)}
 			/>
 			<IconDropdown icon={icon} setIcon={setIcon} />
-			<button type="button" className="p-2 border border-black" onClick={handleSave}>
+			<Button type="button" className="p-2 border border-black" onClick={handleSave}>
 				{category ? 'Update' : 'Add'} Category
-			</button>
+			</Button>
 		</div>
 	);
 };

@@ -1,4 +1,13 @@
 import { db } from '@/components/lib/db';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
 import type { Todo } from '../../components/lib/types';
@@ -23,41 +32,47 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 			await db.transact(db.tx.todos[todoId].unlink({ category: categoryId }));
 		}
 
-		setTitle(todo?.title || '');
-		setDescription(todo?.description || '');
-		setDueDate(todo?.dueDate || '');
-		setCategoryId(todo?.category?.id || '');
+		if (!todo) {
+			setTitle('');
+			setDescription('');
+			setDueDate('');
+			setCategoryId('');
+		}
 	};
 
 	return (
 		<div className="flex flex-col gap-2">
-			<input
+			<Input
 				placeholder="title"
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
 			/>
-			<input
+			<Input
 				placeholder="description"
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
-			<input
+			<Input
 				placeholder="due date"
 				type="date"
 				value={dueDate}
 				onChange={(e) => setDueDate(e.target.value)}
 			/>
-			<select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
-				<option value="">none</option>
-				{categories?.categories.map((category) => (
-					<option key={category.id} value={category.id}>
-						{category.name}
-					</option>
-				))}
-			</select>
-			<button type="button" className="p-2 border border-black" onClick={handleSave}>
+			<Select value={categoryId} onValueChange={(v) => setCategoryId(v)}>
+				<SelectTrigger>
+					<SelectValue placeholder="Select a category..." />
+				</SelectTrigger>
+				<SelectContent>
+					{categories?.categories.map((category) => (
+						<SelectItem key={category.id} value={category.id}>
+							{category.name}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+			<Button type="button" className="p-2 border border-black" onClick={handleSave}>
 				{todo ? 'Update' : 'Add'} Todo
-			</button>
+			</Button>
 		</div>
 	);
 };

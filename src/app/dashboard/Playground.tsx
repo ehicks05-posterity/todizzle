@@ -1,4 +1,5 @@
 import { db } from '@/components/lib/db';
+import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { CategoryForm } from './CategoryForm';
 import { TodoForm } from './TodoForm';
@@ -15,13 +16,12 @@ export const Playground = () => {
 					<div key={category.id}>
 						<pre className="text-sm">{JSON.stringify(category, null, 2)} </pre>
 						<Link href={`/categories/${category.id}`}>link</Link>
-						<button
+						<Button
 							type="button"
-							className="p-2 border border-black"
 							onClick={() => db.transact(db.tx.categories[category.id].delete())}
 						>
 							delete
-						</button>
+						</Button>
 					</div>
 				))}
 				<CategoryForm />
@@ -35,13 +35,12 @@ export const Playground = () => {
 					<div key={todo.id}>
 						<pre className="text-sm">{JSON.stringify(todo, null, 2)} </pre>
 						<Link href={`/todos/${todo.id}`}>link</Link>
-						<button
+						<Button
 							type="button"
-							className="p-2 border border-black"
 							onClick={() => db.transact(db.tx.todos[todo.id].delete())}
 						>
 							delete
-						</button>
+						</Button>
 					</div>
 				))}
 				<TodoForm />
