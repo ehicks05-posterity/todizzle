@@ -9,6 +9,7 @@ const _schema = i.schema({
 			title: i.string(),
 			description: i.string(),
 			dueDate: i.date(),
+			status: i.string(),
 		}),
 		categories: i.entity({
 			name: i.string(),

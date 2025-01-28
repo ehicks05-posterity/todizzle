@@ -1,5 +1,11 @@
 import { db } from '@/components/lib/db';
 import { Button } from '@/components/ui/button';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import {
 	Select,
@@ -11,6 +17,40 @@ import {
 import { id } from '@instantdb/react';
 import { useState } from 'react';
 import type { Todo } from '../../components/lib/types';
+import { STATUSES } from '../constants';
+
+const StatusDropdown = ({
+	status: statusName,
+	setStatus,
+}: {
+	status: string;
+	setStatus: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+	const status = STATUSES[statusName as keyof typeof STATUSES];
+	const Icon = status.icon;
+
+	const OPTIONS = Object.entries(STATUSES).map(([name, status]) => (
+		<DropdownMenuItem key={name} onClick={() => setStatus(name)}>
+			<span className="flex items-center gap-1">
+				<status.icon size={18} className={status.color} />
+				{status.label}
+			</span>
+		</DropdownMenuItem>
+	));
+
+	return (
+		<DropdownMenu>
+			<span>
+				<DropdownMenuTrigger>
+					<span className="flex items-center gap-1">
+						<Icon size={18} /> {status.label}
+					</span>
+				</DropdownMenuTrigger>
+			</span>
+			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};
 
 export const TodoForm = ({ todo }: { todo?: Todo }) => {
 	const { data: categories, isLoading } = db.useQuery({ categories: {} });
@@ -19,6 +59,7 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 	const [description, setDescription] = useState(todo?.description || '');
 	const [dueDate, setDueDate] = useState(todo?.dueDate || '');
 	const [categoryId, setCategoryId] = useState(todo?.category?.id || '');
+	const [status, setStatus] = useState(todo?.status || 'backlog');
 
 	if (isLoading) return null;
 
@@ -37,6 +78,7 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 			setDescription('');
 			setDueDate('');
 			setCategoryId('');
+			setStatus('backlog');
 		}
 	};
 
@@ -70,6 +112,9 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 					))}
 				</SelectContent>
 			</Select>
+			<div className="px-2">
+				<StatusDropdown status={status} setStatus={setStatus} />
+			</div>
 			<Button type="button" className="p-2 border border-black" onClick={handleSave}>
 				{todo ? 'Update' : 'Add'} Todo
 			</Button>
