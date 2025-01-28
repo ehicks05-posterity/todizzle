@@ -18,6 +18,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import { Link } from 'wouter';
 import { db } from './lib/db';
 
 export function NavCategories() {
@@ -54,11 +55,11 @@ export function NavCategories() {
 								<CollapsibleContent>
 									<SidebarMenuSub>
 										{category.todos?.map((todo) => (
-											<SidebarMenuSubItem key={todo.title}>
+											<SidebarMenuSubItem key={todo.id}>
 												<SidebarMenuSubButton asChild>
-													<a href={`/todos/${todo.id}`}>
+													<Link href={`/todos/${todo.id}`}>
 														<span>{todo.title}</span>
-													</a>
+													</Link>
 												</SidebarMenuSubButton>
 											</SidebarMenuSubItem>
 										))}

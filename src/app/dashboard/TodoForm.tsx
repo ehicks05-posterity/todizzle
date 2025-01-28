@@ -42,9 +42,9 @@ const StatusDropdown = ({
 		<DropdownMenu>
 			<span>
 				<DropdownMenuTrigger>
-					<span className="flex items-center gap-1">
-						<Icon size={18} /> {status.label}
-					</span>
+					<Button variant="outline" className="flex items-center gap-1">
+						<Icon size={18} className={status.color} /> {status.label}
+					</Button>
 				</DropdownMenuTrigger>
 			</span>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
@@ -65,7 +65,9 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 
 	const handleSave = async () => {
 		const todoId = todo?.id || id();
-		await db.transact(db.tx.todos[todoId].update({ title, description, dueDate }));
+		await db.transact(
+			db.tx.todos[todoId].update({ title, description, dueDate, status }),
+		);
 
 		if (categoryId) {
 			await db.transact(db.tx.todos[todoId].link({ category: categoryId }));
@@ -112,9 +114,7 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 					))}
 				</SelectContent>
 			</Select>
-			<div className="px-2">
-				<StatusDropdown status={status} setStatus={setStatus} />
-			</div>
+			<StatusDropdown status={status} setStatus={setStatus} />
 			<Button type="button" className="p-2 border border-black" onClick={handleSave}>
 				{todo ? 'Update' : 'Add'} Todo
 			</Button>

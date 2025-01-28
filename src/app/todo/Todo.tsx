@@ -1,7 +1,7 @@
 import { db } from '@/components/lib/db';
+import { Button } from '@/components/ui/button';
 import { Layout } from '../Layout';
 import { TodoForm } from '../dashboard/TodoForm';
-import { Button } from '@/components/ui/button';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, category: {} } });
@@ -21,7 +21,7 @@ export function Todo({ id }: { id: string }) {
 			</Button>
 
 			<div className="h-32" />
-			<TodoForm todo={todo} />
+			<TodoForm key={todo.id} todo={todo} />
 		</Layout>
 	);
 }

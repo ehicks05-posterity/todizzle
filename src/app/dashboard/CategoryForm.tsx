@@ -32,7 +32,9 @@ const IconDropdown = ({
 		<DropdownMenu>
 			<span>
 				<DropdownMenuTrigger>
-					<Icon />
+					<Button variant="outline" className="flex items-center gap-1">
+						<Icon />
+					</Button>
 				</DropdownMenuTrigger>
 			</span>
 			<DropdownMenuContent>{ICON_OPTIONS}</DropdownMenuContent>
