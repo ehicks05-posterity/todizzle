@@ -41,7 +41,7 @@ const StatusDropdown = ({
 	return (
 		<DropdownMenu>
 			<span>
-				<DropdownMenuTrigger>
+				<DropdownMenuTrigger asChild>
 					<Button variant="outline" className="flex items-center gap-1">
 						<Icon size={18} className={status.color} /> {status.label}
 					</Button>
