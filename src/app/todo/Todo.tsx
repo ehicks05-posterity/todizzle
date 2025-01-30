@@ -11,16 +11,6 @@ export function Todo({ id }: { id: string }) {
 
 	return (
 		<Layout>
-			<pre className="text-sm">{JSON.stringify(todo, null, 2)} </pre>
-			<Button
-				type="button"
-				className="p-2 border border-black"
-				onClick={() => db.transact(db.tx.todos[todo.id].delete())}
-			>
-				delete
-			</Button>
-
-			<div className="h-32" />
 			<TodoForm key={todo.id} todo={todo} />
 		</Layout>
 	);

@@ -2,6 +2,7 @@
 
 import { ChevronRight, LucideCircle } from 'lucide-react';
 
+import { CategoryDialog } from '@/app/CategoryDialog';
 import { ICONS } from '@/app/dashboard/icons';
 import {
 	Collapsible,
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Link } from 'wouter';
 import { db } from './lib/db';
+import { TodoDialog } from '@/app/TodoDialog';
 
 export function NavCategories() {
 	const { data, isLoading } = db.useQuery({ categories: { todos: {} } });
@@ -30,7 +32,7 @@ export function NavCategories() {
 
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel>Platform</SidebarGroupLabel>
+			<SidebarGroupLabel>Categories</SidebarGroupLabel>
 			<SidebarMenu>
 				{categories
 					.map((category) => ({
@@ -68,6 +70,13 @@ export function NavCategories() {
 							</SidebarMenuItem>
 						</Collapsible>
 					))}
+				<SidebarMenuItem>
+					<SidebarMenuButton asChild>
+						<Link href="/categories">Manage Categories</Link>
+					</SidebarMenuButton>
+				</SidebarMenuItem>
+				<CategoryDialog />
+				<TodoDialog />
 			</SidebarMenu>
 		</SidebarGroup>
 	);

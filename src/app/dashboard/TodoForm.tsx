@@ -7,6 +7,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
 	Select,
 	SelectContent,
@@ -16,6 +17,7 @@ import {
 } from '@/components/ui/select';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
+import { useLocation } from 'wouter';
 import type { Todo } from '../../components/lib/types';
 import { STATUSES } from '../constants';
 
@@ -52,6 +54,26 @@ const StatusDropdown = ({
 	);
 };
 
+export const DeleteTodoButton = ({ todo }: { todo: Todo }) => {
+	const [, navigate] = useLocation();
+
+	const handleDelete = async () => {
+		db.transact(db.tx.todos[todo.id].delete());
+		navigate('/');
+	};
+
+	return (
+		<Button
+			type="button"
+			variant="destructive"
+			className="p-2 border border-black"
+			onClick={handleDelete}
+		>
+			Delete
+		</Button>
+	);
+};
+
 export const TodoForm = ({ todo }: { todo?: Todo }) => {
 	const { data: categories, isLoading } = db.useQuery({ categories: {} });
 
@@ -84,40 +106,73 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 		}
 	};
 
+	const isValid = title.length !== 0;
+
 	return (
-		<div className="flex flex-col gap-2">
-			<Input
-				placeholder="title"
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<Input
-				placeholder="description"
-				value={description}
-				onChange={(e) => setDescription(e.target.value)}
-			/>
-			<Input
-				placeholder="due date"
-				type="date"
-				value={dueDate}
-				onChange={(e) => setDueDate(e.target.value)}
-			/>
-			<Select value={categoryId} onValueChange={(v) => setCategoryId(v)}>
-				<SelectTrigger>
-					<SelectValue placeholder="Select a category..." />
-				</SelectTrigger>
-				<SelectContent>
-					{categories?.categories.map((category) => (
-						<SelectItem key={category.id} value={category.id}>
-							{category.name}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
-			<StatusDropdown status={status} setStatus={setStatus} />
-			<Button type="button" className="p-2 border border-black" onClick={handleSave}>
-				{todo ? 'Update' : 'Add'} Todo
-			</Button>
+		<div className="grid gap-4 py-4">
+			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Label htmlFor="title">Title</Label>
+				<Input
+					name="title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+			</div>
+			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Label htmlFor="description">Description</Label>
+				<Input
+					name="description"
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				/>
+			</div>
+			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Label htmlFor="dueDate">Due Date</Label>
+				<Input
+					name="dueDate"
+					type="date"
+					value={dueDate}
+					onChange={(e) => setDueDate(e.target.value)}
+				/>
+			</div>
+			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Label htmlFor="category">Category</Label>
+				<Select
+					name="category"
+					value={categoryId}
+					onValueChange={(v) => setCategoryId(v)}
+				>
+					<SelectTrigger>
+						<SelectValue placeholder="Select a category..." />
+					</SelectTrigger>
+					<SelectContent>
+						{categories?.categories.map((category) => (
+							<SelectItem key={category.id} value={category.id}>
+								{category.name}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
+			</div>
+			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Label htmlFor="status">Status</Label>
+				<StatusDropdown status={status} setStatus={setStatus} />
+			</div>
+			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Button
+					type="button"
+					className="p-2 border border-black"
+					onClick={handleSave}
+					disabled={!isValid}
+				>
+					Save changes
+				</Button>
+			</div>
+			{todo && (
+				<div className="grid w-full max-w-sm items-center gap-1.5">
+					<DeleteTodoButton todo={todo} />
+				</div>
+			)}
 		</div>
 	);
 };
