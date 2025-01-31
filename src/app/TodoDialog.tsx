@@ -11,7 +11,7 @@ import {
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
-import { TodoForm } from './dashboard/TodoForm';
+import { TodoForm } from './todos/TodoForm';
 
 export function TodoDialog({ project }: { project?: Project }) {
 	const [isOpen, setIsOpen] = useState(false);

@@ -1,5 +1,5 @@
 import { ProjectDialog } from '@/app/ProjectDialog';
-import { ICONS } from '@/app/dashboard/icons';
+import { ICONS } from '@/app/todos/icons';
 import {
 	DropdownMenu,
 	DropdownMenuContent,

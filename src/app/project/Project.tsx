@@ -1,7 +1,7 @@
 import { db } from '@/components/lib/db';
 import { Button } from '@/components/ui/button';
 import { Layout } from '../Layout';
-import { ProjectForm } from '../dashboard/ProjectForm';
+import { ProjectForm } from '../todos/ProjectForm';
 
 export function Project({ id }: { id: string }) {
 	const { data } = db.useQuery({ projects: { $: { where: { id } }, todos: {} } });

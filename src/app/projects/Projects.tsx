@@ -1,7 +1,7 @@
 'use client';
 
 import { Layout } from '@/app/Layout';
-import { ICONS } from '@/app/dashboard/icons';
+import { ICONS } from '@/app/todos/icons';
 import { db } from '@/components/lib/db';
 import type { Project } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';

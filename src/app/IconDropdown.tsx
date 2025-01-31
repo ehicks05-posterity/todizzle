@@ -5,7 +5,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ICONS } from './dashboard/icons';
+import { ICONS } from './todos/icons';
 
 interface Props {
 	icon: string;

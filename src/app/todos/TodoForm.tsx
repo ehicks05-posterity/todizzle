@@ -21,12 +21,12 @@ import { useLocation } from 'wouter';
 import type { Todo } from '../../components/lib/types';
 import { STATUSES } from '../constants';
 
-const StatusDropdown = ({
+export const StatusDropdown = ({
 	status: statusName,
 	setStatus,
 }: {
 	status: string;
-	setStatus: React.Dispatch<React.SetStateAction<string>>;
+	setStatus: (status: string) => void;
 }) => {
 	const status = STATUSES[statusName as keyof typeof STATUSES];
 	const Icon = status.icon;
@@ -51,6 +51,35 @@ const StatusDropdown = ({
 			</span>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
+	);
+};
+
+export const ProjectSelect = ({
+	projectId,
+	onChange,
+}: { projectId?: string; onChange: (projectId: string) => void }) => {
+	const { data: projects, isLoading } = db.useQuery({ projects: {} });
+	if (isLoading) return null;
+
+	return (
+		<Select
+			name="project"
+			value={projectId || 'no_project'}
+			onValueChange={(v) => onChange(v)}
+		>
+			<SelectTrigger>
+				<SelectValue />
+			</SelectTrigger>
+			<SelectContent>
+				<SelectItem value={'no_project'}>No project</SelectItem>
+
+				{projects?.projects.map((project) => (
+					<SelectItem key={project.id} value={project.id}>
+						{project.name}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
 	);
 };
 
@@ -142,22 +171,7 @@ export const TodoForm = ({
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="project">Project</Label>
-				<Select
-					name="project"
-					value={projectId}
-					onValueChange={(v) => setProjectId(v)}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder="Select a project..." />
-					</SelectTrigger>
-					<SelectContent>
-						{projects?.projects.map((project) => (
-							<SelectItem key={project.id} value={project.id}>
-								{project.name}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
+				<ProjectSelect projectId={projectId} onChange={(v) => setProjectId(v)} />
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="status">Status</Label>
