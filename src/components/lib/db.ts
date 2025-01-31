@@ -11,15 +11,15 @@ const _schema = i.schema({
 			dueDate: i.date(),
 			status: i.string(),
 		}),
-		categories: i.entity({
+		projects: i.entity({
 			name: i.string(),
 			icon: i.string(),
 		}),
 	},
 	links: {
-		todoCategory: {
-			forward: { on: 'todos', has: 'one', label: 'category' },
-			reverse: { on: 'categories', has: 'many', label: 'todos' },
+		todoProject: {
+			forward: { on: 'todos', has: 'one', label: 'project' },
+			reverse: { on: 'projects', has: 'many', label: 'todos' },
 		},
 	},
 });

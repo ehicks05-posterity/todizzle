@@ -1,5 +1,5 @@
 import { db } from '@/components/lib/db';
-import type { Category } from '@/components/lib/types';
+import type { Project } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -14,20 +14,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { id } from '@instantdb/react';
-import { PlusCircle } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { IconDropdown } from './IconDropdown';
 
-export function CategoryDialog({ category }: { category?: Category }) {
+export function ProjectDialog({ project }: { project?: Project }) {
 	const [isOpen, setIsOpen] = useState(false);
-	const [name, setName] = useState(category?.name || '');
-	const [icon, setIcon] = useState(category?.icon || 'circle');
+	const [name, setName] = useState(project?.name || '');
+	const [icon, setIcon] = useState(project?.icon || 'circle');
 
 	const handleSave = async () => {
-		const categoryId = category?.id || id();
-		await db.transact(db.tx.categories[categoryId].update({ name, icon }));
-		setName(category?.name || '');
-		setIcon(category?.icon || 'circle');
+		const projectId = project?.id || id();
+		await db.transact(db.tx.projects[projectId].update({ name, icon }));
+		setName(project?.name || '');
+		setIcon(project?.icon || 'circle');
 		setIsOpen(false);
 	};
 
@@ -37,15 +37,15 @@ export function CategoryDialog({ category }: { category?: Category }) {
 		<Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
 			<DialogTrigger onClick={() => setIsOpen(true)} asChild>
 				<SidebarMenuButton variant="outline">
-					<PlusCircle />
-					Create Category
+					<Plus />
+					New
 				</SidebarMenuButton>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>{category ? 'Edit' : 'Create'} category</DialogTitle>
+					<DialogTitle>{project ? 'Edit' : 'Create'} project</DialogTitle>
 					<DialogDescription>
-						Add a new category here. Click save when you're done.
+						Add a new project here. Click save when you're done.
 					</DialogDescription>
 				</DialogHeader>
 

@@ -9,7 +9,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
-import type { Category } from '../../components/lib/types';
+import type { Project } from '../../components/lib/types';
 import { ICONS } from './icons';
 
 const IconDropdown = ({
@@ -42,15 +42,15 @@ const IconDropdown = ({
 	);
 };
 
-export const CategoryForm = ({ category }: { category?: Category }) => {
-	const [name, setName] = useState(category?.name || '');
-	const [icon, setIcon] = useState(category?.icon || 'circle');
+export const ProjectForm = ({ project }: { project?: Project }) => {
+	const [name, setName] = useState(project?.name || '');
+	const [icon, setIcon] = useState(project?.icon || 'circle');
 
 	const handleSave = () => {
-		const categoryId = category?.id || id();
-		db.transact(db.tx.categories[categoryId].update({ name, icon }));
-		setName(category?.name || '');
-		setIcon(category?.icon || 'circle');
+		const projectId = project?.id || id();
+		db.transact(db.tx.projects[projectId].update({ name, icon }));
+		setName(project?.name || '');
+		setIcon(project?.icon || 'circle');
 	};
 
 	return (
@@ -62,7 +62,7 @@ export const CategoryForm = ({ category }: { category?: Category }) => {
 			/>
 			<IconDropdown icon={icon} setIcon={setIcon} />
 			<Button type="button" className="p-2 border border-black" onClick={handleSave}>
-				{category ? 'Update' : 'Add'} Category
+				Save changes
 			</Button>
 		</div>
 	);

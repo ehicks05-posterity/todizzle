@@ -74,13 +74,16 @@ export const DeleteTodoButton = ({ todo }: { todo: Todo }) => {
 	);
 };
 
-export const TodoForm = ({ todo }: { todo?: Todo }) => {
-	const { data: categories, isLoading } = db.useQuery({ categories: {} });
+export const TodoForm = ({
+	todo,
+	onSubmit,
+}: { todo?: Todo; onSubmit?: () => void }) => {
+	const { data: projects, isLoading } = db.useQuery({ projects: {} });
 
 	const [title, setTitle] = useState(todo?.title || '');
 	const [description, setDescription] = useState(todo?.description || '');
 	const [dueDate, setDueDate] = useState(todo?.dueDate || '');
-	const [categoryId, setCategoryId] = useState(todo?.category?.id || '');
+	const [projectId, setProjectId] = useState(todo?.project?.id || '');
 	const [status, setStatus] = useState(todo?.status || 'backlog');
 
 	if (isLoading) return null;
@@ -91,19 +94,21 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 			db.tx.todos[todoId].update({ title, description, dueDate, status }),
 		);
 
-		if (categoryId) {
-			await db.transact(db.tx.todos[todoId].link({ category: categoryId }));
-		} else {
-			await db.transact(db.tx.todos[todoId].unlink({ category: categoryId }));
+		if (projectId) {
+			await db.transact(db.tx.todos[todoId].link({ project: projectId }));
+		} else if (todo?.project?.id) {
+			await db.transact(db.tx.todos[todoId].unlink({ project: projectId }));
 		}
 
 		if (!todo) {
 			setTitle('');
 			setDescription('');
 			setDueDate('');
-			setCategoryId('');
+			setProjectId('');
 			setStatus('backlog');
 		}
+
+		if (onSubmit) onSubmit();
 	};
 
 	const isValid = title.length !== 0;
@@ -136,19 +141,19 @@ export const TodoForm = ({ todo }: { todo?: Todo }) => {
 				/>
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
-				<Label htmlFor="category">Category</Label>
+				<Label htmlFor="project">Project</Label>
 				<Select
-					name="category"
-					value={categoryId}
-					onValueChange={(v) => setCategoryId(v)}
+					name="project"
+					value={projectId}
+					onValueChange={(v) => setProjectId(v)}
 				>
 					<SelectTrigger>
-						<SelectValue placeholder="Select a category..." />
+						<SelectValue placeholder="Select a project..." />
 					</SelectTrigger>
 					<SelectContent>
-						{categories?.categories.map((category) => (
-							<SelectItem key={category.id} value={category.id}>
-								{category.name}
+						{projects?.projects.map((project) => (
+							<SelectItem key={project.id} value={project.id}>
+								{project.name}
 							</SelectItem>
 						))}
 					</SelectContent>

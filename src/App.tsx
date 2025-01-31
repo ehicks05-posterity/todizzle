@@ -1,7 +1,7 @@
 import { Route, Switch } from 'wouter';
 import { Main } from './app/Main';
-import { CategoryList } from './app/categories/Categories';
-import { Category } from './app/category/Category';
+import { Project } from './app/project/Project';
+import { ProjectList } from './app/projects/Projects';
 import { Todo } from './app/todo/Todo';
 import { ThemeProvider } from './components/theme-provider';
 
@@ -13,10 +13,8 @@ function MyApp() {
 
 				<Route path="/todos/:id">{(params) => <Todo id={params.id} />}</Route>
 
-				<Route path="/categories/:id">
-					{(params) => <Category id={params.id} />}
-				</Route>
-				<Route path="/categories" component={CategoryList} />
+				<Route path="/projects/:id">{(params) => <Project id={params.id} />}</Route>
+				<Route path="/projects" component={ProjectList} />
 
 				{/* Default route in a switch */}
 				<Route>404: No such page!</Route>
