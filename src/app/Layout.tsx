@@ -19,16 +19,34 @@ import { useLocation } from 'wouter';
 export function Breadcrumbs() {
 	const [location] = useLocation();
 
+	const parts = location.split('/').filter(Boolean);
+
+	const paths = parts.map((part, i) => {
+		return {
+			label: part,
+			path: `/${parts.slice(0, i + 1).join('/')}`,
+			isTerminal: i === parts.length - 1,
+		};
+	});
+
 	return (
 		<Breadcrumb>
 			<BreadcrumbList>
-				<BreadcrumbItem className="hidden md:block">
+				{/* <BreadcrumbItem className="hidden md:block">
 					<BreadcrumbLink href="/">Home</BreadcrumbLink>
-				</BreadcrumbItem>
-				{/* <BreadcrumbSeparator className="hidden md:block" />
-				<BreadcrumbItem>
-					<BreadcrumbPage>{location}</BreadcrumbPage>
 				</BreadcrumbItem> */}
+				{paths.map((path, i) => (
+					<div className="flex gap-2 items-center" key={path.path}>
+						{i !== 0 && <BreadcrumbSeparator className="hidden md:block" />}
+						<BreadcrumbItem>
+							{path.isTerminal ? (
+								<BreadcrumbPage>{path.label}</BreadcrumbPage>
+							) : (
+								<BreadcrumbLink href={path.path}>{path.label}</BreadcrumbLink>
+							)}
+						</BreadcrumbItem>
+					</div>
+				))}
 			</BreadcrumbList>
 		</Breadcrumb>
 	);

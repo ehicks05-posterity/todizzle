@@ -21,7 +21,7 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 	return (
 		<Link href={`/todos/${todo.id}`}>
 			<div
-				className="w-full flex justify-between items-center gap-2 p-2 rounded-lg hover:bg-muted"
+				className="w-full flex justify-between items-center gap-2 p-2 text-sm rounded-lg hover:bg-muted"
 				key={todo.id}
 			>
 				<div className="flex items-center gap-2">
@@ -44,7 +44,7 @@ export const Playground = () => {
 	}
 
 	return (
-		<div className="w-full flex flex-col">
+		<div className="w-full flex flex-col p-2">
 			{todos?.todos.map((todo) => (
 				<TodoRow key={todo.id} todo={todo} />
 			))}
