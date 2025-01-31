@@ -1,4 +1,5 @@
 import { AppSidebar } from '@/components/app-sidebar';
+import { db } from '@/components/lib/db';
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -16,16 +17,53 @@ import {
 import type { ReactNode } from 'react';
 import { useLocation } from 'wouter';
 
+// hacky. display todo title or project name in breadcrumb.
+export const useEntityLabel = (location: string) => {
+	const resource = location.startsWith('/todos/')
+		? 'todos'
+		: location.startsWith('/projects/')
+			? 'projects'
+			: undefined;
+
+	const resourceId = resource
+		? location.slice(location.lastIndexOf('/') + 1)
+		: undefined;
+
+	const query =
+		resource && resourceId
+			? {
+					todos: {
+						$: { where: { id: resource === 'todos' ? resourceId : '' } },
+					},
+					projects: {
+						$: { where: { id: resource === 'projects' ? resourceId : '' } },
+					},
+				}
+			: null;
+
+	const { data, isLoading } = db.useQuery(query);
+
+	const todo = data?.todos?.[0];
+	const project = data?.projects?.[0];
+	const entityLabel = todo ? todo.title : project ? project.name : undefined;
+	return { entityLabel, isLoading };
+};
+
 export function Breadcrumbs() {
 	const [location] = useLocation();
+
+	const { entityLabel, isLoading } = useEntityLabel(location);
+	if (isLoading) return null;
 
 	const parts = location.split('/').filter(Boolean);
 
 	const paths = parts.map((part, i) => {
+		const isTerminal = i === parts.length - 1;
+		const label = isTerminal && entityLabel ? entityLabel : part;
 		return {
-			label: part,
+			label,
 			path: `/${parts.slice(0, i + 1).join('/')}`,
-			isTerminal: i === parts.length - 1,
+			isTerminal,
 		};
 	});
 
