@@ -1,5 +1,6 @@
 import { db } from '@/components/lib/db';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
 	Select,
 	SelectContent,
@@ -15,7 +17,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 import { id } from '@instantdb/react';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useLocation } from 'wouter';
 import type { Todo } from '../../components/lib/types';
@@ -43,12 +48,46 @@ export const StatusDropdown = ({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline" className="flex items-center gap-2 justify-start">
+				<Button variant="ghost" className="flex items-center gap-2 justify-start">
 					<Icon size={18} className={status.color} /> {status.label}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
+	);
+};
+
+export const DueDatePicker = ({
+	dueDate,
+	handleSelect,
+}: { dueDate?: string | number; handleSelect: (date?: Date) => void }) => {
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<Button
+					variant={'ghost'}
+					className={cn(
+						'justify-start text-left font-normal',
+						!dueDate && 'text-muted-foreground',
+					)}
+				>
+					<CalendarIcon className="mr-1 h-4 w-4" />
+					{dueDate ? (
+						`Due ${format(new Date(String(dueDate)), 'PP')}`
+					) : (
+						<span>Set a due date</span>
+					)}
+				</Button>
+			</PopoverTrigger>
+			<PopoverContent className="w-auto p-0">
+				<Calendar
+					mode="single"
+					selected={dueDate ? new Date(dueDate) : undefined}
+					onSelect={handleSelect}
+					initialFocus
+				/>
+			</PopoverContent>
+		</Popover>
 	);
 };
 
@@ -81,7 +120,7 @@ export const PriorityDropdown = ({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline" className="flex items-center gap-2 justify-start">
+				<Button variant="ghost" className="flex items-center gap-2 justify-start">
 					<priority.icon size={18} className={color} />
 					<span className={!priorityName ? color : ''}>{label}</span>
 				</Button>
@@ -187,11 +226,9 @@ export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="dueDate">Due Date</Label>
-				<Input
-					name="dueDate"
-					type="date"
-					value={dueDate}
-					onChange={(e) => setDueDate(e.target.value)}
+				<DueDatePicker
+					dueDate={dueDate}
+					handleSelect={(date) => setDueDate(date?.toISOString())}
 				/>
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">

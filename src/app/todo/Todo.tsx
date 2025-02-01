@@ -1,12 +1,11 @@
 import { db } from '@/components/lib/db';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
 import { Layout } from '../Layout';
-import { PriorityDropdown, ProjectSelect, StatusDropdown } from '../todos/TodoForm';
+import {
+	DueDatePicker,
+	PriorityDropdown,
+	ProjectSelect,
+	StatusDropdown,
+} from '../todos/TodoForm';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
@@ -74,35 +73,13 @@ export function Todo({ id }: { id: string }) {
 							}
 						}}
 					/>
-					<Popover>
-						<PopoverTrigger asChild>
-							<Button
-								variant={'outline'}
-								className={cn(
-									'justify-start text-left font-normal',
-									!todo.dueDate && 'text-muted-foreground',
-								)}
-							>
-								<CalendarIcon className="mr-2 h-4 w-4" />
-								{todo.dueDate ? (
-									`Due ${format(new Date(String(todo.dueDate)), 'PP')}`
-								) : (
-									<span>Set a due date</span>
-								)}
-							</Button>
-						</PopoverTrigger>
-						<PopoverContent className="w-auto p-0">
-							<Calendar
-								mode="single"
-								selected={new Date(todo.dueDate)}
-								onSelect={async (date) => {
-									const dueDate = date ? date.toISOString() : undefined;
-									await db.transact(db.tx.todos[todo.id].update({ dueDate }));
-								}}
-								initialFocus
-							/>
-						</PopoverContent>
-					</Popover>
+					<DueDatePicker
+						dueDate={todo.dueDate}
+						handleSelect={async (date?: Date) => {
+							const dueDate = date ? date.toISOString() : undefined;
+							await db.transact(db.tx.todos[todo.id].update({ dueDate }));
+						}}
+					/>
 				</div>
 			</div>
 		</Layout>
