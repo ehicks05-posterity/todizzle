@@ -16,7 +16,7 @@ export function Todo({ id }: { id: string }) {
 
 	return (
 		<Layout>
-			<div className="grid gap-4">
+			<div className="grid gap-8">
 				<div
 					contentEditable
 					className="text-2xl bg-transparent outline-none"
@@ -47,19 +47,19 @@ export function Todo({ id }: { id: string }) {
 				>
 					{todo.description || 'Add a description...'}
 				</div>
-				<StatusDropdown
-					status={todo.status}
-					setStatus={async (status: string) => {
-						await db.transact(db.tx.todos[todo.id].update({ status }));
-					}}
-				/>
-				<PriorityDropdown
-					priority={todo.priority}
-					setPriority={async (priority?: string) => {
-						await db.transact(db.tx.todos[todo.id].update({ priority }));
-					}}
-				/>
-				<div className="max-w-sm">
+				<div className="grid grid-cols-2 gap-4 max-w-sm">
+					<StatusDropdown
+						status={todo.status}
+						setStatus={async (status: string) => {
+							await db.transact(db.tx.todos[todo.id].update({ status }));
+						}}
+					/>
+					<PriorityDropdown
+						priority={todo.priority}
+						setPriority={async (priority?: string) => {
+							await db.transact(db.tx.todos[todo.id].update({ priority }));
+						}}
+					/>
 					<ProjectSelect
 						projectId={todo.project?.id}
 						onChange={async (projectId: string) => {
@@ -74,14 +74,12 @@ export function Todo({ id }: { id: string }) {
 							}
 						}}
 					/>
-				</div>
-				<div>
 					<Popover>
 						<PopoverTrigger asChild>
 							<Button
 								variant={'outline'}
 								className={cn(
-									'w-[280px] justify-start text-left font-normal',
+									'justify-start text-left font-normal',
 									!todo.dueDate && 'text-muted-foreground',
 								)}
 							>

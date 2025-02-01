@@ -33,7 +33,7 @@ export const StatusDropdown = ({
 
 	const OPTIONS = Object.entries(STATUSES).map(([name, status]) => (
 		<DropdownMenuItem key={name} onClick={() => setStatus(name)}>
-			<span className="flex items-center gap-1">
+			<span className="flex items-center gap-2">
 				<status.icon size={18} className={status.color} />
 				{status.label}
 			</span>
@@ -42,13 +42,11 @@ export const StatusDropdown = ({
 
 	return (
 		<DropdownMenu>
-			<span>
-				<DropdownMenuTrigger asChild>
-					<Button variant="outline" className="flex items-center gap-1">
-						<Icon size={18} className={status.color} /> {status.label}
-					</Button>
-				</DropdownMenuTrigger>
-			</span>
+			<DropdownMenuTrigger asChild>
+				<Button variant="outline" className="flex items-center gap-2 justify-start">
+					<Icon size={18} className={status.color} /> {status.label}
+				</Button>
+			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
 	);
@@ -73,7 +71,7 @@ export const PriorityDropdown = ({
 			key={name}
 			onClick={() => setPriority(name === 'none' ? undefined : name)}
 		>
-			<span className="flex items-center gap-1">
+			<span className="flex items-center gap-2">
 				<priority.icon size={18} className={priority.color} />
 				{priority.label}
 			</span>
@@ -82,14 +80,12 @@ export const PriorityDropdown = ({
 
 	return (
 		<DropdownMenu>
-			<span>
-				<DropdownMenuTrigger asChild>
-					<Button variant="outline" className="flex items-center gap-1">
-						<priority.icon size={18} className={color} />
-						<span className={!priorityName ? color : ''}>{label}</span>
-					</Button>
-				</DropdownMenuTrigger>
-			</span>
+			<DropdownMenuTrigger asChild>
+				<Button variant="outline" className="flex items-center gap-2 justify-start">
+					<priority.icon size={18} className={color} />
+					<span className={!priorityName ? color : ''}>{label}</span>
+				</Button>
+			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
 	);
@@ -172,8 +168,8 @@ export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
 	const isValid = title.length !== 0;
 
 	return (
-		<div className="grid gap-4 py-4">
-			<div className="grid w-full max-w-sm items-center gap-1.5">
+		<div className="grid grid-cols-2 gap-4 py-4">
+			<div className="grid col-span-2 w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="title">Title</Label>
 				<Input
 					name="title"
@@ -181,7 +177,7 @@ export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 			</div>
-			<div className="grid w-full max-w-sm items-center gap-1.5">
+			<div className="grid col-span-2 w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="description">Description</Label>
 				<Input
 					name="description"
