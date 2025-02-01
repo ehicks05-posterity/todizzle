@@ -1,18 +1,12 @@
 import { db } from '@/components/lib/db';
 import type { Todo } from '@/components/lib/types';
-import { Temporal } from 'temporal-polyfill';
+import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
 import { STATUSES } from '../constants';
 
-export const DueDate = ({ date }: { date: string }) => {
-	const pd = Temporal.PlainDate.from(date);
-	const formatted = pd.toLocaleString('en-US', {
-		month: 'short',
-		day: 'numeric',
-		year: Temporal.Now.plainDateISO().year === pd.year ? undefined : 'numeric',
-	});
-
-	return <div>{formatted}</div>;
+export const DueDate = ({ date: _date }: { date: string }) => {
+	const date = format(parseISO(_date), 'PP');
+	return <div>{date}</div>;
 };
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
@@ -28,7 +22,7 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 					<status.icon className={status.color} size={16} />
 					<div>{todo.title}</div>
 				</div>
-				<DueDate date={todo.dueDate.toString()} />
+				{todo.dueDate && <DueDate date={todo.dueDate.toString()} />}
 			</div>
 		</Link>
 	);
