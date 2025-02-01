@@ -1,10 +1,17 @@
 import {
+	AlertCircle,
 	ChartPie,
 	Circle,
 	CircleCheckBig,
 	CircleDashed,
 	CircleX,
+	Ellipsis,
 } from 'lucide-react';
+import {
+	PiCellSignalHighFill,
+	PiCellSignalLowFill,
+	PiCellSignalMediumFill,
+} from 'react-icons/pi';
 
 export const STATUSES = {
 	backlog: {
@@ -12,7 +19,11 @@ export const STATUSES = {
 		icon: CircleDashed,
 		color: 'text-neutral-500 dark:text-neutral-300',
 	},
-	ready: { label: 'Ready', icon: Circle, color: 'text-blue-500 dark:text-blue-400' },
+	todo: {
+		label: 'Todo',
+		icon: Circle,
+		color: 'text-blue-500 dark:text-blue-400',
+	},
 	inProgress: {
 		label: 'In Progress',
 		icon: ChartPie,
@@ -27,5 +38,33 @@ export const STATUSES = {
 		label: 'Canceled',
 		icon: CircleX,
 		color: 'text-neutral-400 dark:text-neutral-500',
+	},
+};
+
+export const PRIORITIES = {
+	none: {
+		label: 'No Priority',
+		icon: Ellipsis,
+		color: 'text-neutral-500 dark:text-neutral-300',
+	},
+	low: {
+		label: 'Low',
+		icon: PiCellSignalLowFill,
+		color: 'text-neutral-500 dark:text-neutral-300',
+	},
+	medium: {
+		label: 'Medium',
+		icon: PiCellSignalMediumFill,
+		color: 'text-neutral-500 dark:text-neutral-300',
+	},
+	high: {
+		label: 'High',
+		icon: PiCellSignalHighFill,
+		color: 'text-neutral-500 dark:text-neutral-300',
+	},
+	critical: {
+		label: 'Critical',
+		icon: AlertCircle,
+		color: 'text-red-500 dark:text-red-400',
 	},
 };

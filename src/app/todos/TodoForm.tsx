@@ -19,7 +19,7 @@ import { id } from '@instantdb/react';
 import { useState } from 'react';
 import { useLocation } from 'wouter';
 import type { Todo } from '../../components/lib/types';
-import { STATUSES } from '../constants';
+import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({
 	status: statusName,
@@ -46,6 +46,47 @@ export const StatusDropdown = ({
 				<DropdownMenuTrigger asChild>
 					<Button variant="outline" className="flex items-center gap-1">
 						<Icon size={18} className={status.color} /> {status.label}
+					</Button>
+				</DropdownMenuTrigger>
+			</span>
+			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};
+
+export const PriorityDropdown = ({
+	priority: priorityName,
+	setPriority,
+}: {
+	priority?: string;
+	setPriority: (priority?: string) => void;
+}) => {
+	const priority =
+		PRIORITIES[priorityName as keyof typeof PRIORITIES] || PRIORITIES.none;
+	const label = !priorityName ? 'Priority' : priority.label;
+	const color = !priorityName
+		? 'text-neutral-500 dark:text-neutral-400'
+		: priority.color;
+
+	const OPTIONS = Object.entries(PRIORITIES).map(([name, priority]) => (
+		<DropdownMenuItem
+			key={name}
+			onClick={() => setPriority(name === 'none' ? undefined : name)}
+		>
+			<span className="flex items-center gap-1">
+				<priority.icon size={18} className={priority.color} />
+				{priority.label}
+			</span>
+		</DropdownMenuItem>
+	));
+
+	return (
+		<DropdownMenu>
+			<span>
+				<DropdownMenuTrigger asChild>
+					<Button variant="outline" className="flex items-center gap-1">
+						<priority.icon size={18} className={color} />
+						<span className={!priorityName ? color : ''}>{label}</span>
 					</Button>
 				</DropdownMenuTrigger>
 			</span>
@@ -103,38 +144,26 @@ export const DeleteTodoButton = ({ todo }: { todo: Todo }) => {
 	);
 };
 
-export const TodoForm = ({
-	todo,
-	onSubmit,
-}: { todo?: Todo; onSubmit?: () => void }) => {
+export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
 	const { data: projects, isLoading } = db.useQuery({ projects: {} });
 
-	const [title, setTitle] = useState(todo?.title || '');
-	const [description, setDescription] = useState(todo?.description || '');
-	const [dueDate, setDueDate] = useState(todo?.dueDate || '');
-	const [projectId, setProjectId] = useState(todo?.project?.id || '');
-	const [status, setStatus] = useState(todo?.status || 'backlog');
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const [dueDate, setDueDate] = useState<string | undefined>(undefined);
+	const [projectId, setProjectId] = useState('');
+	const [status, setStatus] = useState('todo');
+	const [priority, setPriority] = useState<string | undefined>(undefined);
 
 	if (isLoading) return null;
 
 	const handleSave = async () => {
-		const todoId = todo?.id || id();
+		const todoId = id();
 		await db.transact(
 			db.tx.todos[todoId].update({ title, description, dueDate, status }),
 		);
 
 		if (projectId) {
 			await db.transact(db.tx.todos[todoId].link({ project: projectId }));
-		} else if (todo?.project?.id) {
-			await db.transact(db.tx.todos[todoId].unlink({ project: projectId }));
-		}
-
-		if (!todo) {
-			setTitle('');
-			setDescription('');
-			setDueDate('');
-			setProjectId('');
-			setStatus('backlog');
 		}
 
 		if (onSubmit) onSubmit();
@@ -178,20 +207,19 @@ export const TodoForm = ({
 				<StatusDropdown status={status} setStatus={setStatus} />
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
+				<Label htmlFor="status">Status</Label>
+				<PriorityDropdown priority={priority} setPriority={setPriority} />
+			</div>
+			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Button
 					type="button"
 					className="p-2 border border-black"
 					onClick={handleSave}
 					disabled={!isValid}
 				>
-					Save changes
+					Create todo
 				</Button>
 			</div>
-			{todo && (
-				<div className="grid w-full max-w-sm items-center gap-1.5">
-					<DeleteTodoButton todo={todo} />
-				</div>
-			)}
 		</div>
 	);
 };

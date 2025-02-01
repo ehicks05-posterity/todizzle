@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { Layout } from '../Layout';
-import { ProjectSelect, StatusDropdown } from '../todos/TodoForm';
+import { PriorityDropdown, ProjectSelect, StatusDropdown } from '../todos/TodoForm';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
@@ -33,22 +33,30 @@ export function Todo({ id }: { id: string }) {
 				</div>
 				<div
 					contentEditable
-					className="bg-transparent outline-none"
+					className={`focus:text-inherit bg-transparent outline-none ${!todo.description ? 'text-neutral-400' : ''}`}
 					onBlur={async (e) => {
-						const value = e.target.textContent;
-						if (value) {
-							await db.transact(db.tx.todos[todo.id].update({ description: value }));
-						} else {
-							e.target.textContent = todo.description;
+						const value = e.target.textContent || undefined;
+						await db.transact(db.tx.todos[todo.id].update({ description: value }));
+						e.target.textContent = value || 'Add a description...';
+					}}
+					onFocus={(e) => {
+						if (!todo.description) {
+							e.target.textContent = '';
 						}
 					}}
 				>
-					{todo.description}
+					{todo.description || 'Add a description...'}
 				</div>
 				<StatusDropdown
 					status={todo.status}
 					setStatus={async (status: string) => {
 						await db.transact(db.tx.todos[todo.id].update({ status }));
+					}}
+				/>
+				<PriorityDropdown
+					priority={todo.priority}
+					setPriority={async (priority?: string) => {
+						await db.transact(db.tx.todos[todo.id].update({ priority }));
 					}}
 				/>
 				<div className="max-w-sm">

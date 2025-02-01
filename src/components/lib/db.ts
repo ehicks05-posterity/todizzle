@@ -10,6 +10,7 @@ const _schema = i.schema({
 			description: i.string(),
 			dueDate: i.date(),
 			status: i.string(),
+			priority: i.string(),
 		}),
 		projects: i.entity({
 			name: i.string(),
