@@ -22,7 +22,7 @@ export const STATUSES = {
 	todo: {
 		label: 'Todo',
 		icon: Circle,
-		color: 'text-blue-500 dark:text-blue-400',
+		color: 'text-neutral-500 dark:text-neutral-300',
 	},
 	inProgress: {
 		label: 'In Progress',
