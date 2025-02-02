@@ -8,9 +8,14 @@ import {
 } from '../todos/TodoInputs';
 
 export function Todo({ id }: { id: string }) {
-	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
+	const { data, isLoading } = db.useQuery({
+		todos: { $: { where: { id } }, project: {} },
+		projects: {},
+	});
 
+	if (isLoading) return null;
 	const todo = data?.todos[0];
+	const projects = data?.projects || [];
 	if (!todo) return null;
 
 	return (
@@ -60,6 +65,7 @@ export function Todo({ id }: { id: string }) {
 						}}
 					/>
 					<ProjectSelect
+						projects={projects}
 						projectId={todo.project?.id}
 						onChange={async (projectId: string) => {
 							if (projectId !== 'no_project') {

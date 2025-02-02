@@ -12,7 +12,8 @@ import {
 } from './TodoInputs';
 
 export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
-	const { data: projects, isLoading } = db.useQuery({ projects: {} });
+	const { data, isLoading } = db.useQuery({ projects: {} });
+	const projects = data?.projects || [];
 
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -65,7 +66,11 @@ export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="project">Project</Label>
-				<ProjectSelect projectId={projectId} onChange={(v) => setProjectId(v)} />
+				<ProjectSelect
+					projects={projects}
+					projectId={projectId}
+					onChange={(v) => setProjectId(v)}
+				/>
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="status">Status</Label>

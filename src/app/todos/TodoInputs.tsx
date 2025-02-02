@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
-import type { Todo } from '../../components/lib/types';
+import type { Project, Todo } from '../../components/lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({
@@ -127,12 +127,14 @@ export const PriorityDropdown = ({
 };
 
 export const ProjectSelect = ({
+	projects,
 	projectId,
 	onChange,
-}: { projectId?: string; onChange: (projectId: string) => void }) => {
-	const { data: projects, isLoading } = db.useQuery({ projects: {} });
-	if (isLoading) return null;
-
+}: {
+	projects: Project[];
+	projectId?: string;
+	onChange: (projectId: string) => void;
+}) => {
 	return (
 		<Select
 			name="project"
@@ -145,7 +147,7 @@ export const ProjectSelect = ({
 			<SelectContent>
 				<SelectItem value={'no_project'}>No project</SelectItem>
 
-				{projects?.projects.map((project) => (
+				{projects.map((project) => (
 					<SelectItem key={project.id} value={project.id}>
 						{project.title}
 					</SelectItem>
