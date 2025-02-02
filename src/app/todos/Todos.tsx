@@ -1,19 +1,12 @@
 import { db } from '@/components/lib/db';
-import { Layout } from '../Layout';
 import { TodoTable } from './TodoTable';
 
 export function Todos() {
-	const { isLoading, data } = db.useQuery({
-		todos: { project: {} },
-	});
-
-	if (isLoading) {
-		return null;
-	}
+	const { data } = db.useQuery({ todos: { project: {} } });
 	const todos = data?.todos || [];
 
 	return (
-		<Layout>
+		<>
 			<div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
 				<TodoTable todos={todos} />
 			</div>
@@ -22,6 +15,6 @@ export function Todos() {
 				<div className="aspect-video rounded-xl bg-muted/50" />
 				<div className="aspect-video rounded-xl bg-muted/50" />
 			</div>
-		</Layout>
+		</>
 	);
 }

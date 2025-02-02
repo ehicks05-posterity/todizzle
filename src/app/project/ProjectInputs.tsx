@@ -27,7 +27,7 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 		<DropdownMenu>
 			<span>
 				<DropdownMenuTrigger asChild>
-					<Button variant="outline" className="flex items-center gap-1">
+					<Button variant="ghost" className="flex items-center gap-1">
 						<Icon />
 					</Button>
 				</DropdownMenuTrigger>
@@ -37,14 +37,17 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 	);
 };
 
-export const DeleteProjectButton = (projectId: string) => {
+export const DeleteProjectButton = ({ id }: { id: string }) => {
+	const handleClick = (e: React.MouseEvent) => {
+		e.preventDefault();
+		if (confirm('Are you sure?')) {
+			db.transact(db.tx.projects[id].delete());
+		}
+	};
+
 	return (
-		<Button
-			type="button"
-			className="p-2 border border-black"
-			onClick={() => db.transact(db.tx.projects[projectId].delete())}
-		>
-			delete
+		<Button type="button" variant="destructive" onClick={(e) => handleClick(e)}>
+			Delete
 		</Button>
 	);
 };

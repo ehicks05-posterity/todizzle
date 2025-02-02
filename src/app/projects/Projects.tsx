@@ -1,11 +1,8 @@
-'use client';
-
-import { Layout } from '@/app/Layout';
 import { ICONS } from '@/app/constants';
 import { db } from '@/components/lib/db';
 import type { Project } from '@/components/lib/types';
-import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
+import { DeleteProjectButton } from '../project/ProjectInputs';
 
 export const ProjectRow = ({ project }: { project: Project }) => {
 	const Icon = ICONS[project.icon as keyof typeof ICONS];
@@ -18,31 +15,21 @@ export const ProjectRow = ({ project }: { project: Project }) => {
 					<div>{project.title}</div>
 				</div>
 
-				<Button
-					variant="destructive"
-					onClick={() => db.transact(db.tx.projects[project.id].delete())}
-				>
-					Delete
-				</Button>
+				<DeleteProjectButton id={project.id} />
 			</div>
 		</Link>
 	);
 };
 
 export function ProjectList() {
-	const { data, isLoading } = db.useQuery({ projects: { todos: {} } });
-
-	if (isLoading) return null;
-
+	const { data } = db.useQuery({ projects: { todos: {} } });
 	const projects = data?.projects || [];
 
 	return (
-		<Layout>
-			<div>
-				{projects.map((project) => (
-					<ProjectRow key={project.id} project={project} />
-				))}
-			</div>
-		</Layout>
+		<div>
+			{projects.map((project) => (
+				<ProjectRow key={project.id} project={project} />
+			))}
+		</div>
 	);
 }

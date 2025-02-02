@@ -15,7 +15,7 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 	return (
 		<Link href={`/todos/${todo.id}`}>
 			<div
-				className="w-full flex justify-between items-center gap-2 p-3 text-sm rounded-lg hover:bg-muted"
+				className="w-full flex justify-between items-center gap-2 p-2 text-sm rounded-lg hover:bg-muted"
 				key={todo.id}
 			>
 				<div className="flex items-center gap-2">
