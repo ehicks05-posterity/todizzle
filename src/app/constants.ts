@@ -6,12 +6,26 @@ import {
 	CircleDashed,
 	CircleX,
 	Ellipsis,
+	Hexagon,
+	Octagon,
+	Pentagon,
+	Square,
+	Triangle,
 } from 'lucide-react';
 import {
 	PiCellSignalHighFill,
 	PiCellSignalLowFill,
 	PiCellSignalMediumFill,
 } from 'react-icons/pi';
+
+export const ICONS = {
+	circle: Circle,
+	square: Square,
+	triangle: Triangle,
+	pentagon: Pentagon,
+	hexagon: Hexagon,
+	octagon: Octagon,
+} as const;
 
 export const STATUSES = {
 	backlog: {

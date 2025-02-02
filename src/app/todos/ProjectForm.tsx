@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
 import type { Project } from '../../components/lib/types';
-import { ICONS } from './icons';
+import { ICONS } from '../constants';
 
 const IconDropdown = ({
 	icon,
