@@ -1,3 +1,4 @@
+import { db } from '@/components/lib/db';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -5,7 +6,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ICONS } from './constants';
+import { ICONS } from '../constants';
 
 interface Props {
 	icon: string;
@@ -33,5 +34,17 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 			</span>
 			<DropdownMenuContent>{ICON_OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
+	);
+};
+
+export const DeleteProjectButton = (projectId: string) => {
+	return (
+		<Button
+			type="button"
+			className="p-2 border border-black"
+			onClick={() => db.transact(db.tx.projects[projectId].delete())}
+		>
+			delete
+		</Button>
 	);
 };

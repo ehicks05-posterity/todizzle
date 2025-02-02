@@ -1,7 +1,6 @@
 import { db } from '@/components/lib/db';
-import { Button } from '@/components/ui/button';
-import { IconDropdown } from '../IconDropdown';
 import { Layout } from '../Layout';
+import { IconDropdown } from './ProjectInputs';
 
 export function Project({ id }: { id: string }) {
 	const { data } = db.useQuery({ projects: { $: { where: { id } }, todos: {} } });
@@ -53,14 +52,6 @@ export function Project({ id }: { id: string }) {
 					/>
 				</div>
 			</div>
-
-			{/* <Button
-				type="button"
-				className="p-2 border border-black"
-				onClick={() => db.transact(db.tx.projects[project.id].delete())}
-			>
-				delete
-			</Button> */}
 		</Layout>
 	);
 }

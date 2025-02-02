@@ -5,7 +5,7 @@ import {
 	PriorityDropdown,
 	ProjectSelect,
 	StatusDropdown,
-} from '../todos/TodoForm';
+} from '../todos/TodoInputs';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });

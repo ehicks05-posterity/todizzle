@@ -15,7 +15,7 @@ import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { id } from '@instantdb/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-import { IconDropdown } from './IconDropdown';
+import { IconDropdown } from './project/ProjectInputs';
 
 export function ProjectDialog() {
 	const [isOpen, setIsOpen] = useState(false);

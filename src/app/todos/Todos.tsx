@@ -29,7 +29,7 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 	);
 };
 
-export default function Page() {
+export function Todos() {
 	const { isLoading: isLoadingTodos, data: todos } = db.useQuery({
 		todos: { project: {} },
 	});
