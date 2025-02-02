@@ -52,14 +52,16 @@ export const useEntityLabel = (location: string) => {
 export function Breadcrumbs() {
 	const [location] = useLocation();
 
-	const { entityLabel, isLoading } = useEntityLabel(location);
-	if (isLoading) return null;
+	const { entityLabel } = useEntityLabel(location);
 
 	const parts = location.split('/').filter(Boolean);
 
 	const paths = parts.map((part, i) => {
 		const isTerminal = i === parts.length - 1;
-		const label = isTerminal && entityLabel ? entityLabel : part;
+		const label =
+			isTerminal && entityLabel
+				? entityLabel
+				: part[0].toLocaleUpperCase() + part.slice(1);
 		return {
 			label,
 			path: `/${parts.slice(0, i + 1).join('/')}`,
@@ -91,10 +93,12 @@ export function Breadcrumbs() {
 }
 
 export function Layout({ children }: { children: ReactNode }) {
+	const [location] = useLocation();
+
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<SidebarInset>
+			<SidebarInset key={location}>
 				<header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
 					<div className="flex items-center gap-2 px-4 w-full">
 						<SidebarTrigger className="-ml-1" />
