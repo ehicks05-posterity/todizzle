@@ -1,7 +1,7 @@
 import { db } from '@/components/lib/db';
 import { Layout } from '../Layout';
 import { TodoDialog } from '../TodoDialog';
-import { TodoRow } from '../todos/TodoRow';
+import { TodoTable } from '../todos/TodoTable';
 import { IconDropdown } from './ProjectInputs';
 
 export function Project({ id }: { id: string }) {
@@ -58,16 +58,12 @@ export function Project({ id }: { id: string }) {
 
 				<div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
 					<div className="w-full flex flex-col p-2">
-						{project.todos.map((todo) => (
-							<TodoRow key={todo.id} todo={todo} />
-						))}
+						<TodoTable todos={project.todos} />
 						{project.todos.length === 0 && (
-							<div className="grid gap-8">
-								This project has 0 todos.
-								<TodoDialog defaults={{ projectId: project.id }} />
-							</div>
+							<div className="grid gap-8">This project has 0 todos.</div>
 						)}
 					</div>
+					<TodoDialog defaults={{ projectId: project.id }} />
 				</div>
 			</div>
 		</Layout>

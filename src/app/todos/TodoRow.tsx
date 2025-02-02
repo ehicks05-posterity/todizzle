@@ -1,4 +1,5 @@
 import type { Todo } from '@/components/lib/types';
+import { Badge } from '@/components/ui/badge';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
 import { STATUSES } from '../constants';
@@ -14,13 +15,16 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 	return (
 		<Link href={`/todos/${todo.id}`}>
 			<div
-				className="w-full flex justify-between items-center gap-2 p-2 text-sm rounded-lg hover:bg-muted"
+				className="w-full flex justify-between items-center gap-2 p-3 text-sm rounded-lg hover:bg-muted"
 				key={todo.id}
 			>
 				<div className="flex items-center gap-2">
 					<status.icon className={status.color} size={16} />
 					<div>{todo.title}</div>
 				</div>
+				{todo.project?.title && (
+					<Badge variant="secondary">{todo.project.title}</Badge>
+				)}
 				{todo.dueDate && <DueDate date={todo.dueDate.toString()} />}
 			</div>
 		</Link>
