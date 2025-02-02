@@ -13,7 +13,8 @@ const _schema = i.schema({
 			priority: i.string(),
 		}),
 		projects: i.entity({
-			name: i.string(),
+			title: i.string(),
+			description: i.string(),
 			icon: i.string(),
 		}),
 	},

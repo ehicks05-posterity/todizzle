@@ -151,7 +151,7 @@ export const ProjectSelect = ({
 
 				{projects?.projects.map((project) => (
 					<SelectItem key={project.id} value={project.id}>
-						{project.name}
+						{project.title}
 					</SelectItem>
 				))}
 			</SelectContent>

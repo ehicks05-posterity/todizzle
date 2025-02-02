@@ -19,16 +19,17 @@ import { IconDropdown } from './IconDropdown';
 
 export function ProjectDialog() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [name, setName] = useState('');
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
 	const [icon, setIcon] = useState('circle');
 
 	const handleSave = async () => {
 		const projectId = id();
-		await db.transact(db.tx.projects[projectId].update({ name, icon }));
+		await db.transact(db.tx.projects[projectId].update({ title, icon }));
 		setIsOpen(false);
 	};
 
-	const isValid = name.length > 0;
+	const isValid = title.length > 0;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -48,13 +49,24 @@ export function ProjectDialog() {
 
 				<div className="grid gap-4 py-4">
 					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="name" className="text-right">
-							Name
+						<Label htmlFor="title" className="text-right">
+							Title
 						</Label>
 						<Input
-							id="name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
+							id="title"
+							value={title}
+							onChange={(e) => setTitle(e.target.value)}
+							className="col-span-3"
+						/>
+					</div>
+					<div className="grid grid-cols-4 items-center gap-4">
+						<Label htmlFor="description" className="text-right">
+							Description
+						</Label>
+						<Input
+							name="description"
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
 							className="col-span-3"
 						/>
 					</div>

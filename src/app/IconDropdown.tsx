@@ -5,11 +5,11 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ICONS } from './todos/icons';
+import { ICONS } from './constants';
 
 interface Props {
 	icon: string;
-	setIcon: React.Dispatch<React.SetStateAction<string>>;
+	setIcon: (icon: string) => void;
 }
 
 export const IconDropdown = ({ icon, setIcon }: Props) => {

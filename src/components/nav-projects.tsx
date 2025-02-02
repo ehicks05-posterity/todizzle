@@ -1,5 +1,5 @@
 import { ProjectDialog } from '@/app/ProjectDialog';
-import { ICONS } from '@/app/todos/icons';
+import { ICONS } from '@/app/constants';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -40,11 +40,11 @@ export function NavProjects() {
 						icon: ICONS[project.icon as keyof typeof ICONS],
 					}))
 					.map((item) => (
-						<SidebarMenuItem key={item.name}>
+						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton asChild>
 								<Link href={`/projects/${item.id}`}>
 									<item.icon />
-									<span>{item.name}</span>
+									<span>{item.title}</span>
 								</Link>
 							</SidebarMenuButton>
 							<DropdownMenu>

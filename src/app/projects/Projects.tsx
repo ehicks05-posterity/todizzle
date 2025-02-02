@@ -1,7 +1,7 @@
 'use client';
 
 import { Layout } from '@/app/Layout';
-import { ICONS } from '@/app/todos/icons';
+import { ICONS } from '@/app/constants';
 import { db } from '@/components/lib/db';
 import type { Project } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ export const ProjectRow = ({ project }: { project: Project }) => {
 			<div className="w-full flex justify-between items-center gap-2 p-2 hover:bg-muted rounded">
 				<div className="flex items-center gap-2">
 					<Icon size={16} />
-					<div>{project.name}</div>
+					<div>{project.title}</div>
 				</div>
 
 				<Button

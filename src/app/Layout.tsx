@@ -45,7 +45,7 @@ export const useEntityLabel = (location: string) => {
 
 	const todo = data?.todos?.[0];
 	const project = data?.projects?.[0];
-	const entityLabel = todo ? todo.title : project ? project.name : undefined;
+	const entityLabel = todo ? todo.title : project ? project.title : undefined;
 	return { entityLabel, isLoading };
 };
 
