@@ -11,14 +11,21 @@ import {
 	StatusDropdown,
 } from './TodoInputs';
 
-export const TodoForm = ({ onSubmit }: { onSubmit?: () => void }) => {
+export interface TodoDefaults {
+	projectId: string;
+}
+
+export const TodoForm = ({
+	defaults,
+	onSubmit,
+}: { defaults?: TodoDefaults; onSubmit?: () => void }) => {
 	const { data, isLoading } = db.useQuery({ projects: {} });
 	const projects = data?.projects || [];
 
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [dueDate, setDueDate] = useState<string | undefined>(undefined);
-	const [projectId, setProjectId] = useState('');
+	const [projectId, setProjectId] = useState(defaults?.projectId || '');
 	const [status, setStatus] = useState('todo');
 	const [priority, setPriority] = useState<string | undefined>(undefined);
 

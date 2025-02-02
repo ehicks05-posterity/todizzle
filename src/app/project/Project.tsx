@@ -1,9 +1,13 @@
 import { db } from '@/components/lib/db';
 import { Layout } from '../Layout';
+import { TodoDialog } from '../TodoDialog';
+import { TodoRow } from '../todos/TodoRow';
 import { IconDropdown } from './ProjectInputs';
 
 export function Project({ id }: { id: string }) {
-	const { data } = db.useQuery({ projects: { $: { where: { id } }, todos: {} } });
+	const { data } = db.useQuery({
+		projects: { $: { where: { id } }, todos: { project: {} } },
+	});
 
 	const project = data?.projects[0];
 	if (!project) return null;
@@ -50,6 +54,20 @@ export function Project({ id }: { id: string }) {
 							await db.transact(db.tx.projects[project.id].update({ icon }));
 						}}
 					/>
+				</div>
+
+				<div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+					<div className="w-full flex flex-col p-2">
+						{project.todos.map((todo) => (
+							<TodoRow key={todo.id} todo={todo} />
+						))}
+						{project.todos.length === 0 && (
+							<div className="grid gap-8">
+								This project has 0 todos.
+								<TodoDialog defaults={{ projectId: project.id }} />
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 		</Layout>

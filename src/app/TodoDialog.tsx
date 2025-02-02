@@ -10,9 +10,9 @@ import {
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
-import { TodoForm } from './todos/TodoForm';
+import { type TodoDefaults, TodoForm } from './todos/TodoForm';
 
-export function TodoDialog() {
+export function TodoDialog({ defaults }: { defaults?: TodoDefaults }) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -31,7 +31,7 @@ export function TodoDialog() {
 					</DialogDescription>
 				</DialogHeader>
 
-				<TodoForm onSubmit={() => setIsOpen(false)} />
+				<TodoForm defaults={defaults} onSubmit={() => setIsOpen(false)} />
 
 				{/* <DialogFooter></DialogFooter> */}
 			</DialogContent>
