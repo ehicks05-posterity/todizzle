@@ -1,4 +1,4 @@
-import Page from './todos/page';
+import Page from './todos/Todos';
 
 export const Main = () => {
 	return <Page />;

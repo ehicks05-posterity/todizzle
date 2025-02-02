@@ -2,6 +2,7 @@ import { db } from '@/components/lib/db';
 import type { Todo } from '@/components/lib/types';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
+import { Layout } from '../Layout';
 import { STATUSES } from '../constants';
 
 export const DueDate = ({ date: _date }: { date: string }) => {
@@ -28,7 +29,7 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 	);
 };
 
-export const Playground = () => {
+export default function Page() {
 	const { isLoading: isLoadingTodos, data: todos } = db.useQuery({
 		todos: { project: {} },
 	});
@@ -38,10 +39,19 @@ export const Playground = () => {
 	}
 
 	return (
-		<div className="w-full flex flex-col p-2">
-			{todos?.todos.map((todo) => (
-				<TodoRow key={todo.id} todo={todo} />
-			))}
-		</div>
+		<Layout>
+			<div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+				<div className="w-full flex flex-col p-2">
+					{todos?.todos.map((todo) => (
+						<TodoRow key={todo.id} todo={todo} />
+					))}
+				</div>
+			</div>
+			<div className="grid auto-rows-min gap-4 md:grid-cols-3">
+				<div className="aspect-video rounded-xl bg-muted/50" />
+				<div className="aspect-video rounded-xl bg-muted/50" />
+				<div className="aspect-video rounded-xl bg-muted/50" />
+			</div>
+		</Layout>
 	);
-};
+}

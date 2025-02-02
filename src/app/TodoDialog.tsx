@@ -1,4 +1,3 @@
-import type { Project } from '@/components/lib/types';
 import {
 	Dialog,
 	DialogContent,
@@ -13,7 +12,7 @@ import { PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import { TodoForm } from './todos/TodoForm';
 
-export function TodoDialog({ project }: { project?: Project }) {
+export function TodoDialog() {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -26,7 +25,7 @@ export function TodoDialog({ project }: { project?: Project }) {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>{project ? 'Edit' : 'Create'} todo</DialogTitle>
+					<DialogTitle>Create todo</DialogTitle>
 					<DialogDescription>
 						Create a new todo here. Click save when you're done.
 					</DialogDescription>

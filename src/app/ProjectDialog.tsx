@@ -1,5 +1,4 @@
 import { db } from '@/components/lib/db';
-import type { Project } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -18,20 +17,18 @@ import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { IconDropdown } from './IconDropdown';
 
-export function ProjectDialog({ project }: { project?: Project }) {
+export function ProjectDialog() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [name, setName] = useState(project?.name || '');
-	const [icon, setIcon] = useState(project?.icon || 'circle');
+	const [name, setName] = useState('');
+	const [icon, setIcon] = useState('circle');
 
 	const handleSave = async () => {
-		const projectId = project?.id || id();
+		const projectId = id();
 		await db.transact(db.tx.projects[projectId].update({ name, icon }));
-		setName(project?.name || '');
-		setIcon(project?.icon || 'circle');
 		setIsOpen(false);
 	};
 
-	const disableSave = name.length === 0;
+	const isValid = name.length > 0;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -43,7 +40,7 @@ export function ProjectDialog({ project }: { project?: Project }) {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>{project ? 'Edit' : 'Create'} project</DialogTitle>
+					<DialogTitle>Create project</DialogTitle>
 					<DialogDescription>
 						Add a new project here. Click save when you're done.
 					</DialogDescription>
@@ -74,7 +71,7 @@ export function ProjectDialog({ project }: { project?: Project }) {
 						type="button"
 						className="p-2 border border-black"
 						onClick={handleSave}
-						disabled={disableSave}
+						disabled={!isValid}
 					>
 						Save changes
 					</Button>
