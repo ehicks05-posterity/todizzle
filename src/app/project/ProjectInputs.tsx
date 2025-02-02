@@ -25,13 +25,11 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 
 	return (
 		<DropdownMenu>
-			<span>
-				<DropdownMenuTrigger asChild>
-					<Button variant="ghost" className="flex items-center gap-1">
-						<Icon />
-					</Button>
-				</DropdownMenuTrigger>
-			</span>
+			<DropdownMenuTrigger asChild>
+				<Button variant="ghost" className="p-0 w-fit">
+					<Icon />
+				</Button>
+			</DropdownMenuTrigger>
 			<DropdownMenuContent>{ICON_OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
 	);

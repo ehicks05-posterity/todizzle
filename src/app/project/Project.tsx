@@ -13,7 +13,7 @@ export function Project({ id }: { id: string }) {
 
 	return (
 		<div className="grid gap-8">
-			<div className="grid grid-cols-2 gap-4 max-w-sm -mb-6">
+			<div className="grid grid-cols-2 gap-4 max-w-sm -mb-8">
 				<IconDropdown
 					icon={project.icon}
 					setIcon={async (icon: string) => {

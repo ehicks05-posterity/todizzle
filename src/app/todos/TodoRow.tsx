@@ -2,7 +2,7 @@ import type { Todo } from '@/components/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
-import { STATUSES } from '../constants';
+import { ICONS, STATUSES } from '../constants';
 
 export const DueDate = ({ date: _date }: { date: string }) => {
 	const date = format(parseISO(_date), 'PP');
@@ -11,6 +11,7 @@ export const DueDate = ({ date: _date }: { date: string }) => {
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
 	const status = STATUSES[todo.status as keyof typeof STATUSES];
+	const ProjectIcon = ICONS[todo.project?.icon as keyof typeof ICONS];
 
 	return (
 		<Link href={`/todos/${todo.id}`}>
@@ -23,7 +24,10 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 					<div>{todo.title}</div>
 				</div>
 				{todo.project?.title && (
-					<Badge variant="secondary">{todo.project.title}</Badge>
+					<Badge variant="secondary" className="flex gap-2">
+						<ProjectIcon size={14} />
+						{todo.project.title}
+					</Badge>
 				)}
 				{todo.dueDate && <DueDate date={todo.dueDate.toString()} />}
 			</div>
