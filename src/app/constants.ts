@@ -46,7 +46,7 @@ export const STATUSES = {
 	complete: {
 		label: 'Complete',
 		icon: CircleCheckBig,
-		color: 'stroke-[2.5] text-green-500 dark:text-green-400',
+		color: 'stroke-[2.5] text-violet-500 dark:text-violet-400',
 	},
 	canceled: {
 		label: 'Canceled',
