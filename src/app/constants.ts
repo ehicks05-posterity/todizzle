@@ -33,30 +33,35 @@ export const STATUSES = {
 		icon: ChartPie,
 		color: 'stroke-[2.5] text-yellow-400 dark:text-yellow-300',
 		order: 1,
+		isActive: true,
 	},
 	todo: {
 		label: 'Todo',
 		icon: Circle,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
 		order: 2,
+		isActive: true,
 	},
 	backlog: {
 		label: 'Backlog',
 		icon: CircleDashed,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
 		order: 3,
+		isActive: false,
 	},
 	complete: {
 		label: 'Complete',
 		icon: CircleCheckBig,
 		color: 'stroke-[2.5] text-violet-500 dark:text-violet-400',
 		order: 4,
+		isActive: false,
 	},
 	canceled: {
 		label: 'Canceled',
 		icon: CircleX,
 		color: 'stroke-[2.5] text-neutral-400 dark:text-neutral-500',
 		order: 5,
+		isActive: false,
 	},
 };
 
