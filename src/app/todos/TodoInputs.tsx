@@ -24,16 +24,28 @@ import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({
 	status: statusName,
-	setStatus,
+	variant = 'default',
+	idOrHandler,
 }: {
 	status: string;
-	setStatus: (status: string) => void;
+	variant?: 'default' | 'icon';
+	idOrHandler: string | ((status: string) => void);
 }) => {
 	const status = STATUSES[statusName as keyof typeof STATUSES];
-	const Icon = status.icon;
+
+	const handleClick =
+		typeof idOrHandler === 'string'
+			? (status: string) => db.transact(db.tx.todos[idOrHandler].update({ status }))
+			: idOrHandler;
 
 	const OPTIONS = Object.entries(STATUSES).map(([name, status]) => (
-		<DropdownMenuItem key={name} onClick={() => setStatus(name)}>
+		<DropdownMenuItem
+			key={name}
+			onClick={(e) => {
+				e.preventDefault();
+				handleClick(name);
+			}}
+		>
 			<span className="flex items-center gap-2">
 				<status.icon size={18} className={status.color} />
 				{status.label}
@@ -44,8 +56,13 @@ export const StatusDropdown = ({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" className="flex items-center gap-2 justify-start">
-					<Icon size={18} className={status.color} /> {status.label}
+				<Button
+					variant="ghost"
+					size={variant === 'icon' ? 'icon' : undefined}
+					className="flex items-center gap-2 justify-center"
+				>
+					<status.icon size={18} className={status.color} />
+					{variant === 'default' && status.label}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>

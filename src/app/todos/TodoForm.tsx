@@ -81,7 +81,7 @@ export const TodoForm = ({
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="status">Status</Label>
-				<StatusDropdown status={status} setStatus={setStatus} />
+				<StatusDropdown status={status} idOrHandler={setStatus} />
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="status">Status</Label>

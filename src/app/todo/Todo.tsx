@@ -51,7 +51,7 @@ export function Todo({ id }: { id: string }) {
 			<div className="grid grid-cols-2 gap-4 max-w-sm">
 				<StatusDropdown
 					status={todo.status}
-					setStatus={async (status: string) => {
+					idOrHandler={async (status: string) => {
 						await db.transact(db.tx.todos[todo.id].update({ status }));
 					}}
 				/>

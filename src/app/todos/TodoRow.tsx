@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
 import { ICONS, PRIORITIES, STATUSES } from '../constants';
+import { StatusDropdown } from './TodoInputs';
 
 export const DueDate = ({ date: _date }: { date: string }) => {
 	const date = format(parseISO(_date), 'PP');
@@ -23,7 +24,11 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 			>
 				<div className="flex items-center gap-2">
 					<priority.icon className={priority.color} size={16} />
-					<status.icon className={status.color} size={16} />
+					<StatusDropdown
+						status={todo.status}
+						idOrHandler={todo.id}
+						variant="icon"
+					/>
 					<div>{todo.title}</div>
 				</div>
 				{todo.project?.title && (
