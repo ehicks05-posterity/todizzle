@@ -56,7 +56,7 @@ export function Todo({ id }: { id: string }) {
 					}}
 				/>
 				<PriorityDropdown
-					priority={todo.priority}
+					priority={todo.priority || 'none'}
 					setPriority={async (priority?: string) => {
 						await db.transact(db.tx.todos[todo.id].update({ priority }));
 					}}

@@ -27,7 +27,7 @@ export const TodoForm = ({
 	const [dueDate, setDueDate] = useState<string | undefined>(undefined);
 	const [projectId, setProjectId] = useState(defaults?.projectId || '');
 	const [status, setStatus] = useState('todo');
-	const [priority, setPriority] = useState<string | undefined>(undefined);
+	const [priority, setPriority] = useState('none');
 
 	if (isLoading) return null;
 

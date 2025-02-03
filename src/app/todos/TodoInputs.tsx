@@ -91,21 +91,18 @@ export const PriorityDropdown = ({
 	priority: priorityName,
 	setPriority,
 }: {
-	priority?: string;
-	setPriority: (priority?: string) => void;
+	priority: string;
+	setPriority: (priority: string) => void;
 }) => {
-	const priority =
-		PRIORITIES[priorityName as keyof typeof PRIORITIES] || PRIORITIES.none;
-	const label = !priorityName ? 'Priority' : priority.label;
-	const color = !priorityName
-		? 'text-neutral-500 dark:text-neutral-400'
-		: priority.color;
+	const priority = PRIORITIES[priorityName];
+	const label = priorityName === 'none' ? 'Priority' : priority.label;
+	const color =
+		priorityName === 'none'
+			? 'text-neutral-500 dark:text-neutral-400'
+			: priority.color;
 
 	const OPTIONS = Object.entries(PRIORITIES).map(([name, priority]) => (
-		<DropdownMenuItem
-			key={name}
-			onClick={() => setPriority(name === 'none' ? undefined : name)}
-		>
+		<DropdownMenuItem key={name} onClick={() => setPriority(name)}>
 			<span className="flex items-center gap-2">
 				<priority.icon size={18} className={priority.color} />
 				{priority.label}
@@ -118,7 +115,7 @@ export const PriorityDropdown = ({
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" className="flex items-center gap-2 justify-start">
 					<priority.icon size={18} className={color} />
-					<span className={!priorityName ? color : ''}>{label}</span>
+					<span className={priorityName === 'none' ? color : ''}>{label}</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>

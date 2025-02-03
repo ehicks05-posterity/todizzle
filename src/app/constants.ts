@@ -7,11 +7,13 @@ import {
 	CircleX,
 	Ellipsis,
 	Hexagon,
+	type LucideProps,
 	Octagon,
 	Pentagon,
 	Square,
 	Triangle,
 } from 'lucide-react';
+import type { IconType } from 'react-icons/lib';
 import {
 	PiCellSignalHighFill,
 	PiCellSignalLowFill,
@@ -27,7 +29,17 @@ export const ICONS = {
 	octagon: Octagon,
 } as const;
 
-export const STATUSES = {
+interface Status {
+	label: string;
+	icon: React.ForwardRefExoticComponent<
+		Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+	>;
+	color: string;
+	order: number;
+	isActive: boolean;
+}
+
+export const STATUSES: Record<string, Status> = {
 	backlog: {
 		label: 'Backlog',
 		icon: CircleDashed,
@@ -65,30 +77,46 @@ export const STATUSES = {
 	},
 };
 
-export const PRIORITIES = {
+interface Priority {
+	label: string;
+	icon:
+		| React.ForwardRefExoticComponent<
+				Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+		  >
+		| IconType;
+	color: string;
+	order: number;
+}
+
+export const PRIORITIES: Record<string, Priority> = {
 	none: {
 		label: 'No Priority',
 		icon: Ellipsis,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
+		order: 5,
 	},
 	low: {
 		label: 'Low',
 		icon: PiCellSignalLowFill,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
+		order: 4,
 	},
 	medium: {
 		label: 'Medium',
 		icon: PiCellSignalMediumFill,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
+		order: 3,
 	},
 	high: {
 		label: 'High',
 		icon: PiCellSignalHighFill,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
+		order: 2,
 	},
 	critical: {
 		label: 'Critical',
 		icon: AlertCircle,
 		color: 'stroke-[2.5] text-red-500 dark:text-red-400',
+		order: 1,
 	},
 };
