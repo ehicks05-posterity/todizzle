@@ -7,7 +7,7 @@ export function TodoTable({ todos }: { todos: Todo[] }) {
 	const todosByStatus = groupBy(todos, 'status');
 
 	return (
-		<div className="w-full flex flex-col p-2">
+		<div className="w-full flex flex-col p-2 gap-2">
 			{Object.entries(todosByStatus)
 				.sort(
 					([o1], [o2]) =>
@@ -18,7 +18,7 @@ export function TodoTable({ todos }: { todos: Todo[] }) {
 					const status = STATUSES[statusName as keyof typeof STATUSES];
 					return (
 						<div key={statusName}>
-							<div className="flex items-center gap-2">
+							<div className="flex items-center gap-2 p-1">
 								{status.label}
 								<status.icon className={status.color} size={16} />
 							</div>

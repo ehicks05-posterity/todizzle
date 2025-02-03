@@ -2,7 +2,7 @@ import type { Todo } from '@/components/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
-import { ICONS, STATUSES } from '../constants';
+import { ICONS, PRIORITIES, STATUSES } from '../constants';
 
 export const DueDate = ({ date: _date }: { date: string }) => {
 	const date = format(parseISO(_date), 'PP');
@@ -11,6 +11,8 @@ export const DueDate = ({ date: _date }: { date: string }) => {
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
 	const status = STATUSES[todo.status as keyof typeof STATUSES];
+	const priority =
+		PRIORITIES[todo.priority as keyof typeof PRIORITIES] || PRIORITIES.none;
 	const ProjectIcon = ICONS[todo.project?.icon as keyof typeof ICONS];
 
 	return (
@@ -20,6 +22,7 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 				key={todo.id}
 			>
 				<div className="flex items-center gap-2">
+					<priority.icon className={priority.color} size={16} />
 					<status.icon className={status.color} size={16} />
 					<div>{todo.title}</div>
 				</div>

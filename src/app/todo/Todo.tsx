@@ -17,7 +17,7 @@ export function Todo({ id }: { id: string }) {
 	if (!todo) return null;
 
 	return (
-		<div className="grid gap-4">
+		<div className="grid gap-4 p-4 bg-muted/50 rounded-lg">
 			<div
 				contentEditable
 				className="text-3xl font-bold bg-transparent outline-none"
