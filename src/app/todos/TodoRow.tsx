@@ -11,8 +11,7 @@ export const DueDate = ({ date: _date }: { date: string }) => {
 };
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
-	const priority =
-		PRIORITIES[todo.priority as keyof typeof PRIORITIES] || PRIORITIES.none;
+	const priority = PRIORITIES[todo.priority];
 	const ProjectIcon = ICONS[todo.project?.icon as keyof typeof ICONS];
 
 	return (

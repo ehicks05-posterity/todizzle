@@ -1,4 +1,5 @@
 import { db } from '@/components/lib/db';
+import type { Priority } from '@/components/lib/types';
 import {
 	DueDatePicker,
 	PriorityDropdown,
@@ -51,8 +52,8 @@ export function Todo({ id }: { id: string }) {
 			<div className="grid grid-cols-2 gap-4 max-w-sm">
 				<StatusDropdown status={todo.status} idOrHandler={todo.id} />
 				<PriorityDropdown
-					priority={todo.priority || 'none'}
-					setPriority={async (priority?: string) => {
+					priority={todo.priority}
+					setPriority={async (priority: Priority) => {
 						await db.transact(db.tx.todos[todo.id].update({ priority }));
 					}}
 				/>

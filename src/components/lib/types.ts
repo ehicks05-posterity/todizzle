@@ -6,3 +6,4 @@ export type Todo = InstaQLEntity<AppSchema, 'todos', { project: {} }>;
 export type Project = InstaQLEntity<AppSchema, 'projects'>;
 
 export type Status = 'backlog' | 'todo' | 'inProgress' | 'done' | 'canceled';
+export type Priority = 'none' | 'low' | 'medium' | 'high' | 'urgent';

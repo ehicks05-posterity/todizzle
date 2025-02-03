@@ -1,4 +1,4 @@
-import type { Status } from '@/components/lib/types';
+import type { Priority, Status } from '@/components/lib/types';
 import {
 	AlertCircle,
 	ChartPie,
@@ -88,40 +88,46 @@ export const STATUSES: Record<Status, StatusMeta> = {
 	},
 } as const;
 
-interface Priority {
+interface PriorityMeta {
+	name: Priority; // included for use in Object.entries situations
 	label: string;
 	icon: LucideIcon | IconType;
 	color: string;
 	order: number;
 }
 
-export const PRIORITIES: Record<string, Priority> = {
+export const PRIORITIES: Record<Priority, PriorityMeta> = {
 	none: {
+		name: 'none',
 		label: 'No Priority',
 		icon: Ellipsis,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
 		order: 5,
 	},
 	low: {
+		name: 'low',
 		label: 'Low',
 		icon: PiCellSignalLowFill,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
 		order: 4,
 	},
 	medium: {
+		name: 'medium',
 		label: 'Medium',
 		icon: PiCellSignalMediumFill,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
 		order: 3,
 	},
 	high: {
+		name: 'high',
 		label: 'High',
 		icon: PiCellSignalHighFill,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
 		order: 2,
 	},
-	critical: {
-		label: 'Critical',
+	urgent: {
+		name: 'urgent',
+		label: 'Urgent',
 		icon: AlertCircle,
 		color: 'stroke-[2.5] text-red-500 dark:text-red-400',
 		order: 1,

@@ -1,5 +1,5 @@
 import { i, init } from '@instantdb/react';
-import type { Status } from './types';
+import type { Priority, Status } from './types';
 
 const _schema = i.schema({
 	entities: {
@@ -11,7 +11,7 @@ const _schema = i.schema({
 			description: i.string(),
 			dueDate: i.date(),
 			status: i.string<Status>(),
-			priority: i.string(),
+			priority: i.string<Priority>(),
 		}),
 		projects: i.entity({
 			title: i.string(),

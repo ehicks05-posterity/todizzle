@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
-import type { Project, Status, Todo } from '../../components/lib/types';
+import type { Priority, Project, Status, Todo } from '../../components/lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({
@@ -38,7 +38,7 @@ export const StatusDropdown = ({
 			? (status: Status) => db.transact(db.tx.todos[idOrHandler].update({ status }))
 			: idOrHandler;
 
-	const OPTIONS = Object.entries(STATUSES).map(([, status]) => (
+	const OPTIONS = Object.values(STATUSES).map((status) => (
 		<DropdownMenuItem
 			key={status.name}
 			onClick={(e) => {
@@ -105,21 +105,20 @@ export const DueDatePicker = ({
 };
 
 export const PriorityDropdown = ({
-	priority: priorityName,
+	priority,
 	setPriority,
 }: {
-	priority: string;
-	setPriority: (priority: string) => void;
+	priority: Priority;
+	setPriority: (priority: Priority) => void;
 }) => {
-	const priority = PRIORITIES[priorityName];
-	const label = priorityName === 'none' ? 'Priority' : priority.label;
+	const priorityMeta = PRIORITIES[priority];
 	const color =
-		priorityName === 'none'
+		priority === 'none'
 			? 'text-neutral-500 dark:text-neutral-400'
-			: priority.color;
+			: priorityMeta.color;
 
-	const OPTIONS = Object.entries(PRIORITIES).map(([name, priority]) => (
-		<DropdownMenuItem key={name} onClick={() => setPriority(name)}>
+	const OPTIONS = Object.values(PRIORITIES).map((priority) => (
+		<DropdownMenuItem key={priority.name} onClick={() => setPriority(priority.name)}>
 			<span className="flex items-center gap-2">
 				<priority.icon size={18} className={priority.color} />
 				{priority.label}
@@ -131,8 +130,10 @@ export const PriorityDropdown = ({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" className="flex items-center gap-2 justify-start">
-					<priority.icon size={18} className={color} />
-					<span className={priorityName === 'none' ? color : ''}>{label}</span>
+					<priorityMeta.icon size={18} className={color} />
+					<span className={priority === 'none' ? color : ''}>
+						{priority === 'none' ? 'Priority' : priorityMeta.label}
+					</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
