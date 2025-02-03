@@ -26,7 +26,7 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" className="p-0 w-fit">
+				<Button variant="outline" size="icon">
 					<Icon />
 				</Button>
 			</DropdownMenuTrigger>
