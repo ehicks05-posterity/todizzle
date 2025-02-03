@@ -106,10 +106,12 @@ export const DueDatePicker = ({
 
 export const PriorityDropdown = ({
 	priority,
-	setPriority,
+	variant = 'default',
+	idOrHandler,
 }: {
 	priority: Priority;
-	setPriority: (priority: Priority) => void;
+	variant?: 'default' | 'icon';
+	idOrHandler: string | ((priority: Priority) => void);
 }) => {
 	const priorityMeta = PRIORITIES[priority];
 	const color =
@@ -117,8 +119,20 @@ export const PriorityDropdown = ({
 			? 'text-neutral-500 dark:text-neutral-400'
 			: priorityMeta.color;
 
+	const handleClick =
+		typeof idOrHandler === 'string'
+			? (priority: Priority) =>
+					db.transact(db.tx.todos[idOrHandler].update({ priority }))
+			: idOrHandler;
+
 	const OPTIONS = Object.values(PRIORITIES).map((priority) => (
-		<DropdownMenuItem key={priority.name} onClick={() => setPriority(priority.name)}>
+		<DropdownMenuItem
+			key={priority.name}
+			onClick={(e) => {
+				e.preventDefault();
+				handleClick(priority.name);
+			}}
+		>
 			<span className="flex items-center gap-2">
 				<priority.icon size={18} className={priority.color} />
 				{priority.label}
@@ -129,11 +143,17 @@ export const PriorityDropdown = ({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" className="flex items-center gap-2 justify-start">
+				<Button
+					variant="ghost"
+					size={variant === 'icon' ? 'icon' : undefined}
+					className="flex items-center gap-2 justify-center"
+				>
 					<priorityMeta.icon size={18} className={color} />
-					<span className={priority === 'none' ? color : ''}>
-						{priority === 'none' ? 'Priority' : priorityMeta.label}
-					</span>
+					{variant === 'default' && (
+						<span className={priority === 'none' ? color : ''}>
+							{priority === 'none' ? 'Priority' : priorityMeta.label}
+						</span>
+					)}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>

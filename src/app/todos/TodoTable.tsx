@@ -66,8 +66,12 @@ export function TodoTable({ todos: _todos }: { todos: Todo[] }) {
 					return (
 						<div key={groupName}>
 							<div className="flex items-center gap-2 p-1 border-b mt-2">
+								<Button size="icon" className="invisible" />
+								<grouping.icon
+									className={`ml-3.5 mr-2 ${grouping.color}`}
+									size={16}
+								/>
 								{grouping.label}
-								<grouping.icon className={grouping.color} size={16} />
 							</div>
 							{todosInGroup.map((todo) => (
 								<TodoRow key={todo.id} todo={todo} />
