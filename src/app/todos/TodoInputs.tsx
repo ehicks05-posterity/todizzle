@@ -19,31 +19,31 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
-import type { Project, Todo } from '../../components/lib/types';
+import type { Project, Status, Todo } from '../../components/lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({
-	status: statusName,
+	status,
 	variant = 'default',
 	idOrHandler,
 }: {
-	status: string;
+	status: Status;
 	variant?: 'default' | 'icon';
-	idOrHandler: string | ((status: string) => void);
+	idOrHandler: string | ((status: Status) => void);
 }) => {
-	const status = STATUSES[statusName as keyof typeof STATUSES];
+	const statusMeta = STATUSES[status];
 
 	const handleClick =
 		typeof idOrHandler === 'string'
-			? (status: string) => db.transact(db.tx.todos[idOrHandler].update({ status }))
+			? (status: Status) => db.transact(db.tx.todos[idOrHandler].update({ status }))
 			: idOrHandler;
 
-	const OPTIONS = Object.entries(STATUSES).map(([name, status]) => (
+	const OPTIONS = Object.entries(STATUSES).map(([, status]) => (
 		<DropdownMenuItem
-			key={name}
+			key={status.name}
 			onClick={(e) => {
 				e.preventDefault();
-				handleClick(name);
+				handleClick(status.name);
 			}}
 		>
 			<span className="flex items-center gap-2">
@@ -61,8 +61,8 @@ export const StatusDropdown = ({
 					size={variant === 'icon' ? 'icon' : undefined}
 					className="flex items-center gap-2 justify-center"
 				>
-					<status.icon size={18} className={status.color} />
-					{variant === 'default' && status.label}
+					<statusMeta.icon size={18} className={statusMeta.color} />
+					{variant === 'default' && statusMeta.label}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>

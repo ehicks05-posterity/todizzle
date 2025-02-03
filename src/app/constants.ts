@@ -1,3 +1,4 @@
+import type { Status } from '@/components/lib/types';
 import {
 	AlertCircle,
 	ChartPie,
@@ -21,6 +22,10 @@ import {
 	PiCellSignalMediumFill,
 } from 'react-icons/pi';
 
+type LucideIcon = React.ForwardRefExoticComponent<
+	Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+>;
+
 export const ICONS = {
 	circle: Circle,
 	square: Square,
@@ -31,18 +36,18 @@ export const ICONS = {
 	lightBult: Lightbulb,
 } as const;
 
-interface Status {
+interface StatusMeta {
+	name: Status; // included for use in Object.entries situations
 	label: string;
-	icon: React.ForwardRefExoticComponent<
-		Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
-	>;
+	icon: LucideIcon;
 	color: string;
 	order: number;
 	isActive: boolean;
 }
 
-export const STATUSES: Record<string, Status> = {
+export const STATUSES: Record<Status, StatusMeta> = {
 	backlog: {
+		name: 'backlog',
 		label: 'Backlog',
 		icon: CircleDashed,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
@@ -50,6 +55,7 @@ export const STATUSES: Record<string, Status> = {
 		isActive: false,
 	},
 	todo: {
+		name: 'todo',
 		label: 'Todo',
 		icon: Circle,
 		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
@@ -57,6 +63,7 @@ export const STATUSES: Record<string, Status> = {
 		isActive: true,
 	},
 	inProgress: {
+		name: 'inProgress',
 		label: 'In Progress',
 		icon: ChartPie,
 		color: 'stroke-[2.5] text-yellow-400 dark:text-yellow-300',
@@ -64,6 +71,7 @@ export const STATUSES: Record<string, Status> = {
 		isActive: true,
 	},
 	done: {
+		name: 'done',
 		label: 'Done',
 		icon: CircleCheckBig,
 		color: 'stroke-[2.5] text-violet-500 dark:text-violet-400',
@@ -71,21 +79,18 @@ export const STATUSES: Record<string, Status> = {
 		isActive: false,
 	},
 	canceled: {
+		name: 'canceled',
 		label: 'Canceled',
 		icon: CircleX,
 		color: 'stroke-[2.5] text-neutral-400 dark:text-neutral-500',
 		order: 5,
 		isActive: false,
 	},
-};
+} as const;
 
 interface Priority {
 	label: string;
-	icon:
-		| React.ForwardRefExoticComponent<
-				Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
-		  >
-		| IconType;
+	icon: LucideIcon | IconType;
 	color: string;
 	order: number;
 }

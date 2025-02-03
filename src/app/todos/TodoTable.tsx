@@ -1,22 +1,22 @@
 import type { Todo } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
-import { groupBy } from 'lodash-es';
 import { useState } from 'react';
 import { PRIORITIES, STATUSES } from '../constants';
 import { TodoRow } from './TodoRow';
 
-export function TodoTable({ todos }: { todos: Todo[] }) {
+export function TodoTable({ todos: _todos }: { todos: Todo[] }) {
 	const [statusToggle, setStatusToggle] = useState('all');
 	const [orderField, setOrderField] = useState<'status' | 'priority'>('status');
 
-	const statusFilteredTodos = todos.filter((todo) => {
-		const status = STATUSES[todo.status as keyof typeof STATUSES];
+	const todos = _todos.filter((todo) => {
+		const status = STATUSES[todo.status];
 		return statusToggle === 'all' || (statusToggle === 'active' && status.isActive);
 	});
 
-	const todosByStatus = groupBy(statusFilteredTodos, 'status');
-	const todosByPriority = groupBy(statusFilteredTodos, 'priority');
-	const groupedTodos = orderField === 'status' ? todosByStatus : todosByPriority;
+	const groupedTodos =
+		orderField === 'status'
+			? Object.groupBy(todos, (todo) => todo.status)
+			: Object.groupBy(todos, (todo) => todo.priority);
 
 	return (
 		<div className="w-full flex flex-col p-2 gap-2">
@@ -52,23 +52,24 @@ export function TodoTable({ todos }: { todos: Todo[] }) {
 				</Button>
 			</div>
 			{Object.entries(groupedTodos)
-				.sort(([o1], [o2]) =>
+				.sort(([, arr1], [, arr2]) =>
 					orderField === 'status'
-						? STATUSES[o1].order - STATUSES[o2].order
-						: PRIORITIES[o1]?.order - PRIORITIES[o2]?.order,
+						? STATUSES[arr1[0].status].order - STATUSES[arr2[0].status].order
+						: PRIORITIES[arr1[0].priority].order -
+							PRIORITIES[arr2[0].priority].order,
 				)
-				.map(([groupName, todosInStatus]) => {
+				.map(([groupName, todosInGroup]) => {
 					const grouping =
 						orderField === 'status'
-							? STATUSES[groupName]
-							: PRIORITIES[groupName] || PRIORITIES.none;
+							? STATUSES[todosInGroup[0].status]
+							: PRIORITIES[todosInGroup[0].priority] || PRIORITIES.none;
 					return (
 						<div key={groupName}>
 							<div className="flex items-center gap-2 p-1 border-b mt-2">
 								{grouping.label}
 								<grouping.icon className={grouping.color} size={16} />
 							</div>
-							{todosInStatus.map((todo) => (
+							{todosInGroup.map((todo) => (
 								<TodoRow key={todo.id} todo={todo} />
 							))}
 						</div>

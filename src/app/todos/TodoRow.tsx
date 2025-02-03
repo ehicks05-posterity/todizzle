@@ -2,7 +2,7 @@ import type { Todo } from '@/components/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
-import { ICONS, PRIORITIES, STATUSES } from '../constants';
+import { ICONS, PRIORITIES } from '../constants';
 import { StatusDropdown } from './TodoInputs';
 
 export const DueDate = ({ date: _date }: { date: string }) => {
@@ -11,7 +11,6 @@ export const DueDate = ({ date: _date }: { date: string }) => {
 };
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
-	const status = STATUSES[todo.status as keyof typeof STATUSES];
 	const priority =
 		PRIORITIES[todo.priority as keyof typeof PRIORITIES] || PRIORITIES.none;
 	const ProjectIcon = ICONS[todo.project?.icon as keyof typeof ICONS];

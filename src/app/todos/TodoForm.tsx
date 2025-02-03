@@ -1,4 +1,5 @@
 import { db } from '@/components/lib/db';
+import type { Status } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,7 +27,7 @@ export const TodoForm = ({
 	const [description, setDescription] = useState('');
 	const [dueDate, setDueDate] = useState<string | undefined>(undefined);
 	const [projectId, setProjectId] = useState(defaults?.projectId || '');
-	const [status, setStatus] = useState('todo');
+	const [status, setStatus] = useState<Status>('todo');
 	const [priority, setPriority] = useState('none');
 
 	if (isLoading) return null;

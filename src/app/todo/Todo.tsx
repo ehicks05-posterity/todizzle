@@ -49,12 +49,7 @@ export function Todo({ id }: { id: string }) {
 				{todo.description || 'Add a description...'}
 			</div>
 			<div className="grid grid-cols-2 gap-4 max-w-sm">
-				<StatusDropdown
-					status={todo.status}
-					idOrHandler={async (status: string) => {
-						await db.transact(db.tx.todos[todo.id].update({ status }));
-					}}
-				/>
+				<StatusDropdown status={todo.status} idOrHandler={todo.id} />
 				<PriorityDropdown
 					priority={todo.priority || 'none'}
 					setPriority={async (priority?: string) => {
