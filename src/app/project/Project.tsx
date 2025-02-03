@@ -12,8 +12,8 @@ export function Project({ id }: { id: string }) {
 	if (!project) return null;
 
 	return (
-		<div className="grid gap-8">
-			<div className="grid grid-cols-2 gap-4 max-w-sm -mb-8">
+		<div className="grid gap-4">
+			<div className="grid grid-cols-2 gap-4 max-w-sm -mb-4">
 				<IconDropdown
 					icon={project.icon}
 					setIcon={async (icon: string) => {
@@ -23,7 +23,7 @@ export function Project({ id }: { id: string }) {
 			</div>
 			<div
 				contentEditable
-				className="text-2xl bg-transparent outline-none"
+				className="text-3xl font-bold bg-transparent outline-none"
 				onBlur={async (e) => {
 					const value = e.target.textContent;
 					if (value) {

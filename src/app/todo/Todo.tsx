@@ -17,10 +17,10 @@ export function Todo({ id }: { id: string }) {
 	if (!todo) return null;
 
 	return (
-		<div className="grid gap-8">
+		<div className="grid gap-4">
 			<div
 				contentEditable
-				className="text-2xl bg-transparent outline-none"
+				className="text-3xl font-bold bg-transparent outline-none"
 				onBlur={async (e) => {
 					const value = e.target.textContent;
 					if (value) {
