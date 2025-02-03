@@ -28,12 +28,12 @@ export const ICONS = {
 } as const;
 
 export const STATUSES = {
-	inProgress: {
-		label: 'In Progress',
-		icon: ChartPie,
-		color: 'stroke-[2.5] text-yellow-400 dark:text-yellow-300',
-		order: 1,
-		isActive: true,
+	backlog: {
+		label: 'Backlog',
+		icon: CircleDashed,
+		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
+		order: 3,
+		isActive: false,
 	},
 	todo: {
 		label: 'Todo',
@@ -42,12 +42,12 @@ export const STATUSES = {
 		order: 2,
 		isActive: true,
 	},
-	backlog: {
-		label: 'Backlog',
-		icon: CircleDashed,
-		color: 'stroke-[2.5] text-neutral-500 dark:text-neutral-300',
-		order: 3,
-		isActive: false,
+	inProgress: {
+		label: 'In Progress',
+		icon: ChartPie,
+		color: 'stroke-[2.5] text-yellow-400 dark:text-yellow-300',
+		order: 1,
+		isActive: true,
 	},
 	complete: {
 		label: 'Complete',
