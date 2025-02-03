@@ -35,7 +35,7 @@ export const TodoForm = ({
 	const handleSave = async () => {
 		const todoId = id();
 		await db.transact(
-			db.tx.todos[todoId].update({ title, description, dueDate, status }),
+			db.tx.todos[todoId].update({ title, description, dueDate, status, priority }),
 		);
 
 		if (projectId) {
