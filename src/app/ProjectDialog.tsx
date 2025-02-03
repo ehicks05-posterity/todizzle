@@ -85,7 +85,7 @@ export function ProjectDialog() {
 						onClick={handleSave}
 						disabled={!isValid}
 					>
-						Save changes
+						Save
 					</Button>
 				</DialogFooter>
 			</DialogContent>

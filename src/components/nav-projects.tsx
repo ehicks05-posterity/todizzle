@@ -33,7 +33,6 @@ export function NavProjects() {
 		<SidebarGroup className="group-data-[collapsible=icon]:hidden">
 			<SidebarGroupLabel>Projects</SidebarGroupLabel>
 			<SidebarMenu>
-				<ProjectDialog />
 				{projects
 					.map((project) => ({
 						...project,
@@ -84,6 +83,7 @@ export function NavProjects() {
 						</SidebarMenuButton>
 					</Link>
 				</SidebarMenuItem>
+				<ProjectDialog />
 			</SidebarMenu>
 		</SidebarGroup>
 	);

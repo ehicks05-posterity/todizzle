@@ -35,7 +35,7 @@ export function TodoTable({ todos }: { todos: Todo[] }) {
 				>
 					Active
 				</Button>
-				<div className="h-4 w-px bg-neutral-700" />
+				<div className="h-4 w-px mx-2 bg-neutral-700" />
 				<Button
 					size="sm"
 					variant={orderField === 'status' ? 'outline' : 'ghost'}
@@ -64,7 +64,7 @@ export function TodoTable({ todos }: { todos: Todo[] }) {
 							: PRIORITIES[groupName] || PRIORITIES.none;
 					return (
 						<div key={groupName}>
-							<div className="flex items-center gap-2 p-1">
+							<div className="flex items-center gap-2 p-1 border-b mt-2">
 								{grouping.label}
 								<grouping.icon className={grouping.color} size={16} />
 							</div>

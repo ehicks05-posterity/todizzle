@@ -94,7 +94,7 @@ export const TodoForm = ({
 					onClick={handleSave}
 					disabled={!isValid}
 				>
-					Create todo
+					Save
 				</Button>
 			</div>
 		</div>

@@ -8,7 +8,7 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import { SidebarMenuButton } from '@/components/ui/sidebar';
-import { PlusCircle } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { type TodoDefaults, TodoForm } from './todos/TodoForm';
 
@@ -19,8 +19,8 @@ export function TodoDialog({ defaults }: { defaults?: TodoDefaults }) {
 		<Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
 			<DialogTrigger onClick={() => setIsOpen(true)} asChild>
 				<SidebarMenuButton variant="outline">
-					<PlusCircle />
-					Create Todo
+					<Plus />
+					New
 				</SidebarMenuButton>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">

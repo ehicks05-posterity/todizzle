@@ -7,6 +7,7 @@ import {
 	CircleX,
 	Ellipsis,
 	Hexagon,
+	Lightbulb,
 	type LucideProps,
 	Octagon,
 	Pentagon,
@@ -27,6 +28,7 @@ export const ICONS = {
 	pentagon: Pentagon,
 	hexagon: Hexagon,
 	octagon: Octagon,
+	lightBult: Lightbulb,
 } as const;
 
 interface Status {
@@ -61,8 +63,8 @@ export const STATUSES: Record<string, Status> = {
 		order: 1,
 		isActive: true,
 	},
-	complete: {
-		label: 'Complete',
+	done: {
+		label: 'Done',
 		icon: CircleCheckBig,
 		color: 'stroke-[2.5] text-violet-500 dark:text-violet-400',
 		order: 4,
