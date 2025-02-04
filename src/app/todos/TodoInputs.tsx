@@ -35,7 +35,7 @@ export const StatusDropdown = ({
 		<DropdownMenuItem
 			key={status.name}
 			onClick={(e) => {
-				e.preventDefault();
+				e.stopPropagation();
 				handleClick(status.name);
 			}}
 		>
@@ -122,7 +122,7 @@ export const PriorityDropdown = ({
 		<DropdownMenuItem
 			key={priority.name}
 			onClick={(e) => {
-				e.preventDefault();
+				e.stopPropagation();
 				handleClick(priority.name);
 			}}
 		>
