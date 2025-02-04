@@ -135,7 +135,10 @@ const data = {
 	],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+	isOpen,
+	...props
+}: React.ComponentProps<typeof Sidebar> & { isOpen: boolean }) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>

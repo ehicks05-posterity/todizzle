@@ -14,7 +14,7 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from '@/components/ui/sidebar';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useLocation } from 'wouter';
 
 export const parseLocation = (
@@ -102,10 +102,11 @@ export function Breadcrumbs() {
 
 export function Layout({ children }: { children: ReactNode }) {
 	const [location] = useLocation();
+	const [isOpen, setIsOpen] = useState(true);
 
 	return (
-		<SidebarProvider>
-			<AppSidebar />
+		<SidebarProvider open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+			<AppSidebar isOpen={isOpen} />
 			<SidebarInset key={location}>
 				<header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
 					<div className="flex items-center gap-2 px-4 w-full">
