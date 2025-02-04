@@ -28,10 +28,12 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 					/>
 					<div>{todo.title}</div>
 				</div>
-				{todo.project?.id && (
-					<ProjectDropdown projectId={todo.project.id} idOrHandler={todo.id} />
-				)}
-				{todo.dueDate && <DueDate date={todo.dueDate.toString()} />}
+				<div className="hidden sm:flex items-center gap-2">
+					{todo.project?.id && (
+						<ProjectDropdown projectId={todo.project.id} idOrHandler={todo.id} />
+					)}
+					{todo.dueDate && <DueDate date={todo.dueDate.toString()} />}
+				</div>
 			</div>
 		</Link>
 	);

@@ -85,7 +85,7 @@ export function Breadcrumbs() {
 				</BreadcrumbItem> */}
 				{paths.map((path, i) => (
 					<div className="flex gap-2 items-center" key={path.path}>
-						{i !== 0 && <BreadcrumbSeparator className="hidden md:block" />}
+						{i !== 0 && <BreadcrumbSeparator className="block" />}
 						<BreadcrumbItem>
 							{path.isTerminal ? (
 								<BreadcrumbPage>{path.label}</BreadcrumbPage>
