@@ -21,11 +21,12 @@ export function ProjectDialog() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [icon, setIcon] = useState('circle');
+	const [icon, setIcon] = useState('scan');
+	const [color, setColor] = useState('blue');
 
 	const handleSave = async () => {
 		const projectId = id();
-		await db.transact(db.tx.projects[projectId].update({ title, icon }));
+		await db.transact(db.tx.projects[projectId].update({ title, icon, color }));
 		setIsOpen(false);
 	};
 
