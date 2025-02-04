@@ -43,7 +43,7 @@ export const IconDropdown = ({ icon, color, idOrHandler }: Props) => {
 					<Icon className={colorMeta.primary} />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="grid grid-cols-6">
+			<DropdownMenuContent align="start" className="grid grid-cols-6">
 				{ICON_OPTIONS}
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -78,7 +78,7 @@ export const ColorDropdown = ({ color, setColor }: ColorDropdownProps) => {
 					<div className={`h-5 w-5 rounded ${colorMeta.primaryBg}`} />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="grid grid-cols-6">
+			<DropdownMenuContent align="start" className="grid grid-cols-6">
 				{COLOR_OPTIONS}
 			</DropdownMenuContent>
 		</DropdownMenu>

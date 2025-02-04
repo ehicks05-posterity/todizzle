@@ -60,7 +60,7 @@ export const StatusDropdown = ({
 					{variant === 'default' && statusMeta.label}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
+			<DropdownMenuContent align="start">{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };
@@ -87,7 +87,7 @@ export const DueDatePicker = ({
 					)}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="w-auto p-0">
+			<PopoverContent align="start" className="w-auto p-0">
 				<Calendar
 					mode="single"
 					selected={dueDate ? new Date(dueDate) : undefined}
@@ -151,7 +151,7 @@ export const PriorityDropdown = ({
 					)}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
+			<DropdownMenuContent align="start">{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };
@@ -209,7 +209,7 @@ export const ProjectDropdown = ({
 					</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
+			<DropdownMenuContent align="start">{OPTIONS}</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };
