@@ -35,39 +35,41 @@ export function Project({ id }: { id: string }) {
 					}}
 				/>
 			</div>
-			<div
-				contentEditable
-				className="text-3xl font-bold bg-transparent outline-none"
-				onBlur={async (e) => {
-					const value = e.target.textContent;
-					if (value) {
-						await db.transact(db.tx.projects[project.id].update({ title: value }));
-					} else {
-						e.target.textContent = project.title;
-					}
-				}}
-				suppressContentEditableWarning
-			>
-				{project.title}
-			</div>
-			<div
-				contentEditable
-				className={`focus:text-inherit bg-transparent outline-none ${!project.description ? 'text-neutral-400' : ''}`}
-				onBlur={async (e) => {
-					const value = e.target.textContent || undefined;
-					await db.transact(
-						db.tx.projects[project.id].update({ description: value }),
-					);
-					e.target.textContent = value || 'Add a description...';
-				}}
-				onFocus={(e) => {
-					if (!project.description) {
-						e.target.textContent = '';
-					}
-				}}
-				suppressContentEditableWarning
-			>
-				{project.description || 'Add a description...'}
+			<div className="flex flex-col gap-2 p-4 bg-sidebar-accent/50 rounded-lg">
+				<div
+					contentEditable
+					className="text-3xl font-bold bg-transparent outline-none"
+					onBlur={async (e) => {
+						const value = e.target.textContent;
+						if (value) {
+							await db.transact(db.tx.projects[project.id].update({ title: value }));
+						} else {
+							e.target.textContent = project.title;
+						}
+					}}
+					suppressContentEditableWarning
+				>
+					{project.title}
+				</div>
+				<div
+					contentEditable
+					className={`focus:text-inherit bg-transparent outline-none ${!project.description ? 'text-neutral-400' : ''}`}
+					onBlur={async (e) => {
+						const value = e.target.textContent || undefined;
+						await db.transact(
+							db.tx.projects[project.id].update({ description: value }),
+						);
+						e.target.textContent = value || 'Add a description...';
+					}}
+					onFocus={(e) => {
+						if (!project.description) {
+							e.target.textContent = '';
+						}
+					}}
+					suppressContentEditableWarning
+				>
+					{project.description || 'Add a description...'}
+				</div>
 			</div>
 
 			<div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
