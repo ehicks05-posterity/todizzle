@@ -84,10 +84,11 @@ export const DueDatePicker = ({
 						'justify-start text-left font-normal',
 						!dueDate && 'text-muted-foreground',
 					)}
+					title="Due date"
 				>
 					<CalendarIcon className="mr-1 h-4 w-4" />
 					{dueDate ? (
-						`Due ${formatDate(new Date(String(dueDate)))}`
+						`${formatDate(new Date(String(dueDate)))}`
 					) : (
 						<span>Set a due date</span>
 					)}
