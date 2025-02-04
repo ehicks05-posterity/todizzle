@@ -6,7 +6,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ICONS } from '../constants';
+import { ICONS } from '@/constants/icons';
 
 interface Props {
 	icon: string;
@@ -19,7 +19,6 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 	const ICON_OPTIONS = Object.entries(ICONS).map(([name, Icon]) => (
 		<DropdownMenuItem key={name} onClick={() => setIcon(name)}>
 			<Icon />
-			{name}
 		</DropdownMenuItem>
 	));
 
@@ -30,7 +29,9 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 					<Icon />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>{ICON_OPTIONS}</DropdownMenuContent>
+			<DropdownMenuContent className="grid grid-cols-6">
+				{ICON_OPTIONS}
+			</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };

@@ -7,16 +7,7 @@ import {
 	CircleDashed,
 	CircleX,
 	Ellipsis,
-	FlaskConical,
-	Hexagon,
-	Lightbulb,
 	type LucideProps,
-	Octagon,
-	Pentagon,
-	Scan,
-	Square,
-	SquareDashed,
-	Triangle,
 } from 'lucide-react';
 import type { IconType } from 'react-icons/lib';
 import {
@@ -28,19 +19,6 @@ import {
 type LucideIcon = React.ForwardRefExoticComponent<
 	Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
 >;
-
-export const ICONS = {
-	squareDashed: SquareDashed,
-	scan: Scan,
-	circle: Circle,
-	square: Square,
-	triangle: Triangle,
-	pentagon: Pentagon,
-	hexagon: Hexagon,
-	octagon: Octagon,
-	lightBult: Lightbulb,
-	flaskConical: FlaskConical,
-} as const;
 
 export const THEMES = {
 	blue: {

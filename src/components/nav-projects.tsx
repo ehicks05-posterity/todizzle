@@ -1,5 +1,5 @@
 import { ProjectDialog } from '@/app/ProjectDialog';
-import { ICONS, THEMES } from '@/app/constants';
+import { THEMES } from '@/app/constants';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -16,6 +16,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
+import { ICONS } from '@/constants/icons';
 import { Folder, Forward, MoreHorizontal, Trash2 } from 'lucide-react';
 import { Link } from 'wouter';
 import { db } from './lib/db';

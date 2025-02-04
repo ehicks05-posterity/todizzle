@@ -1,6 +1,6 @@
-import { ICONS } from '@/app/constants';
 import { db } from '@/components/lib/db';
 import type { Project } from '@/components/lib/types';
+import { ICONS } from '@/constants/icons';
 import { Link } from 'wouter';
 import { DeleteProjectButton } from '../project/ProjectInputs';
 
