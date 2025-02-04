@@ -7,6 +7,7 @@ const _schema = i.schema({
 			email: i.string().unique().indexed(),
 		}),
 		todos: i.entity({
+			createdAt: i.date(),
 			title: i.string(),
 			description: i.string(),
 			dueDate: i.date(),

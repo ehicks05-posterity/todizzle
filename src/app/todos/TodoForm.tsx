@@ -30,7 +30,14 @@ export const TodoForm = ({
 	const handleSave = async () => {
 		const todoId = id();
 		await db.transact(
-			db.tx.todos[todoId].update({ title, description, dueDate, status, priority }),
+			db.tx.todos[todoId].update({
+				title,
+				description,
+				dueDate,
+				status,
+				priority,
+				createdAt: new Date().toISOString(),
+			}),
 		);
 
 		if (projectId) {
