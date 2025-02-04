@@ -8,19 +8,12 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
-import type { Priority, Project, Status, Todo } from '../../components/lib/types';
-import { PRIORITIES, STATUSES } from '../constants';
+import type { Priority, Status, Todo } from '../../components/lib/types';
+import { ICONS, PRIORITIES, STATUSES, THEMES } from '../constants';
 
 export const StatusDropdown = ({
 	status,
@@ -59,7 +52,7 @@ export const StatusDropdown = ({
 				<Button
 					variant="ghost"
 					size={variant === 'icon' ? 'icon' : undefined}
-					className="flex items-center gap-2 justify-center"
+					className={`flex items-center gap-2 ${variant === 'icon' ? 'justify-center' : 'justify-start'}`}
 				>
 					<statusMeta.icon size={18} className={statusMeta.color} />
 					{variant === 'default' && statusMeta.label}
@@ -146,7 +139,7 @@ export const PriorityDropdown = ({
 				<Button
 					variant="ghost"
 					size={variant === 'icon' ? 'icon' : undefined}
-					className="flex items-center gap-2 justify-center"
+					className={`flex items-center gap-2 ${variant === 'icon' ? 'justify-center' : 'justify-start'}`}
 				>
 					<priorityMeta.icon size={18} className={color} />
 					{variant === 'default' && (
@@ -161,34 +154,56 @@ export const PriorityDropdown = ({
 	);
 };
 
-export const ProjectSelect = ({
-	projects,
+export const ProjectDropdown = ({
 	projectId,
-	onChange,
+	idOrHandler,
 }: {
-	projects: Project[];
 	projectId?: string;
-	onChange: (projectId: string) => void;
+	idOrHandler: string | ((projectId: string) => void);
 }) => {
-	return (
-		<Select
-			name="project"
-			value={projectId || 'no_project'}
-			onValueChange={(v) => onChange(v)}
-		>
-			<SelectTrigger>
-				<SelectValue />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectItem value={'no_project'}>No project</SelectItem>
+	const { data } = db.useQuery({ projects: {} });
+	const projects = data?.projects || [];
+	const project = projects.find((p) => p.id === projectId);
+	const Icon = project ? ICONS[project.icon as keyof typeof ICONS] : ICONS.scan;
+	const theme = project ? THEMES[project.color as keyof typeof THEMES] : THEMES.blue;
+	const color = theme.primary;
 
-				{projects.map((project) => (
-					<SelectItem key={project.id} value={project.id}>
-						{project.title}
-					</SelectItem>
-				))}
-			</SelectContent>
-		</Select>
+	const handleClick =
+		typeof idOrHandler === 'string'
+			? (id: string) =>
+					id === projectId
+						? db.transact(db.tx.todos[idOrHandler].unlink({ project: id }))
+						: db.transact(db.tx.todos[idOrHandler].link({ project: id }))
+			: idOrHandler;
+
+	const OPTIONS = projects.map((project) => {
+		const Icon = ICONS[project.icon as keyof typeof ICONS];
+		return (
+			<DropdownMenuItem
+				key={project.id}
+				onClick={(e) => {
+					e.stopPropagation();
+					handleClick(project.id);
+				}}
+			>
+				<span className="flex items-center gap-2">
+					<Icon size={18} className={color} />
+					{project.title}
+				</span>
+			</DropdownMenuItem>
+		);
+	});
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant="ghost" className="flex items-center gap-2 justify-start">
+					{Icon && <Icon size={18} className={color} />}
+					{project?.title || 'Add to project'}
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
+		</DropdownMenu>
 	);
 };
 

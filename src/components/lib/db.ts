@@ -17,6 +17,7 @@ const _schema = i.schema({
 			title: i.string(),
 			description: i.string(),
 			icon: i.string(),
+			color: i.string(),
 		}),
 	},
 	links: {

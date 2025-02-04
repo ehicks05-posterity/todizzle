@@ -7,12 +7,15 @@ import {
 	CircleDashed,
 	CircleX,
 	Ellipsis,
+	FlaskConical,
 	Hexagon,
 	Lightbulb,
 	type LucideProps,
 	Octagon,
 	Pentagon,
+	Scan,
 	Square,
+	SquareDashed,
 	Triangle,
 } from 'lucide-react';
 import type { IconType } from 'react-icons/lib';
@@ -27,6 +30,8 @@ type LucideIcon = React.ForwardRefExoticComponent<
 >;
 
 export const ICONS = {
+	squareDashed: SquareDashed,
+	scan: Scan,
 	circle: Circle,
 	square: Square,
 	triangle: Triangle,
@@ -34,7 +39,15 @@ export const ICONS = {
 	hexagon: Hexagon,
 	octagon: Octagon,
 	lightBult: Lightbulb,
+	flaskConical: FlaskConical,
 } as const;
+
+export const THEMES = {
+	blue: {
+		primary: 'text-blue-500',
+		subtle: 'text-blue-100 dark:text-blue-900',
+	},
+};
 
 interface StatusMeta {
 	name: Status; // included for use in Object.entries situations

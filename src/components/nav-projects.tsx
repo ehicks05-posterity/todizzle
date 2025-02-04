@@ -1,5 +1,5 @@
 import { ProjectDialog } from '@/app/ProjectDialog';
-import { ICONS } from '@/app/constants';
+import { ICONS, THEMES } from '@/app/constants';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -37,12 +37,13 @@ export function NavProjects() {
 					.map((project) => ({
 						...project,
 						icon: ICONS[project.icon as keyof typeof ICONS],
+						color: THEMES[project.color as keyof typeof THEMES],
 					}))
 					.map((item) => (
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton asChild>
 								<Link href={`/projects/${item.id}`}>
-									<item.icon />
+									<item.icon className={item.color.primary} />
 									<span>{item.title}</span>
 								</Link>
 							</SidebarMenuButton>

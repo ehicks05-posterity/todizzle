@@ -8,7 +8,7 @@ import { useState } from 'react';
 import {
 	DueDatePicker,
 	PriorityDropdown,
-	ProjectSelect,
+	ProjectDropdown,
 	StatusDropdown,
 } from './TodoInputs';
 
@@ -20,17 +20,12 @@ export const TodoForm = ({
 	defaults,
 	onSubmit,
 }: { defaults?: TodoDefaults; onSubmit?: () => void }) => {
-	const { data, isLoading } = db.useQuery({ projects: {} });
-	const projects = data?.projects || [];
-
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [dueDate, setDueDate] = useState<string | undefined>(undefined);
 	const [projectId, setProjectId] = useState(defaults?.projectId || '');
 	const [status, setStatus] = useState<Status>('todo');
 	const [priority, setPriority] = useState<Priority>('none');
-
-	if (isLoading) return null;
 
 	const handleSave = async () => {
 		const todoId = id();
@@ -74,10 +69,9 @@ export const TodoForm = ({
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Label htmlFor="project">Project</Label>
-				<ProjectSelect
-					projects={projects}
+				<ProjectDropdown
 					projectId={projectId}
-					onChange={(v) => setProjectId(v)}
+					idOrHandler={(v) => (v === projectId ? setProjectId('') : setProjectId(v))}
 				/>
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
