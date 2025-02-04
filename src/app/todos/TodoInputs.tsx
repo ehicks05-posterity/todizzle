@@ -202,7 +202,11 @@ export const ProjectDropdown = ({
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" className="flex items-center gap-2 justify-start">
 					{Icon && <Icon size={18} className={theme.primary} />}
-					{project?.title || 'Add to project'}
+					<span
+						className={projectId ? '' : 'text-neutral-500 dark:text-neutral-400'}
+					>
+						{project?.title || 'Add to project'}
+					</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>{OPTIONS}</DropdownMenuContent>
