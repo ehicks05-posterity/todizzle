@@ -8,13 +8,14 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
 import type { Priority, Status, Todo } from '../../components/lib/types';
-import { PRIORITIES, STATUSES, THEMES } from '../constants';
+import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({
 	status,

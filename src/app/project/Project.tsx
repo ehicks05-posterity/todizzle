@@ -2,7 +2,7 @@ import { db } from '@/components/lib/db';
 import type { Todo } from '@/components/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { TodoTable } from '../todos/TodoTable';
-import { IconDropdown } from './ProjectInputs';
+import { ColorDropdown, IconDropdown } from './ProjectInputs';
 
 const getCompletion = (todos: Todo[]) => {
 	const denominator = todos.filter((todo) => todo.status !== 'canceled').length;
@@ -27,11 +27,16 @@ export function Project({ id }: { id: string }) {
 
 	return (
 		<div className="grid gap-4">
-			<div className="flex gap-4 max-w-sm -mb-4">
+			<div className="flex gap-4 max-w-sm">
 				<IconDropdown
 					icon={project.icon}
-					setIcon={async (icon: string) => {
-						await db.transact(db.tx.projects[project.id].update({ icon }));
+					color={project.color}
+					idOrHandler={project.id}
+				/>
+				<ColorDropdown
+					color={project.color}
+					setColor={async (color: string) => {
+						await db.transact(db.tx.projects[project.id].update({ color }));
 					}}
 				/>
 			</div>

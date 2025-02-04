@@ -15,7 +15,7 @@ import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { id } from '@instantdb/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-import { IconDropdown } from './project/ProjectInputs';
+import { ColorDropdown, IconDropdown } from './project/ProjectInputs';
 
 export function ProjectDialog() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -48,11 +48,9 @@ export function ProjectDialog() {
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="title" className="text-right">
-							Title
-						</Label>
+				<div className="grid grid-cols-2 gap-4 py-4">
+					<div className="grid col-span-2 w-full max-w-sm items-center gap-1.5">
+						<Label htmlFor="title">Title</Label>
 						<Input
 							id="title"
 							value={title}
@@ -60,10 +58,8 @@ export function ProjectDialog() {
 							className="col-span-3"
 						/>
 					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="description" className="text-right">
-							Description
-						</Label>
+					<div className="grid col-span-2 w-full max-w-sm items-center gap-1.5">
+						<Label htmlFor="description">Description</Label>
 						<Input
 							name="description"
 							value={description}
@@ -71,21 +67,18 @@ export function ProjectDialog() {
 							className="col-span-3"
 						/>
 					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="icon" className="text-right">
-							Icon
-						</Label>
-						<IconDropdown icon={icon} setIcon={setIcon} />
+					<div className="grid w-full max-w-sm items-center gap-1.5">
+						<Label htmlFor="icon">Icon</Label>
+						<IconDropdown icon={icon} idOrHandler={setIcon} color={color} />
+					</div>
+					<div className="grid w-full max-w-sm items-center gap-1.5">
+						<Label htmlFor="color">Color</Label>
+						<ColorDropdown color={color} setColor={setColor} />
 					</div>
 				</div>
 
 				<DialogFooter>
-					<Button
-						type="button"
-						className="p-2 border border-black"
-						onClick={handleSave}
-						disabled={!isValid}
-					>
+					<Button type="button" onClick={handleSave} disabled={!isValid}>
 						Save
 					</Button>
 				</DialogFooter>

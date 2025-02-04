@@ -83,12 +83,7 @@ export const TodoForm = ({
 				<PriorityDropdown priority={priority} idOrHandler={setPriority} />
 			</div>
 			<div className="grid w-full max-w-sm items-center gap-1.5">
-				<Button
-					type="button"
-					className="p-2 border border-black"
-					onClick={handleSave}
-					disabled={!isValid}
-				>
+				<Button type="button" onClick={handleSave} disabled={!isValid}>
 					Save
 				</Button>
 			</div>

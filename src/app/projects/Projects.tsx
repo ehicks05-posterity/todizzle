@@ -1,17 +1,18 @@
 import { db } from '@/components/lib/db';
 import type { Project } from '@/components/lib/types';
-import { ICONS } from '@/constants/icons';
 import { Link } from 'wouter';
-import { DeleteProjectButton } from '../project/ProjectInputs';
+import { DeleteProjectButton, IconDropdown } from '../project/ProjectInputs';
 
 export const ProjectRow = ({ project }: { project: Project }) => {
-	const Icon = ICONS[project.icon as keyof typeof ICONS];
-
 	return (
 		<Link href={`/projects/${project.id}`}>
 			<div className="w-full flex justify-between items-center gap-2 p-2 hover:bg-muted rounded">
 				<div className="flex items-center gap-2">
-					<Icon size={16} />
+					<IconDropdown
+						icon={project.icon}
+						color={project.color}
+						idOrHandler={project.id}
+					/>
 					<div>{project.title}</div>
 				</div>
 

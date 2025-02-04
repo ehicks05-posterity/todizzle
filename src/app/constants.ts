@@ -20,13 +20,6 @@ type LucideIcon = React.ForwardRefExoticComponent<
 	Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
 >;
 
-export const THEMES = {
-	blue: {
-		primary: 'text-blue-500',
-		subtle: 'text-blue-100 dark:text-blue-900',
-	},
-};
-
 interface StatusMeta {
 	name: Status; // included for use in Object.entries situations
 	label: string;

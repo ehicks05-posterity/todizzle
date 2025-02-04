@@ -6,19 +6,33 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
 
 interface Props {
 	icon: string;
-	setIcon: (icon: string) => void;
+	color: string;
+	idOrHandler: string | ((icon: string) => void);
 }
 
-export const IconDropdown = ({ icon, setIcon }: Props) => {
+export const IconDropdown = ({ icon, color, idOrHandler }: Props) => {
 	const Icon = ICONS[icon as keyof typeof ICONS];
+	const colorMeta = THEMES[color as keyof typeof THEMES];
+
+	const handleClick =
+		typeof idOrHandler === 'string'
+			? (icon: string) => db.transact(db.tx.projects[idOrHandler].update({ icon }))
+			: idOrHandler;
 
 	const ICON_OPTIONS = Object.entries(ICONS).map(([name, Icon]) => (
-		<DropdownMenuItem key={name} onClick={() => setIcon(name)}>
-			<Icon />
+		<DropdownMenuItem
+			key={name}
+			onClick={(e) => {
+				e.stopPropagation();
+				handleClick(name);
+			}}
+		>
+			<Icon className={colorMeta.primary} />
 		</DropdownMenuItem>
 	));
 
@@ -26,11 +40,46 @@ export const IconDropdown = ({ icon, setIcon }: Props) => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline" size="icon">
-					<Icon />
+					<Icon className={colorMeta.primary} />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="grid grid-cols-6">
 				{ICON_OPTIONS}
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};
+
+interface ColorDropdownProps {
+	color: string;
+	setColor: (icon: string) => void;
+}
+
+export const ColorDropdown = ({ color, setColor }: ColorDropdownProps) => {
+	const colorMeta = THEMES[color as keyof typeof THEMES];
+
+	const COLOR_OPTIONS = Object.entries(THEMES).map(([name, meta]) => (
+		<DropdownMenuItem
+			key={name}
+			onClick={(e) => {
+				e.stopPropagation();
+				setColor(name);
+			}}
+			title={meta.label}
+		>
+			<div className={`h-5 w-5 rounded ${meta.primaryBg}`} />
+		</DropdownMenuItem>
+	));
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant="outline" size="icon" title={colorMeta.label}>
+					<div className={`h-5 w-5 rounded ${colorMeta.primaryBg}`} />
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent className="grid grid-cols-6">
+				{COLOR_OPTIONS}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
