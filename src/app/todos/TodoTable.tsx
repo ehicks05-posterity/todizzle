@@ -1,5 +1,6 @@
 import type { Todo } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 import { PRIORITIES, STATUSES } from '../constants';
 import { TodoRow } from './TodoRow';
@@ -65,14 +66,11 @@ export function TodoTable({ todos: _todos }: { todos: Todo[] }) {
 							: PRIORITIES[todosInGroup[0].priority] || PRIORITIES.none;
 					return (
 						<div key={groupName}>
-							<div className="flex items-center gap-2 p-1 border-b mt-2">
-								<Button size="icon" className="invisible" />
-								<grouping.icon
-									className={`ml-3.5 mr-2 ${grouping.color}`}
-									size={16}
-								/>
+							<div className="flex items-center gap-2 p-2 pb-1 mt-2 font-semibold text-neutral-700 dark:text-neutral-300">
+								<grouping.icon className={`ml-2.5 ${grouping.color}`} size={16} />
 								{grouping.label}
 							</div>
+							<Separator className="m-1" />
 							{todosInGroup.map((todo) => (
 								<TodoRow key={todo.id} todo={todo} />
 							))}
