@@ -167,7 +167,6 @@ export const ProjectDropdown = ({
 	const project = projects.find((p) => p.id === projectId);
 	const Icon = project ? ICONS[project.icon as keyof typeof ICONS] : ICONS.scan;
 	const theme = project ? THEMES[project.color as keyof typeof THEMES] : THEMES.blue;
-	const color = theme.primary;
 
 	const handleClick =
 		typeof idOrHandler === 'string'
@@ -179,6 +178,8 @@ export const ProjectDropdown = ({
 
 	const OPTIONS = projects.map((project) => {
 		const Icon = ICONS[project.icon as keyof typeof ICONS];
+		const theme = THEMES[project.color as keyof typeof THEMES];
+
 		return (
 			<DropdownMenuItem
 				key={project.id}
@@ -188,7 +189,7 @@ export const ProjectDropdown = ({
 				}}
 			>
 				<span className="flex items-center gap-2">
-					<Icon size={18} className={color} />
+					<Icon size={18} className={theme.primary} />
 					{project.title}
 				</span>
 			</DropdownMenuItem>
@@ -199,7 +200,7 @@ export const ProjectDropdown = ({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" className="flex items-center gap-2 justify-start">
-					{Icon && <Icon size={18} className={color} />}
+					{Icon && <Icon size={18} className={theme.primary} />}
 					{project?.title || 'Add to project'}
 				</Button>
 			</DropdownMenuTrigger>
