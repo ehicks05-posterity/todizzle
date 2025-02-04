@@ -30,6 +30,7 @@ export function Todo({ id }: { id: string }) {
 						e.target.textContent = todo.title;
 					}
 				}}
+				suppressContentEditableWarning
 			>
 				{todo.title}
 			</div>
@@ -46,6 +47,7 @@ export function Todo({ id }: { id: string }) {
 						e.target.textContent = '';
 					}
 				}}
+				suppressContentEditableWarning
 			>
 				{todo.description || 'Add a description...'}
 			</div>

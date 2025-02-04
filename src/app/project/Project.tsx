@@ -32,6 +32,7 @@ export function Project({ id }: { id: string }) {
 						e.target.textContent = project.title;
 					}
 				}}
+				suppressContentEditableWarning
 			>
 				{project.title}
 			</div>
@@ -50,6 +51,7 @@ export function Project({ id }: { id: string }) {
 						e.target.textContent = '';
 					}
 				}}
+				suppressContentEditableWarning
 			>
 				{project.description || 'Add a description...'}
 			</div>
