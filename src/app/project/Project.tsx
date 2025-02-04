@@ -86,9 +86,7 @@ export function Project({ id }: { id: string }) {
 				</div>
 			</div>
 			<div className="flex items-start justify-end w-full">
-				<Badge variant="outline">
-					{getCompletionPercent(project.todos)} complete
-				</Badge>
+				<Badge variant="outline">{getCompletionPercent(project.todos)}</Badge>
 			</div>
 		</div>
 	);
