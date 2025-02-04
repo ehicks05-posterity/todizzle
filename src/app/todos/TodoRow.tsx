@@ -1,11 +1,17 @@
 import type { Todo } from '@/components/lib/types';
-import { format, parseISO } from 'date-fns';
 import { Link } from 'wouter';
 import { PriorityDropdown, ProjectDropdown, StatusDropdown } from './TodoInputs';
 
+export const formatDate = (date: Date) =>
+	Intl.DateTimeFormat('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: date.getFullYear() === new Date().getFullYear() ? undefined : 'numeric',
+	}).format(date);
+
 export const DueDate = ({ date: _date }: { date: string }) => {
-	const date = format(parseISO(_date), 'PP');
-	return <div>{date}</div>;
+	const date = new Date(_date);
+	return <div>{formatDate(date)}</div>;
 };
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {

@@ -16,6 +16,7 @@ import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
 import type { Priority, Status, Todo } from '../../components/lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
+import { formatDate } from './TodoRow';
 
 export const StatusDropdown = ({
 	status,
@@ -81,7 +82,7 @@ export const DueDatePicker = ({
 				>
 					<CalendarIcon className="mr-1 h-4 w-4" />
 					{dueDate ? (
-						`Due ${format(new Date(String(dueDate)), 'PP')}`
+						`Due ${formatDate(new Date(String(dueDate)))}`
 					) : (
 						<span>Set a due date</span>
 					)}
