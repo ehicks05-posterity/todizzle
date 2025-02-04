@@ -10,10 +10,17 @@ import {
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
+
 import { type TodoDefaults, TodoForm } from './todos/TodoForm';
 
 export function TodoDialog({ defaults }: { defaults?: TodoDefaults }) {
 	const [isOpen, setIsOpen] = useState(false);
+
+	useHotkeys('c', (e) => {
+		e.preventDefault();
+		setIsOpen((isOpen) => !isOpen);
+	});
 
 	return (
 		<Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
