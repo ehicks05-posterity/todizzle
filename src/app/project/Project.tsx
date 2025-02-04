@@ -1,7 +1,22 @@
 import { db } from '@/components/lib/db';
+import type { Todo } from '@/components/lib/types';
+import { Badge } from '@/components/ui/badge';
 import { TodoDialog } from '../TodoDialog';
 import { TodoTable } from '../todos/TodoTable';
 import { IconDropdown } from './ProjectInputs';
+
+const getCompletion = (todos: Todo[]) => {
+	const denominator = todos.filter((todo) => todo.status !== 'canceled').length;
+	const numerator =
+		todos.filter((todo) => todo.status === 'done').length +
+		todos.filter((todo) => todo.status === 'inProgress').length * 0.5;
+
+	if (denominator === 0) return 0;
+	return numerator / denominator;
+};
+
+const getCompletionPercent = (todos: Todo[]) =>
+	Intl.NumberFormat('en-US', { style: 'percent' }).format(getCompletion(todos));
 
 export function Project({ id }: { id: string }) {
 	const { data } = db.useQuery({
@@ -13,7 +28,7 @@ export function Project({ id }: { id: string }) {
 
 	return (
 		<div className="grid gap-4">
-			<div className="grid grid-cols-2 gap-4 max-w-sm -mb-4">
+			<div className="flex gap-4 max-w-sm -mb-4">
 				<IconDropdown
 					icon={project.icon}
 					setIcon={async (icon: string) => {
@@ -60,12 +75,17 @@ export function Project({ id }: { id: string }) {
 				<div className="w-full flex flex-col p-2">
 					<TodoTable todos={project.todos} />
 					{project.todos.length === 0 && (
-						<div className="grid gap-8">This project has 0 todos.</div>
+						<div className="p-4">This project has 0 todos.</div>
 					)}
 				</div>
 			</div>
-			<div className="w-fit">
-				<TodoDialog defaults={{ projectId: project.id }} />
+			<div className="flex items-start justify-between w-full">
+				<div>
+					<TodoDialog defaults={{ projectId: project.id }} />
+				</div>
+				<Badge variant="outline">
+					{getCompletionPercent(project.todos)} complete
+				</Badge>
 			</div>
 		</div>
 	);
