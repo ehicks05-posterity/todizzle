@@ -11,12 +11,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
 import type { Priority, Status, Todo } from '../../components/lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
-import { formatDate } from './TodoRow';
 
 export const StatusDropdown = ({
 	status,
@@ -66,12 +64,19 @@ export const StatusDropdown = ({
 	);
 };
 
+const formatDate = (date: Date) =>
+	Intl.DateTimeFormat('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: date.getFullYear() === new Date().getFullYear() ? undefined : 'numeric',
+	}).format(date);
+
 export const DueDatePicker = ({
 	dueDate,
 	handleSelect,
 }: { dueDate?: string | number; handleSelect: (date?: Date) => void }) => {
 	return (
-		<Popover>
+		<Popover modal>
 			<PopoverTrigger asChild>
 				<Button
 					variant={'ghost'}

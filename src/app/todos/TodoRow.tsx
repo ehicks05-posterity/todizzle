@@ -1,18 +1,12 @@
+import { db } from '@/components/lib/db';
 import type { Todo } from '@/components/lib/types';
 import { Link } from 'wouter';
-import { PriorityDropdown, ProjectDropdown, StatusDropdown } from './TodoInputs';
-
-export const formatDate = (date: Date) =>
-	Intl.DateTimeFormat('en-US', {
-		month: 'short',
-		day: 'numeric',
-		year: date.getFullYear() === new Date().getFullYear() ? undefined : 'numeric',
-	}).format(date);
-
-export const DueDate = ({ date: _date }: { date: string }) => {
-	const date = new Date(_date);
-	return <div>{formatDate(date)}</div>;
-};
+import {
+	DueDatePicker,
+	PriorityDropdown,
+	ProjectDropdown,
+	StatusDropdown,
+} from './TodoInputs';
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
 	return (
@@ -38,7 +32,15 @@ export const TodoRow = ({ todo }: { todo: Todo }) => {
 					{todo.project?.id && (
 						<ProjectDropdown projectId={todo.project.id} idOrHandler={todo.id} />
 					)}
-					{todo.dueDate && <DueDate date={todo.dueDate.toString()} />}
+					{todo.dueDate && (
+						<DueDatePicker
+							dueDate={todo.dueDate.toString()}
+							handleSelect={async (date?: Date) => {
+								const dueDate = date ? date.toISOString() : undefined;
+								await db.transact(db.tx.todos[todo.id].update({ dueDate }));
+							}}
+						/>
+					)}
 				</div>
 			</div>
 		</Link>
