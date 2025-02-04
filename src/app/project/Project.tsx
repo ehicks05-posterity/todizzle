@@ -1,7 +1,6 @@
 import { db } from '@/components/lib/db';
 import type { Todo } from '@/components/lib/types';
 import { Badge } from '@/components/ui/badge';
-import { TodoDialog } from '../TodoDialog';
 import { TodoTable } from '../todos/TodoTable';
 import { IconDropdown } from './ProjectInputs';
 
@@ -79,10 +78,7 @@ export function Project({ id }: { id: string }) {
 					)}
 				</div>
 			</div>
-			<div className="flex items-start justify-between w-full">
-				<div>
-					<TodoDialog defaults={{ projectId: project.id }} />
-				</div>
+			<div className="flex items-start justify-end w-full">
 				<Badge variant="outline">
 					{getCompletionPercent(project.todos)} complete
 				</Badge>

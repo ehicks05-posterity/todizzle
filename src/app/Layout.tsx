@@ -17,8 +17,9 @@ import {
 import type { ReactNode } from 'react';
 import { useLocation } from 'wouter';
 
-// hacky. display todo title or project name in breadcrumb.
-export const useEntityLabel = (location: string) => {
+export const parseLocation = (
+	location: string,
+): { resource?: 'todos' | 'projects'; resourceId?: string } => {
 	const resource = location.startsWith('/todos/')
 		? 'todos'
 		: location.startsWith('/projects/')
@@ -28,6 +29,13 @@ export const useEntityLabel = (location: string) => {
 	const resourceId = resource
 		? location.slice(location.lastIndexOf('/') + 1)
 		: undefined;
+
+	return { resource, resourceId };
+};
+
+// hacky. display todo title or project name in breadcrumb.
+export const useEntityLabel = (location: string) => {
+	const { resource, resourceId } = parseLocation(location);
 
 	const query =
 		resource && resourceId
