@@ -36,7 +36,7 @@ export function TodoTable({ todos: _todos }: { todos: Todo[] }) {
 				>
 					Active
 				</Button>
-				<div className="h-4 w-px mx-2 bg-neutral-700" />
+				<Separator orientation="vertical" className="h-5" />
 				<Button
 					size="sm"
 					variant={orderField === 'status' ? 'outline' : 'ghost'}
