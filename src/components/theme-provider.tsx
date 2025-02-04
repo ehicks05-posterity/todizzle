@@ -70,3 +70,21 @@ export const useTheme = () => {
 
 	return context;
 };
+
+export const useResolvedTheme = () => {
+	const context = useContext(ThemeProviderContext);
+
+	if (context === undefined)
+		throw new Error('useTheme must be used within a ThemeProvider');
+
+	const themeSelection = context.theme;
+
+	if (themeSelection === 'system') {
+		const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light';
+		return systemTheme;
+	}
+
+	return themeSelection;
+};
