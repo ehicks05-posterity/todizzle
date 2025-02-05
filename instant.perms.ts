@@ -11,7 +11,7 @@ const rules = {
 			update: 'isOwner',
 			delete: 'isOwner',
 		},
-		bind: ['isOwner', "auth.id != null && auth.id == data.ref('owner.id')"],
+		bind: ['isOwner', "auth.id != null && auth.id in data.ref('owner.id')"],
 	},
 } satisfies InstantRules;
 
