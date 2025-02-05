@@ -16,7 +16,7 @@ export function Todo({ id }: { id: string }) {
 		<div className="grid gap-4 p-4 bg-muted/50 rounded-lg">
 			<div
 				contentEditable
-				className="text-3xl font-bold bg-transparent outline-none"
+				className="text-3xl font-bold bg-transparent outline-hidden"
 				onBlur={async (e) => {
 					const value = e.target.textContent;
 					if (value) {
@@ -31,7 +31,7 @@ export function Todo({ id }: { id: string }) {
 			</div>
 			<div
 				contentEditable
-				className={`focus:text-inherit bg-transparent outline-none ${!todo.description ? 'text-neutral-400' : ''}`}
+				className={`focus:text-inherit bg-transparent outline-hidden ${!todo.description ? 'text-neutral-400' : ''}`}
 				onBlur={async (e) => {
 					const value = e.target.textContent || undefined;
 					await db.transact(db.tx.todos[todo.id].update({ description: value }));

@@ -43,7 +43,7 @@ export function Project({ id }: { id: string }) {
 			<div className="flex flex-col gap-2 p-4 bg-sidebar-accent/50 rounded-lg">
 				<div
 					contentEditable
-					className="text-3xl font-bold bg-transparent outline-none"
+					className="text-3xl font-bold bg-transparent outline-hidden"
 					onBlur={async (e) => {
 						const value = e.target.textContent;
 						if (value) {
@@ -58,7 +58,7 @@ export function Project({ id }: { id: string }) {
 				</div>
 				<div
 					contentEditable
-					className={`focus:text-inherit bg-transparent outline-none ${!project.description ? 'text-neutral-400' : ''}`}
+					className={`focus:text-inherit bg-transparent outline-hidden ${!project.description ? 'text-neutral-400' : ''}`}
 					onBlur={async (e) => {
 						const value = e.target.textContent || undefined;
 						await db.transact(
