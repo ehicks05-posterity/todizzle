@@ -48,12 +48,12 @@ const _schema = i.schema({
 			},
 		},
 		userProjects: {
-			forward: { on: '$users', has: 'many', label: 'projects', onDelete: 'cascade' },
-			reverse: { on: 'projects', has: 'one', label: 'owner' },
+			forward: { on: 'projects', has: 'one', label: 'owner' },
+			reverse: { on: '$users', has: 'many', label: 'projects', onDelete: 'cascade' },
 		},
 		userTodos: {
-			forward: { on: '$users', has: 'many', label: 'todos', onDelete: 'cascade' },
-			reverse: { on: 'todos', has: 'one', label: 'owner' },
+			forward: { on: 'todos', has: 'one', label: 'owner' },
+			reverse: { on: '$users', has: 'many', label: 'todos', onDelete: 'cascade' },
 		},
 	},
 	// If you use presence, you can define a room schema here
