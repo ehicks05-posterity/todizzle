@@ -4,31 +4,29 @@ import {
 	Bot,
 	Command,
 	GalleryVerticalEnd,
-	Settings2,
 	SquareTerminal,
+	UserCircle2,
 } from 'lucide-react';
 import type * as React from 'react';
 
+import { InstantSignIn } from '@/InstantSignIn';
 import { NavMain } from '@/components/nav-main';
 import { NavProjects } from '@/components/nav-projects';
-import { NavUser } from '@/components/nav-user';
 import { TeamSwitcher } from '@/components/team-switcher';
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
+	SidebarMenuButton,
 	SidebarRail,
 } from '@/components/ui/sidebar';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { NavSettings } from './nav-settings';
 import { NavTodos } from './nav-todos';
 
 // This is sample data.
 const data = {
-	user: {
-		name: 'eric',
-		email: 'eric@example.com',
-		avatar: '/images/avatar.jpg',
-	},
 	teams: [
 		{
 			name: 'Acme Inc',
@@ -109,29 +107,6 @@ const data = {
 				},
 			],
 		},
-		{
-			title: 'Settings',
-			url: '#',
-			icon: Settings2,
-			items: [
-				{
-					title: 'General',
-					url: '#',
-				},
-				{
-					title: 'Team',
-					url: '#',
-				},
-				{
-					title: 'Billing',
-					url: '#',
-				},
-				{
-					title: 'Limits',
-					url: '#',
-				},
-			],
-		},
 	],
 };
 
@@ -146,11 +121,39 @@ export function AppSidebar({
 			</SidebarHeader>
 			<SidebarContent>
 				<NavTodos />
-				{/* <NavMain items={data.navMain} /> */}
 				<NavProjects />
+				<NavMain items={data.navMain} />
+				<NavSettings />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser user={data.user} />
+				<InstantSignIn />
+				<SignedIn>
+					<div className="w-full hover:bg-sidebar-accent">
+						<UserButton
+							showName={isOpen}
+							appearance={{
+								elements: {
+									userButtonTrigger: {
+										padding: isOpen ? '.5rem' : '',
+										width: isOpen ? '240px' : '',
+									},
+								},
+							}}
+						/>
+					</div>
+				</SignedIn>
+				<SignedOut>
+					<SignInButton mode="modal">
+						<SidebarMenuButton size="lg">
+							<div className="w-full flex items-center justify-center gap-2">
+								{isOpen && (
+									<span className="truncate text-sm font-bold">Sign In</span>
+								)}
+								<UserCircle2 className="h-6 w-6 rounded-lg" />
+							</div>
+						</SidebarMenuButton>
+					</SignInButton>
+				</SignedOut>
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
