@@ -69,9 +69,15 @@ export function NavProjects() {
 										<span>Share Project</span>
 									</DropdownMenuItem>
 									<DropdownMenuSeparator />
-									<DropdownMenuItem>
-										<Trash2 className="text-muted-foreground" />
-										<span>Delete Project</span>
+									<DropdownMenuItem
+										onClick={() => {
+											if (confirm('Are you sure?')) {
+												db.transact(db.tx.projects[item.id].delete());
+											}
+										}}
+									>
+										<Trash2 className="text-destructive" />
+										<span className="text-destructive">Delete Project</span>
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
