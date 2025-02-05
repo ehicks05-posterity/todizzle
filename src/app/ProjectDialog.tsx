@@ -24,9 +24,15 @@ export function ProjectDialog() {
 	const [icon, setIcon] = useState('scan');
 	const [color, setColor] = useState('blue');
 
+	const { user } = db.useAuth();
+
 	const handleSave = async () => {
 		const projectId = id();
-		await db.transact(db.tx.projects[projectId].update({ title, icon, color }));
+		await db.transact(
+			db.tx.projects[projectId]
+				.update({ title, icon, color })
+				.link({ owner: user?.id }),
+		);
 		setIsOpen(false);
 	};
 

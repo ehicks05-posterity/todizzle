@@ -27,17 +27,21 @@ export const TodoForm = ({
 	const [status, setStatus] = useState<Status>('todo');
 	const [priority, setPriority] = useState<Priority>('none');
 
+	const { user } = db.useAuth();
+
 	const handleSave = async () => {
 		const todoId = id();
 		await db.transact(
-			db.tx.todos[todoId].update({
-				title,
-				description,
-				dueDate,
-				status,
-				priority,
-				createdAt: new Date().toISOString(),
-			}),
+			db.tx.todos[todoId]
+				.update({
+					title,
+					description,
+					dueDate,
+					status,
+					priority,
+					createdAt: new Date().toISOString(),
+				})
+				.link({ owner: user?.id }),
 		);
 
 		if (projectId) {
