@@ -8,23 +8,31 @@ const _schema = i.schema({
 		}),
 		todos: i.entity({
 			createdAt: i.date(),
-			title: i.string(),
 			description: i.string(),
 			dueDate: i.date(),
-			status: i.string<Status>(),
 			priority: i.string<Priority>(),
+			status: i.string<Status>(),
+			title: i.string(),
 		}),
 		projects: i.entity({
-			title: i.string(),
+			color: i.string(),
 			description: i.string(),
 			icon: i.string(),
-			color: i.string(),
+			title: i.string(),
 		}),
 	},
 	links: {
 		todoProject: {
 			forward: { on: 'todos', has: 'one', label: 'project' },
 			reverse: { on: 'projects', has: 'many', label: 'todos' },
+		},
+		userProjects: {
+			forward: { on: '$users', has: 'many', label: 'projects' },
+			reverse: { on: 'projects', has: 'one', label: 'owner' },
+		},
+		userTodos: {
+			forward: { on: '$users', has: 'many', label: 'todos' },
+			reverse: { on: 'todos', has: 'one', label: 'owner' },
 		},
 	},
 });
