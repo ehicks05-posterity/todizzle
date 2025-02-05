@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import { Redirect, Route, Switch } from 'wouter';
-import { Landing } from './Landing';
+import { Landing } from './app/Landing';
 import { Layout } from './app/Layout';
 import { Project } from './app/project/Project';
 import { ProjectList } from './app/projects/Projects';

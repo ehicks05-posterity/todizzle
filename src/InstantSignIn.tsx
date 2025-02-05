@@ -32,11 +32,8 @@ export function InstantSignIn() {
 		signInToInstantWithClerkToken();
 	}, [userId]);
 
-	const { isLoading, error } = db.useAuth();
+	const { error } = db.useAuth();
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
 	if (error) {
 		return <div>Error signing in to Instant! {error.message}</div>;
 	}

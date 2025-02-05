@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { SignInButton } from '@clerk/clerk-react';
 
-export function Hero() {
+function Hero() {
 	return (
 		<div className="flex-grow relative overflow-hidden py-24 lg:py-32">
 			{/* Gradients */}
@@ -16,7 +16,12 @@ export function Hero() {
 			<div className="relative z-10">
 				<div className="py-10 lg:py-16">
 					<div className="max-w-2xl text-center mx-auto">
-						<p className="">Get it done</p>
+						<p className="">
+							Not tomorrow.
+							<br /> Not next week.
+							<br />
+							<br /> Get it done.
+						</p>
 						{/* Title */}
 						<div className="mt-5 max-w-2xl">
 							<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
@@ -25,7 +30,8 @@ export function Hero() {
 						</div>
 						<div className="mt-5 max-w-3xl">
 							<p className="text-xl text-muted-foreground">
-								A todo app for <code className="text-violet-500">$currentYear</code>
+								A todo app for{' '}
+								<code className="font-bold text-violet-500">$currentYear</code>.
 							</p>
 						</div>
 						{/* Buttons */}
@@ -35,13 +41,21 @@ export function Hero() {
 									Get started
 								</Button>
 							</SignInButton>
-							<Button size="lg" variant="outline">
+							{/* <Button size="lg" variant="outline">
 								Learn more
-							</Button>
+							</Button> */}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	);
+}
+
+export function Landing() {
+	return (
+		<main className="grid">
+			<Hero />
+		</main>
 	);
 }
