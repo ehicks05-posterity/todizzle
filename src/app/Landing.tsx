@@ -24,14 +24,14 @@ function Hero() {
 						</p>
 						{/* Title */}
 						<div className="mt-5 max-w-2xl">
-							<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+							<h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-7xl font-logo">
 								todizzle
 							</h1>
 						</div>
 						<div className="mt-5 max-w-3xl">
 							<p className="text-xl text-muted-foreground">
 								A todo app for{' '}
-								<code className="font-bold text-violet-500">$currentYear</code>.
+								<code className="font-bold text-violet-500">$currentYear</code>
 							</p>
 						</div>
 						{/* Buttons */}
