@@ -17,9 +17,9 @@ import {
 } from '@/components/ui/sidebar';
 import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
+import { db } from '@/lib/db';
 import { Folder, Forward, MoreHorizontal, Trash2 } from 'lucide-react';
 import { Link } from 'wouter';
-import { db } from './lib/db';
 
 export function NavProjects() {
 	const { isMobile } = useSidebar();

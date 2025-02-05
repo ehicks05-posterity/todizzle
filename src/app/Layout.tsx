@@ -1,5 +1,4 @@
 import { AppSidebar } from '@/components/app-sidebar';
-import { db } from '@/components/lib/db';
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -14,7 +13,8 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { useState, type ReactNode } from 'react';
+import { db } from '@/lib/db';
+import { type ReactNode, useState } from 'react';
 import { useLocation } from 'wouter';
 
 export const parseLocation = (

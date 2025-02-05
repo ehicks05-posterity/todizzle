@@ -1,4 +1,3 @@
-import { db } from '@/components/lib/db';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -10,10 +9,11 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
+import { db } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
-import type { Priority, Status, Todo } from '../../components/lib/types';
+import type { Priority, Status, Todo } from '../../lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
 
 export const StatusDropdown = ({

@@ -1,6 +1,6 @@
+import { db } from '@/lib/db';
 import { useAuth } from '@clerk/clerk-react';
 import { useEffect } from 'react';
-import { db } from './components/lib/db';
 
 // Use the clerk client name you set in the Instant dashboard auth tab
 const CLERK_CLIENT_NAME = 'clerk';

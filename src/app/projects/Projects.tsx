@@ -1,5 +1,5 @@
-import { db } from '@/components/lib/db';
-import type { Project } from '@/components/lib/types';
+import { db } from '@/lib/db';
+import type { Project } from '@/lib/types';
 import { Link } from 'wouter';
 import { DeleteProjectButton, IconDropdown } from '../project/ProjectInputs';
 

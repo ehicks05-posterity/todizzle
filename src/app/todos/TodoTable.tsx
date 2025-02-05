@@ -1,6 +1,6 @@
-import type { Todo } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import type { Todo } from '@/lib/types';
 import { useState } from 'react';
 import { PRIORITIES, STATUSES } from '../constants';
 import { TodoRow } from './TodoRow';

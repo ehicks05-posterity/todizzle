@@ -1,4 +1,3 @@
-import { db } from '@/components/lib/db';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -12,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SidebarMenuButton } from '@/components/ui/sidebar';
+import { db } from '@/lib/db';
 import { id } from '@instantdb/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';

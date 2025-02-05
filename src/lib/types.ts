@@ -1,5 +1,5 @@
-import type { AppSchema } from '@/components/lib/db';
 import type { InstaQLEntity } from '@instantdb/react';
+import type { AppSchema } from '../../instant.schema';
 
 // biome-ignore lint/complexity/noBannedTypes: <explanation>
 export type Todo = InstaQLEntity<AppSchema, 'todos', { project: {} }>;

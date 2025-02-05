@@ -1,4 +1,4 @@
-import type { Priority, Status } from '@/components/lib/types';
+import type { Priority, Status } from '@/lib/types';
 import { i } from '@instantdb/react';
 
 const _schema = i.schema({

@@ -1,8 +1,8 @@
-import { db } from '@/components/lib/db';
-import type { Priority, Status } from '@/components/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { db } from '@/lib/db';
+import type { Priority, Status } from '@/lib/types';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
 import {

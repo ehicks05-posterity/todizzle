@@ -1,4 +1,4 @@
-import { db } from '@/components/lib/db';
+import { db } from '@/lib/db';
 import {
 	DueDatePicker,
 	PriorityDropdown,

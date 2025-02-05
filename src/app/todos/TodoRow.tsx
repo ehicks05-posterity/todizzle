@@ -1,5 +1,5 @@
-import { db } from '@/components/lib/db';
-import type { Todo } from '@/components/lib/types';
+import { db } from '@/lib/db';
+import type { Todo } from '@/lib/types';
 import { Link } from 'wouter';
 import {
 	DueDatePicker,
