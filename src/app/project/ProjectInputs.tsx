@@ -1,4 +1,3 @@
-import { db } from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -8,6 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
+import { db } from '@/lib/db';
 
 interface Props {
 	icon: string;
@@ -94,7 +94,12 @@ export const DeleteProjectButton = ({ id }: { id: string }) => {
 	};
 
 	return (
-		<Button type="button" variant="destructive" onClick={(e) => handleClick(e)}>
+		<Button
+			type="button"
+			size="sm"
+			variant="destructive"
+			onClick={(e) => handleClick(e)}
+		>
 			Delete
 		</Button>
 	);

@@ -60,15 +60,6 @@ export function NavProjects() {
 									side={isMobile ? 'bottom' : 'right'}
 									align={isMobile ? 'end' : 'start'}
 								>
-									<DropdownMenuItem>
-										<Folder className="text-muted-foreground" />
-										<span>View Project</span>
-									</DropdownMenuItem>
-									<DropdownMenuItem>
-										<Forward className="text-muted-foreground" />
-										<span>Share Project</span>
-									</DropdownMenuItem>
-									<DropdownMenuSeparator />
 									<DropdownMenuItem
 										onClick={() => {
 											if (confirm('Are you sure?')) {
@@ -76,8 +67,8 @@ export function NavProjects() {
 											}
 										}}
 									>
-										<Trash2 className="text-destructive" />
-										<span className="text-destructive">Delete Project</span>
+										<Trash2 className="text-muted-foreground" />
+										<span>Delete Project</span>
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
