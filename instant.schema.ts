@@ -48,11 +48,11 @@ const _schema = i.schema({
 			},
 		},
 		userProjects: {
-			forward: { on: '$users', has: 'many', label: 'projects' },
+			forward: { on: '$users', has: 'many', label: 'projects', onDelete: 'cascade' },
 			reverse: { on: 'projects', has: 'one', label: 'owner' },
 		},
 		userTodos: {
-			forward: { on: '$users', has: 'many', label: 'todos' },
+			forward: { on: '$users', has: 'many', label: 'todos', onDelete: 'cascade' },
 			reverse: { on: 'todos', has: 'one', label: 'owner' },
 		},
 	},
