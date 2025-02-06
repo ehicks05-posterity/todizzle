@@ -15,61 +15,66 @@ import {
 } from '@/components/ui/sidebar';
 import { db } from '@/lib/db';
 import { type ReactNode, useState } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, useRoute } from 'wouter';
 
-export const parseLocation = (
-	location: string,
-): { resource?: 'todos' | 'projects'; resourceId?: string } => {
-	const resource = location.startsWith('/todos/')
-		? 'todos'
-		: location.startsWith('/projects/')
-			? 'projects'
-			: undefined;
+export const parseLocation = () => {
+	const projectRoute = useRoute('/projects/:projectId');
+	const todoRoute = useRoute('/todos/:todoId');
+	const projectTodoRoute = useRoute('/projects/:projectId/todos/:todoId');
 
-	const resourceId = resource
-		? location.slice(location.lastIndexOf('/') + 1)
-		: undefined;
+	const defaults = { projectId: undefined, todoId: undefined };
 
-	return { resource, resourceId };
+	const match = {
+		...defaults,
+		...projectRoute[1],
+		...todoRoute[1],
+		...projectTodoRoute[1],
+	};
+
+	return match;
 };
 
 // hacky. display todo title or project name in breadcrumb.
-export const useEntityLabel = (location: string) => {
-	const { resource, resourceId } = parseLocation(location);
+export const useEntityLabel = () => {
+	const { projectId, todoId } = parseLocation();
 
 	const query =
-		resource && resourceId
+		projectId || todoId
 			? {
-					todos: {
-						$: { where: { id: resource === 'todos' ? resourceId : '' } },
-					},
-					projects: {
-						$: { where: { id: resource === 'projects' ? resourceId : '' } },
-					},
+					todos: { $: { where: { id: todoId || '' } } },
+					projects: { $: { where: { id: projectId || '' } } },
 				}
 			: null;
 
-	const { data, isLoading } = db.useQuery(query);
+	const { data } = db.useQuery(query);
 
 	const todo = data?.todos?.[0];
 	const project = data?.projects?.[0];
-	const entityLabel = todo ? todo.title : project ? project.title : undefined;
-	return { entityLabel, isLoading };
+	return { todo, project };
 };
 
 export function Breadcrumbs() {
 	const [location] = useLocation();
 
-	const { entityLabel } = useEntityLabel(location);
+	const { todo, project } = useEntityLabel();
 
 	const parts = location.split('/').filter(Boolean);
 
 	const paths = parts.map((part, i) => {
+		const previous = i > 0 ? parts[i - 1] : undefined;
 		const isTerminal = i === parts.length - 1;
-		const label =
-			isTerminal && entityLabel
-				? entityLabel
-				: part[0].toLocaleUpperCase() + part.slice(1);
+		const isEntity = previous && ['todos', 'projects'].includes(previous);
+		const entityLabel =
+			isEntity && previous === 'todos'
+				? todo?.title
+				: isEntity && previous === 'projects'
+					? project?.title
+					: undefined;
+
+		const label = entityLabel
+			? entityLabel
+			: part[0].toLocaleUpperCase() + part.slice(1);
+
 		return {
 			label,
 			path: `/${parts.slice(0, i + 1).join('/')}`,

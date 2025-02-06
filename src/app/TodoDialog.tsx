@@ -12,22 +12,19 @@ import { Plus } from 'lucide-react';
 import { useState } from 'react';
 
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useLocation } from 'wouter';
 import { parseLocation } from './Layout';
 import { TodoForm } from './todos/TodoForm';
 
 export function TodoDialog() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [location] = useLocation();
-	const { resource, resourceId } = parseLocation(location);
+	const { projectId } = parseLocation();
 
 	useHotkeys('c', (e) => {
 		e.preventDefault();
 		setIsOpen((isOpen) => !isOpen);
 	});
 
-	const defaults =
-		resource === 'projects' && resourceId ? { projectId: resourceId } : undefined;
+	const defaults = projectId ? { projectId } : undefined;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
