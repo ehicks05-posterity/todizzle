@@ -3,7 +3,6 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -18,7 +17,7 @@ import {
 import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
 import { db } from '@/lib/db';
-import { Folder, Forward, MoreHorizontal, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { Link } from 'wouter';
 
 export function NavProjects() {
