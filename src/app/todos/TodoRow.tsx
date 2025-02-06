@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import type { Todo } from '@/lib/types';
 import { Link } from 'wouter';
+import { useParseLocation } from '../Layout';
 import {
 	DueDatePicker,
 	PriorityDropdown,
@@ -9,8 +10,13 @@ import {
 } from './TodoInputs';
 
 export const TodoRow = ({ todo }: { todo: Todo }) => {
+	const { projectId } = useParseLocation();
+	const href = projectId
+		? `/projects/${projectId}/todos/${todo.id}`
+		: `/todos/${todo.id}`;
+
 	return (
-		<Link href={`/todos/${todo.id}`}>
+		<Link href={href}>
 			<div
 				className="w-full flex justify-between items-center gap-2 px-2 text-sm rounded-lg hover:bg-muted"
 				key={todo.id}

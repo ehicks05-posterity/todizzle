@@ -17,7 +17,7 @@ import { db } from '@/lib/db';
 import { type ReactNode, useState } from 'react';
 import { useLocation, useRoute } from 'wouter';
 
-export const parseLocation = () => {
+export const useParseLocation = () => {
 	const projectRoute = useRoute('/projects/:projectId');
 	const todoRoute = useRoute('/todos/:todoId');
 	const projectTodoRoute = useRoute('/projects/:projectId/todos/:todoId');
@@ -36,7 +36,7 @@ export const parseLocation = () => {
 
 // hacky. display todo title or project name in breadcrumb.
 export const useEntityLabel = () => {
-	const { projectId, todoId } = parseLocation();
+	const { projectId, todoId } = useParseLocation();
 
 	const query =
 		projectId || todoId

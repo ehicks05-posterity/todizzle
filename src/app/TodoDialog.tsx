@@ -12,12 +12,12 @@ import { Plus } from 'lucide-react';
 import { useState } from 'react';
 
 import { useHotkeys } from 'react-hotkeys-hook';
-import { parseLocation } from './Layout';
+import { useParseLocation } from './Layout';
 import { TodoForm } from './todos/TodoForm';
 
 export function TodoDialog() {
 	const [isOpen, setIsOpen] = useState(false);
-	const { projectId } = parseLocation();
+	const { projectId } = useParseLocation();
 
 	useHotkeys('c', (e) => {
 		e.preventDefault();
