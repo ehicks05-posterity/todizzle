@@ -5,6 +5,7 @@ import {
 	ProjectDropdown,
 	StatusDropdown,
 } from '../todos/TodoInputs';
+import Novel from '@/components/novel/Novel';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
@@ -29,7 +30,15 @@ export function Todo({ id }: { id: string }) {
 			>
 				{todo.title}
 			</div>
-			<div
+
+			<Novel
+				content={todo.description}
+				onUpdate={(content) =>
+					db.transact(db.tx.todos[todo.id].update({ description: content }))
+				}
+			/>
+
+			{/* <div
 				contentEditable
 				className={`focus:text-inherit bg-transparent outline-hidden ${!todo.description ? 'text-neutral-400' : ''}`}
 				onBlur={async (e) => {
@@ -45,7 +54,8 @@ export function Todo({ id }: { id: string }) {
 				suppressContentEditableWarning
 			>
 				{todo.description || 'Add a description...'}
-			</div>
+			</div> */}
+
 			<div className="grid md:grid-cols-4 gap-4">
 				<StatusDropdown status={todo.status} idOrHandler={todo.id} />
 				<PriorityDropdown priority={todo.priority} idOrHandler={todo.id} />
