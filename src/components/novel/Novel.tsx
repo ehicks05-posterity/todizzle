@@ -12,6 +12,7 @@ import {
 	useEditor,
 } from 'novel';
 import './prosemirror.css';
+import './globals.css';
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { defaultExtensions } from './extensions';
@@ -21,6 +22,8 @@ import { NodeSelector } from './selectors/NodeSelector';
 import { TextButtons } from './selectors/TextButtons';
 import { slashCommand, suggestionItems } from './suggestionItems';
 
+// Issue: this is meant to get instant updates from changes made from another device.
+// The problem is it closes the bubble menu.
 function ExternalContentSync({ content }: { content: string }) {
 	const { editor } = useEditor();
 
@@ -47,12 +50,6 @@ export default ({
 	const debouncedUpdates = useDebouncedCallback(async (editor: EditorInstance) => {
 		const json = editor.getJSON();
 		setCharsCount(editor.storage.characterCount.words());
-		// window.localStorage.setItem(
-		// 	'html-content',
-		// 	highlightCodeblocks(editor.getHTML()),
-		// );
-		// window.localStorage.setItem('novel-content', JSON.stringify(json));
-		// window.localStorage.setItem('markdown', editor.storage.markdown.getMarkdown());
 		onUpdate(JSON.stringify(json));
 		setSaveStatus('Saved');
 	}, 500);
@@ -64,8 +61,8 @@ export default ({
 					extensions={[...defaultExtensions, slashCommand]}
 					initialContent={initialContent}
 					onUpdate={({ editor }) => {
-						debouncedUpdates(editor);
 						setSaveStatus('Unsaved');
+						debouncedUpdates(editor);
 					}}
 					onCreate={({ editor }) => {
 						setCharsCount(editor.storage.characterCount.words());
@@ -76,7 +73,8 @@ export default ({
 						},
 						attributes: {
 							class:
-								'prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full',
+								'prose prose-sm dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full',
+							spellcheck: 'false',
 						},
 					}}
 				>
@@ -89,7 +87,7 @@ export default ({
 							{suggestionItems.map((item) => (
 								<EditorCommandItem
 									value={item.title}
-									onCommand={(val) => item.command(val)}
+									onCommand={(val) => item.command?.(val)}
 									className={
 										'flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent '
 									}
