@@ -123,7 +123,8 @@ export default ({
 				>
 					{saveStatus}
 				</div>
-				<div
+				{/* TODO: fix word count not updating */}
+				{/* <div
 					className={
 						charsCount
 							? 'rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground'
@@ -131,7 +132,7 @@ export default ({
 					}
 				>
 					{charsCount} Words
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
