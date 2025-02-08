@@ -10,7 +10,6 @@ import {
 import type * as React from 'react';
 
 import { InstantSignIn } from '@/InstantSignIn';
-import { NavMain } from '@/components/nav-main';
 import { NavProjects } from '@/components/nav-projects';
 import { TeamSwitcher } from '@/components/team-switcher';
 import {
@@ -122,7 +121,7 @@ export function AppSidebar({
 			<SidebarContent>
 				<NavTodos />
 				<NavProjects />
-				<NavMain items={data.navMain} />
+				{/* <NavMain items={data.navMain} /> */}
 				<NavSettings />
 			</SidebarContent>
 			<SidebarFooter>
