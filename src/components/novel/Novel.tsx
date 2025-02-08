@@ -9,11 +9,10 @@ import {
 	EditorRoot,
 	type JSONContent,
 	handleCommandNavigation,
-	useEditor,
 } from 'novel';
 import './prosemirror.css';
 import './globals.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { defaultExtensions } from './extensions';
 import { ColorSelector } from './selectors/ColorSelector';
@@ -22,36 +21,26 @@ import { NodeSelector } from './selectors/NodeSelector';
 import { TextButtons } from './selectors/TextButtons';
 import { slashCommand, suggestionItems } from './suggestionItems';
 
-// Issue: this is meant to get instant updates from changes made from another device.
-// The problem is it closes the bubble menu.
-function ExternalContentSync({ content }: { content: string }) {
-	const { editor } = useEditor();
-
-	useEffect(() => {
-		editor?.commands.setContent(JSON.parse(content));
-	}, [content, editor]);
-
-	return null;
-}
-
 export default ({
 	content,
 	onUpdate,
-}: { content: string; onUpdate: (content: string) => void }) => {
-	const [initialContent] = useState<JSONContent | undefined>(JSON.parse(content));
+}: { content?: string; onUpdate: (content: string) => void }) => {
+	const [initialContent] = useState<JSONContent | undefined>(
+		JSON.parse(content || '{}'),
+	);
 	const [saveStatus, setSaveStatus] = useState('Saved');
-	const [charsCount, setCharsCount] = useState();
+	// const [charsCount, setCharsCount] = useState();
 
 	const [openNode, setOpenNode] = useState(false);
 	const [openColor, setOpenColor] = useState(false);
 	const [openLink, setOpenLink] = useState(false);
-	const [openAI, setOpenAI] = useState(false);
+	const [openAI] = useState(false);
 
 	const debouncedUpdates = useDebouncedCallback(async (editor: EditorInstance) => {
 		const json = editor.getJSON();
-		setCharsCount(editor.storage.characterCount.words());
 		onUpdate(JSON.stringify(json));
 		setSaveStatus('Saved');
+		// setCharsCount(editor.storage.characterCount.words());
 	}, 500);
 
 	return (
@@ -64,9 +53,9 @@ export default ({
 						setSaveStatus('Unsaved');
 						debouncedUpdates(editor);
 					}}
-					onCreate={({ editor }) => {
-						setCharsCount(editor.storage.characterCount.words());
-					}}
+					// onCreate={({ editor }) => {
+					// 	setCharsCount(editor.storage.characterCount.words());
+					// }}
 					editorProps={{
 						handleDOMEvents: {
 							keydown: (_view, event) => handleCommandNavigation(event),

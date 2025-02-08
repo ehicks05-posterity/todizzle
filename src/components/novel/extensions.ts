@@ -13,12 +13,9 @@ import {
 	TaskItem,
 	TaskList,
 	TextStyle,
-	TiptapImage,
 	TiptapLink,
 	TiptapUnderline,
 	Twitter,
-	UpdatedImage,
-	UploadImagesPlugin,
 	Youtube,
 } from 'novel';
 import AutoJoiner from 'tiptap-extension-auto-joiner';
@@ -48,27 +45,6 @@ const tiptapLink = TiptapLink.configure({
 		class: cx(
 			'text-muted-foreground underline underline-offset-[3px] hover:text-primary transition-colors cursor-pointer',
 		),
-	},
-});
-
-const tiptapImage = TiptapImage.extend({
-	addProseMirrorPlugins() {
-		return [
-			UploadImagesPlugin({
-				imageClass: cx('opacity-40 rounded-lg border border-stone-200'),
-			}),
-		];
-	},
-}).configure({
-	allowBase64: true,
-	HTMLAttributes: {
-		class: cx('rounded-lg border border-muted'),
-	},
-});
-
-const updatedImage = UpdatedImage.configure({
-	HTMLAttributes: {
-		class: cx('rounded-lg border border-muted'),
 	},
 });
 
@@ -163,6 +139,27 @@ const mathematics = Mathematics.configure({
 });
 
 const characterCount = CharacterCount.configure({});
+
+// const tiptapImage = TiptapImage.extend({
+// 	addProseMirrorPlugins() {
+// 		return [
+// 			UploadImagesPlugin({
+// 				imageClass: cx('opacity-40 rounded-lg border border-stone-200'),
+// 			}),
+// 		];
+// 	},
+// }).configure({
+// 	allowBase64: true,
+// 	HTMLAttributes: {
+// 		class: cx('rounded-lg border border-muted'),
+// 	},
+// });
+
+// const updatedImage = UpdatedImage.configure({
+// 	HTMLAttributes: {
+// 		class: cx('rounded-lg border border-muted'),
+// 	},
+// });
 
 export const defaultExtensions = [
 	starterKit,

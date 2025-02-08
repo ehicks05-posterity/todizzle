@@ -22,9 +22,7 @@ Temporal.Now.zonedDateTimeISO().round({
 	roundingIncrement: 15,
 });
 
-const monthLabel = Temporal.ZonedDateTime.from(
-	'2024-11-04[America/New_York]',
-).toLocaleString('en-US', {
+Temporal.ZonedDateTime.from('2024-11-04[America/New_York]').toLocaleString('en-US', {
 	month: 'long',
 	year: 'numeric',
 });
