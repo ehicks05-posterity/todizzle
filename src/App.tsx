@@ -6,6 +6,7 @@ import { Project } from './app/project/Project';
 import { ProjectList } from './app/projects/Projects';
 import { Todo } from './app/todo/Todo';
 import { Todos } from './app/todos/Todos';
+import { Pricing } from './app/pricing/Pricing';
 
 function MyApp() {
 	return (
@@ -31,6 +32,8 @@ function MyApp() {
 							{(params) => <Project id={params.projectId} />}
 						</Route>
 						<Route path="/projects" component={ProjectList} />
+
+						<Route path="/pricing" component={Pricing} />
 
 						{/* Default route in a switch */}
 						<Route>404: No such page!</Route>

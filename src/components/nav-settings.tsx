@@ -23,6 +23,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
+import { Link } from 'wouter';
 import { ThemeToggle } from './theme-toggle';
 
 export function NavSettings() {
@@ -55,10 +56,12 @@ export function NavSettings() {
 							sideOffset={4}
 						>
 							<DropdownMenuGroup>
-								<DropdownMenuItem>
-									<Sparkles />
-									Upgrade to Pro
-								</DropdownMenuItem>
+								<Link to="/pricing">
+									<DropdownMenuItem>
+										<Sparkles />
+										Upgrade to Pro
+									</DropdownMenuItem>
+								</Link>
 							</DropdownMenuGroup>
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
