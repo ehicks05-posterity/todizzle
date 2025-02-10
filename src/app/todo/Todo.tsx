@@ -56,7 +56,7 @@ export function Todo({ id }: { id: string }) {
 				{todo.description || 'Add a description...'}
 			</div> */}
 
-			<div className="grid md:grid-cols-4 gap-4">
+			<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
 				<StatusDropdown status={todo.status} idOrHandler={todo.id} />
 				<PriorityDropdown priority={todo.priority} idOrHandler={todo.id} />
 				<ProjectDropdown projectId={todo.project?.id} idOrHandler={todo.id} />
