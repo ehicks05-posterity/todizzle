@@ -17,6 +17,7 @@ const _schema = i.schema({
 			email: i.string().unique().indexed(),
 		}),
 		customers: i.entity({
+			customerId: i.string().unique(),
 			activeProductId: i.string(),
 		}),
 		projects: i.entity({
