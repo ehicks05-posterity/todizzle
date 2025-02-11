@@ -28,7 +28,6 @@ export function InstantSignIn() {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		console.log({ userId });
 		signInToInstantWithClerkToken();
 	}, [userId]);
 
