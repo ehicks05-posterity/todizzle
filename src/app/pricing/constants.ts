@@ -37,7 +37,7 @@ export const PRODUCTS: Product[] = [
     },
     features: ['Up to 100 active todos', 'Up to 10 projects'],
     icon: Squirrel,
-    color: 'text-stone-400'
+    color: 'text-orange-600/75'
   },
   {
     id: 'prod_RkDnxPUsaC3ddQ',
