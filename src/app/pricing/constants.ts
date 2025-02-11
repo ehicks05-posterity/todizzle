@@ -15,12 +15,14 @@ export interface Product {
   color: string;
 }
 
+export const FREE_TIER_ID = 'free';
+
 export const PRODUCTS: Product[] = [
   {
-    id: 'free',
+    id: FREE_TIER_ID,
     name: 'Starter',
     price: {
-      id: 'free',
+      id: FREE_TIER_ID,
       amount: 0,
     },
     features: ['Up to 10 active todos', 'Up to 2 projects'],
