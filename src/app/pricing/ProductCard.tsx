@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import { z } from 'zod';
@@ -46,14 +47,20 @@ export function ProductCard({ product }: { product: Product }) {
 	const isCurrentPlan = product.id === CURRENT_PRODUCT;
 
 	return (
-		<div className="group flex flex-col gap-12 p-4 lg:p-8 border rounded-lg">
+		<div className="group flex flex-col gap-12 p-4 lg:p-8 border rounded-lg bg-muted/50">
 			<div>
-				<product.icon className={cn('group-hover:animate-bounce', product.color)} />
-				<div className="text-4xl font-bold text-blue-500 mix">{product.name}</div>
+				<div className="flex gap-2 justify-between items-end">
+					<div className="text-4xl font-bold text-blue-500 mix">{product.name}</div>
+					<product.icon
+						className={cn('group-hover:animate-bounce', product.color)}
+					/>
+				</div>
 				<PriceLine price={product.price} />
 			</div>
 
+			<Separator className="-my-4" />
 			<Features features={product.features} />
+			<Separator className="-my-4" />
 
 			<Button disabled={isCurrentPlan} onClick={handleClick}>
 				{isCurrentPlan ? 'Current Plan' : 'Get Started!'}
