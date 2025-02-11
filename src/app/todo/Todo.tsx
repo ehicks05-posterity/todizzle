@@ -1,3 +1,4 @@
+import Novel from '@/components/novel/Novel';
 import { db } from '@/lib/db';
 import {
 	DueDatePicker,
@@ -5,7 +6,8 @@ import {
 	ProjectDropdown,
 	StatusDropdown,
 } from '../todos/TodoInputs';
-import Novel from '@/components/novel/Novel';
+import { CreatedAt } from './CreatedAt';
+import { Separator } from '@/components/ui/separator';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
@@ -68,6 +70,8 @@ export function Todo({ id }: { id: string }) {
 					}}
 				/>
 			</div>
+			<Separator />
+			<CreatedAt date={todo.createdAt} />
 		</div>
 	);
 }

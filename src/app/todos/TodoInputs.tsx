@@ -15,6 +15,7 @@ import { CalendarIcon } from 'lucide-react';
 import { useLocation } from 'wouter';
 import type { Priority, Status, Todo } from '../../lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
+import { formatDate } from './utils';
 
 export const StatusDropdown = ({
 	status,
@@ -63,13 +64,6 @@ export const StatusDropdown = ({
 		</DropdownMenu>
 	);
 };
-
-const formatDate = (date: Date) =>
-	Intl.DateTimeFormat('en-US', {
-		month: 'short',
-		day: 'numeric',
-		year: date.getFullYear() === new Date().getFullYear() ? undefined : 'numeric',
-	}).format(date);
 
 export const DueDatePicker = ({
 	dueDate,
