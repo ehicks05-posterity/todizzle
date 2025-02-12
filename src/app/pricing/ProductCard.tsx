@@ -1,14 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { API_URL, STRIPE_CUSTOMER_PORTAL_LINK } from '@/constants/app';
 import { db } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import { z } from 'zod';
 import { Features } from './Features';
 import { PriceLine } from './PriceLine';
-import type { Product } from './constants';
+import { FREE_TIER_ID, type Product } from './constants';
+import { useActiveProductId } from './hooks';
 
-// const CREATE_CHECKOUT_URL = 'https://api.todizzle.com/payments/create-checkout-session';
-const CREATE_CHECKOUT_URL = 'http://localhost:8000/payments/test';
+const CREATE_CHECKOUT_URL = `${API_URL}/payments/create-checkout-session`;
 
 interface Params {
 	token: string;
@@ -18,7 +19,7 @@ interface Params {
 const createCheckoutSession = async ({ token, priceId }: Params) => {
 	const result = await fetch(CREATE_CHECKOUT_URL, {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json', authorization: token },
+		headers: { 'Content-Type': 'application/json', Authorization: token },
 		body: JSON.stringify({ priceId }),
 	});
 	return result.json();
@@ -37,14 +38,18 @@ const checkOut = async ({ token, priceId }: Params) => {
 
 export function ProductCard({ product }: { product: Product }) {
 	const { user } = db.useAuth();
+	const activeProductId = useActiveProductId();
+	if (!user) return null;
 
-	const handleClick = user
-		? async () => checkOut({ token: user.refresh_token, priceId: product.price.id })
-		: undefined;
+	const handleClick = () => {
+		if (activeProductId === FREE_TIER_ID) {
+			checkOut({ token: user.refresh_token, priceId: product.price.id });
+			return;
+		}
+		window.location.href = STRIPE_CUSTOMER_PORTAL_LINK;
+	};
 
-	// TODO: add to db
-	const CURRENT_PRODUCT = 'free';
-	const isCurrentPlan = product.id === CURRENT_PRODUCT;
+	const isCurrentPlan = product.id === activeProductId;
 
 	return (
 		<div className="group flex flex-col gap-12 p-4 lg:p-8 border rounded-lg bg-muted/50">
