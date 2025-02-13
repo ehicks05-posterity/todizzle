@@ -8,6 +8,7 @@
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
+		"pull": "npx instant-cli@latest pull",
 		"push": "npx instant-cli@latest push schema && npx instant-cli@latest push perms"
 	},
 	"dependencies": {

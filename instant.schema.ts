@@ -1,12 +1,13 @@
-import type { Priority, Status } from '@/lib/types';
-import { i } from '@instantdb/react';
+import type { Priority, Status } from "@/lib/types";
+import { i } from "@instantdb/react";
 
 const _schema = i.schema({
 	entities: {
 		$files: i.entity({
-			'content-disposition': i.string().indexed(),
-			'content-type': i.string().indexed(),
-			'key-version': i.number(),
+			"content-disposition": i.string().indexed(),
+			"content-type": i.string().indexed(),
+			"key-version": i.number(),
+			"location-id": i.string().unique().indexed(),
 			path: i.string().unique().indexed(),
 			size: i.number().indexed(),
 			url: i.string(),
@@ -15,8 +16,8 @@ const _schema = i.schema({
 			email: i.string().unique().indexed(),
 		}),
 		customers: i.entity({
-			customerId: i.string().unique(),
 			activeProductId: i.string(),
+			customerId: i.string().unique(),
 		}),
 		products: i.entity({
 			productId: i.string().unique(),
@@ -39,33 +40,65 @@ const _schema = i.schema({
 		}),
 	},
 	links: {
-		todosProject: {
+		customersOwner: {
 			forward: {
-				on: 'todos',
-				has: 'one',
-				label: 'project',
+				on: "customers",
+				has: "one",
+				label: "owner",
 			},
 			reverse: {
-				on: 'projects',
-				has: 'many',
-				label: 'todos',
+				on: "$users",
+				has: "one",
+				label: "customer",
 			},
 		},
-		userProduct: {
-			forward: { on: 'products', has: 'many', label: 'subscribers' },
-			reverse: { on: '$users', has: 'one', label: 'product' },
+		productsSubscribers: {
+			forward: {
+				on: "products",
+				has: "many",
+				label: "subscribers",
+			},
+			reverse: {
+				on: "$users",
+				has: "one",
+				label: "product",
+			},
 		},
-		userProjects: {
-			forward: { on: 'projects', has: 'one', label: 'owner' },
-			reverse: { on: '$users', has: 'many', label: 'projects', onDelete: 'cascade' },
+		projectsOwner: {
+			forward: {
+				on: "projects",
+				has: "one",
+				label: "owner",
+			},
+			reverse: {
+				on: "$users",
+				has: "many",
+				label: "projects",
+			},
 		},
-		userTodos: {
-			forward: { on: 'todos', has: 'one', label: 'owner' },
-			reverse: { on: '$users', has: 'many', label: 'todos', onDelete: 'cascade' },
+		todosOwner: {
+			forward: {
+				on: "todos",
+				has: "one",
+				label: "owner",
+			},
+			reverse: {
+				on: "$users",
+				has: "many",
+				label: "todos",
+			},
 		},
-		userCustomers: {
-			forward: { on: 'customers', has: 'one', label: 'owner' },
-			reverse: { on: '$users', has: 'one', label: 'customer' },
+		todosProject: {
+			forward: {
+				on: "todos",
+				has: "one",
+				label: "project",
+			},
+			reverse: {
+				on: "projects",
+				has: "many",
+				label: "todos",
+			},
 		},
 	},
 	rooms: {},
