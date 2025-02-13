@@ -1,4 +1,5 @@
 import Novel from '@/components/novel/Novel';
+import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
 import {
 	DueDatePicker,
@@ -7,7 +8,6 @@ import {
 	StatusDropdown,
 } from '../todos/TodoInputs';
 import { CreatedAt } from './CreatedAt';
-import { Separator } from '@/components/ui/separator';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
@@ -69,9 +69,9 @@ export function Todo({ id }: { id: string }) {
 						await db.transact(db.tx.todos[todo.id].update({ dueDate }));
 					}}
 				/>
+				<Separator className="col-span-full" />
+				<CreatedAt date={todo.createdAt} />
 			</div>
-			<Separator />
-			<CreatedAt date={todo.createdAt} />
 		</div>
 	);
 }
