@@ -1,11 +1,8 @@
 import {
 	AudioWaveform,
-	BookOpen,
-	Bot,
 	Command,
 	GalleryVerticalEnd,
 	Loader2,
-	SquareTerminal,
 	UserCircle2,
 } from 'lucide-react';
 import type * as React from 'react';
@@ -45,70 +42,6 @@ const data = {
 			plan: 'Free',
 		},
 	],
-	navMain: [
-		{
-			title: 'Playground',
-			url: '#',
-			icon: SquareTerminal,
-			isActive: true,
-			items: [
-				{
-					title: 'History',
-					url: '#',
-				},
-				{
-					title: 'Starred',
-					url: '#',
-				},
-				{
-					title: 'Settings',
-					url: '#',
-				},
-			],
-		},
-		{
-			title: 'Models',
-			url: '#',
-			icon: Bot,
-			items: [
-				{
-					title: 'Genesis',
-					url: '#',
-				},
-				{
-					title: 'Explorer',
-					url: '#',
-				},
-				{
-					title: 'Quantum',
-					url: '#',
-				},
-			],
-		},
-		{
-			title: 'Documentation',
-			url: '#',
-			icon: BookOpen,
-			items: [
-				{
-					title: 'Introduction',
-					url: '#',
-				},
-				{
-					title: 'Get Started',
-					url: '#',
-				},
-				{
-					title: 'Tutorials',
-					url: '#',
-				},
-				{
-					title: 'Changelog',
-					url: '#',
-				},
-			],
-		},
-	],
 };
 
 export function AppSidebar({
@@ -123,7 +56,6 @@ export function AppSidebar({
 			<SidebarContent>
 				<NavTodos />
 				<NavProjects />
-				{/* <NavMain items={data.navMain} /> */}
 				<NavSettings />
 			</SidebarContent>
 			<SidebarFooter>
