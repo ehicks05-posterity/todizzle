@@ -3,8 +3,8 @@ import {
 	BookOpen,
 	Bot,
 	Command,
-	CreditCard,
 	GalleryVerticalEnd,
+	Loader2,
 	SquareTerminal,
 	UserCircle2,
 } from 'lucide-react';
@@ -144,7 +144,7 @@ export function AppSidebar({
 							<UserButton.UserProfilePage
 								label="Usage"
 								url="usage"
-								labelIcon={<CreditCard size={16} />}
+								labelIcon={<Loader2 size={16} />}
 							>
 								<Usage />
 							</UserButton.UserProfilePage>
