@@ -11,6 +11,14 @@ const rules = {
 		}
 	},
 	// NOTE: $users is read-only and defaults to can-view-self only.
+	products: {
+		allow: {
+			view: 'true',
+			create: 'false',
+			update: 'false',
+			delete: 'false',
+		},
+	},
 	projects: {
 		bind: ['isOwner', "auth.id != null && auth.id in data.ref('owner.id')"],
 		allow: {

@@ -7,10 +7,8 @@ const _schema = i.schema({
 			'content-disposition': i.string().indexed(),
 			'content-type': i.string().indexed(),
 			'key-version': i.number(),
-			metadata: i.string(),
-			path: i.string().indexed(),
+			path: i.string().unique().indexed(),
 			size: i.number().indexed(),
-			status: i.string().indexed(),
 			url: i.string(),
 		}),
 		$users: i.entity({
@@ -19,6 +17,11 @@ const _schema = i.schema({
 		customers: i.entity({
 			customerId: i.string().unique(),
 			activeProductId: i.string(),
+		}),
+		products: i.entity({
+			productId: i.string().unique(),
+			projectLimit: i.number(),
+			todoLimit: i.number(),
 		}),
 		projects: i.entity({
 			color: i.string(),
@@ -47,6 +50,10 @@ const _schema = i.schema({
 				has: 'many',
 				label: 'todos',
 			},
+		},
+		userProduct: {
+			forward: { on: 'products', has: 'many', label: 'subscribers' },
+			reverse: { on: '$users', has: 'one', label: 'product' },
 		},
 		userProjects: {
 			forward: { on: 'projects', has: 'one', label: 'owner' },
