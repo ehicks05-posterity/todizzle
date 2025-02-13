@@ -17,6 +17,14 @@ const rules = {
 			update: "isOwner",
 		},
 	},
+	$users: {
+		allow: {
+			view: "auth.id == data.id",
+			create: "false",
+			update: "false",
+			delete: "false",
+		},
+	},
 	$default: {
 		allow: {
 			$default: "false",
