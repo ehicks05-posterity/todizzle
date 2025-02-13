@@ -3,6 +3,7 @@ import {
 	BookOpen,
 	Bot,
 	Command,
+	CreditCard,
 	GalleryVerticalEnd,
 	SquareTerminal,
 	UserCircle2,
@@ -10,6 +11,7 @@ import {
 import type * as React from 'react';
 
 import { InstantSignIn } from '@/InstantSignIn';
+import { Usage } from '@/app/pricing/Usage';
 import { NavProjects } from '@/components/nav-projects';
 import { TeamSwitcher } from '@/components/team-switcher';
 import {
@@ -138,7 +140,15 @@ export function AppSidebar({
 									},
 								},
 							}}
-						/>
+						>
+							<UserButton.UserProfilePage
+								label="Usage"
+								url="usage"
+								labelIcon={<CreditCard size={16} />}
+							>
+								<Usage />
+							</UserButton.UserProfilePage>
+						</UserButton>
 					</div>
 				</SignedIn>
 				<SignedOut>

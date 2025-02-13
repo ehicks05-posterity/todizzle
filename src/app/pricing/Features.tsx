@@ -1,12 +1,13 @@
 import { Check } from 'lucide-react';
+import { RESOURCES, type ResourceLimit } from './constants';
 
-export function Features({ features }: { features: string[] }) {
+export function Features({ limits }: { limits: ResourceLimit[] }) {
 	return (
 		<ul>
-			{features.map((feature) => (
-				<li className="flex items-center gap-2" key={feature}>
+			{limits.map((limit) => (
+				<li className="flex items-center gap-2" key={limit.resource}>
 					<Check size={16} className="text-green-500 stroke-[3.5]" />
-					{feature}
+					Up to {limit.amount} {RESOURCES[limit.resource].label}
 				</li>
 			))}
 		</ul>

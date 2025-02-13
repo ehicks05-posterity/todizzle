@@ -64,7 +64,7 @@ export function ProductCard({ product }: { product: Product }) {
 			</div>
 
 			<Separator className="-my-4" />
-			<Features features={product.features} />
+			<Features limits={product.limits} />
 			<Separator className="-my-4" />
 
 			<Button disabled={isCurrentPlan} onClick={handleClick}>
