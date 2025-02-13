@@ -1,13 +1,6 @@
 'use client';
 
-import {
-	BadgeCheck,
-	Bell,
-	ChevronsUpDown,
-	CreditCard,
-	Settings2,
-	Sparkles,
-} from 'lucide-react';
+import { Bell, ChevronsUpDown, Loader2, Settings2, Sparkles } from 'lucide-react';
 
 import {
 	DropdownMenu,
@@ -59,20 +52,18 @@ export function NavSettings() {
 								<Link to="/pricing">
 									<DropdownMenuItem>
 										<Sparkles />
-										Upgrade to Pro
+										Plans and Pricing
 									</DropdownMenuItem>
 								</Link>
 							</DropdownMenuGroup>
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
-								<DropdownMenuItem>
-									<BadgeCheck />
-									Account
-								</DropdownMenuItem>
-								<DropdownMenuItem>
-									<CreditCard />
-									Billing
-								</DropdownMenuItem>
+								<Link to="/pricing">
+									<DropdownMenuItem>
+										<Loader2 />
+										Usage
+									</DropdownMenuItem>
+								</Link>
 								<DropdownMenuItem>
 									<Bell />
 									Notifications

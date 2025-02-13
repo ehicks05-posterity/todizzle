@@ -1,6 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Info } from 'lucide-react';
 import { ProductCard } from './ProductCard';
+import { Usage } from './Usage';
 import { FREE_TIER_ID, PRODUCTS } from './constants';
 import { useActiveProductId } from './hooks';
 
@@ -27,6 +28,9 @@ export function Pricing() {
 						<ProductCard key={product.id} product={product} />
 					))}
 				</div>
+			</div>
+			<div className="bg-muted/50 rounded-lg p-4 max-w-xl">
+				<Usage />
 			</div>
 		</div>
 	);
