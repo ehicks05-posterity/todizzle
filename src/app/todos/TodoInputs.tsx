@@ -93,7 +93,7 @@ export const DueDatePicker = ({
 					mode="single"
 					selected={dueDate ? new Date(dueDate) : undefined}
 					onSelect={handleSelect}
-					initialFocus
+					autoFocus
 				/>
 			</PopoverContent>
 		</Popover>
