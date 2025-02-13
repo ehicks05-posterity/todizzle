@@ -1,6 +1,7 @@
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
+import { Fragment } from 'react';
 import { PRODUCTS } from './constants';
 import { useActiveProductId } from './hooks';
 
@@ -49,12 +50,9 @@ export function Usage() {
 			<div className="flex gap-4 justify-start">
 				<div className="flex flex-col gap-2 justify-between w-full">
 					{usage.map((usage, i) => (
-						<>
+						<Fragment key={usage.label}>
 							{i !== 0 && <Separator className="bg-white/7" />}
-							<div
-								key={usage.label}
-								className="flex items-center justify-items-stretch gap-2"
-							>
+							<div className="flex items-center justify-items-stretch gap-2">
 								<div className="flex flex-col w-44">
 									<div className="font-medium text-sm">{usage.label}</div>
 									<span className="text-sm">{usage.asFraction}</span>
@@ -66,7 +64,7 @@ export function Usage() {
 									</div>
 								</div>
 							</div>
-						</>
+						</Fragment>
 					))}
 				</div>
 			</div>
