@@ -46,20 +46,23 @@ export function Usage() {
 	return (
 		<div className="grid gap-4">
 			<div className="text-[17px] font-[700]">Usage</div>
-			<div className="grid gap-4 justify-start">
-				<div className="flex flex-col gap-2 lg:gap-4">
+			<div className="flex gap-4 justify-start">
+				<div className="flex flex-col gap-2 justify-between w-full">
 					{usage.map((usage, i) => (
 						<>
 							{i !== 0 && <Separator className="bg-white/7" />}
-							<div key={usage.label} className="flex flex-col gap-2 min-w-64">
-								<div className="flex justify-between items-baseline">
+							<div
+								key={usage.label}
+								className="flex items-center justify-items-stretch gap-2"
+							>
+								<div className="flex flex-col w-44">
 									<div className="font-medium text-sm">{usage.label}</div>
-									<span>{usage.asFraction}</span>
+									<span className="text-sm">{usage.asFraction}</span>
 								</div>
-								<div className="flex flex-col items-end">
+								<div className="flex flex-col items-end w-full">
 									<Progress value={usage.asPercentRaw} />
 									<div className="flex gap-4 justify-between">
-										<span>{usage.asPercent}</span>
+										<span className="text-sm">{usage.asPercent}</span>
 									</div>
 								</div>
 							</div>
