@@ -3,16 +3,16 @@ import { Info } from 'lucide-react';
 import { ProductCard } from './ProductCard';
 import { Usage } from './Usage';
 import { FREE_TIER_ID, PRODUCTS } from './constants';
-import { useActiveProductId } from './hooks';
+import { useActiveProduct } from './hooks';
 
 export function Pricing() {
-	const activeProductId = useActiveProductId();
+	const activeProduct = useActiveProduct();
 
 	return (
 		<div className="grid gap-4">
 			<div className="text-4xl font-bold">Plans</div>
 			<div className="grid gap-4 justify-start">
-				{activeProductId !== FREE_TIER_ID && (
+				{activeProduct?.productId !== FREE_TIER_ID && (
 					<Alert>
 						<Info />
 						<AlertTitle>Making changes to your plan</AlertTitle>

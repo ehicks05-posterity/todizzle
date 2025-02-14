@@ -2,34 +2,25 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
 import { Fragment } from 'react';
-import { PRODUCTS } from './constants';
-import { useActiveProductId } from './hooks';
+import { useActiveProduct } from './hooks';
 
 const percent = Intl.NumberFormat('en-US', { style: 'percent' });
 
 export function useUsage() {
 	const { data } = db.useQuery({ projects: {}, todos: {} });
 
-	const activeProductId = useActiveProductId();
-	const productLimits = PRODUCTS.find(
-		(product) => product.id === activeProductId,
-	)?.limits;
+	const activeProduct = useActiveProduct();
 
 	const usage = [
 		{
 			label: 'Projects',
 			used: data?.projects.length || 0,
-			limit:
-				productLimits?.find((productLimit) => productLimit.resource === 'projects')
-					?.amount || Number.POSITIVE_INFINITY,
+			limit: activeProduct?.projectLimit || Number.POSITIVE_INFINITY,
 		},
 		{
 			label: 'Todos',
 			used: data?.todos.length || 0,
-			limit:
-				productLimits?.find(
-					(productLimit) => productLimit.resource === 'activeTodos',
-				)?.amount || Number.POSITIVE_INFINITY,
+			limit: activeProduct?.todoLimit || Number.POSITIVE_INFINITY,
 		},
 	].map((usage) => ({
 		...usage,
@@ -43,6 +34,7 @@ export function useUsage() {
 
 export function Usage() {
 	const usage = useUsage();
+	const activeProduct = useActiveProduct();
 
 	return (
 		<div className="grid gap-4">
@@ -68,6 +60,7 @@ export function Usage() {
 					))}
 				</div>
 			</div>
+			<pre>{JSON.stringify(activeProduct, null, 2)}</pre>
 		</div>
 	);
 }

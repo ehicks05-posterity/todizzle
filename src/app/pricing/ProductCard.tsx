@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { Features } from './Features';
 import { PriceLine } from './PriceLine';
 import { FREE_TIER_ID, type Product } from './constants';
-import { useActiveProductId } from './hooks';
+import { useActiveProduct } from './hooks';
 
 const CREATE_CHECKOUT_URL = `${API_URL}/payments/create-checkout-session`;
 
@@ -38,18 +38,18 @@ const checkOut = async ({ token, priceId }: Params) => {
 
 export function ProductCard({ product }: { product: Product }) {
 	const { user } = db.useAuth();
-	const activeProductId = useActiveProductId();
+	const activeProduct = useActiveProduct();
 	if (!user) return null;
 
 	const handleClick = () => {
-		if (activeProductId === FREE_TIER_ID) {
+		if (activeProduct?.productId === FREE_TIER_ID) {
 			checkOut({ token: user.refresh_token, priceId: product.price.id });
 			return;
 		}
 		window.location.href = STRIPE_CUSTOMER_PORTAL_LINK;
 	};
 
-	const isCurrentPlan = product.id === activeProductId;
+	const isCurrentPlan = product.id === activeProduct?.productId;
 
 	return (
 		<div className="group flex flex-col gap-12 p-4 lg:p-8 border rounded-lg bg-muted/50">
