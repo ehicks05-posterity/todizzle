@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { z } from 'zod';
 import { Features } from './Features';
 import { PriceLine } from './PriceLine';
-import { FREE_TIER_ID, type Product } from './constants';
+import type { Product } from './constants';
 import { useActiveProduct } from './hooks';
 
 const CREATE_CHECKOUT_URL = `${API_URL}/payments/create-checkout-session`;
@@ -42,11 +42,11 @@ export function ProductCard({ product }: { product: Product }) {
 	if (!user) return null;
 
 	const handleClick = () => {
-		if (activeProduct?.productId === FREE_TIER_ID) {
+		if (activeProduct?.isPayingUser) {
+			window.location.href = STRIPE_CUSTOMER_PORTAL_LINK;
+		} else {
 			checkOut({ token: user.refresh_token, priceId: product.price.id });
-			return;
 		}
-		window.location.href = STRIPE_CUSTOMER_PORTAL_LINK;
 	};
 
 	const isCurrentPlan = product.id === activeProduct?.productId;
