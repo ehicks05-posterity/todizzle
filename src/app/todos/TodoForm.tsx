@@ -1,8 +1,10 @@
+import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { db } from '@/lib/db';
 import type { Priority, Status } from '@/lib/types';
+import { getErrorMessage } from '@/lib/utils';
 import { id } from '@instantdb/react';
 import { useState } from 'react';
 import {
@@ -27,28 +29,37 @@ export const TodoForm = ({
 	const [status, setStatus] = useState<Status>('todo');
 	const [priority, setPriority] = useState<Priority>('none');
 
+	const [error, setError] = useState('');
+
 	const { user } = db.useAuth();
 
 	const handleSave = async () => {
-		const todoId = id();
-		await db.transact(
-			db.tx.todos[todoId]
-				.update({
-					title,
-					description,
-					dueDate,
-					status,
-					priority,
-					createdAt: new Date().toISOString(),
-				})
-				.link({ owner: user?.id }),
-		);
+		try {
+			const todoId = id();
+			await db.transact(
+				db.tx.todos[todoId]
+					.update({
+						title,
+						description,
+						dueDate,
+						status,
+						priority,
+						createdAt: new Date().toISOString(),
+					})
+					.link({ owner: user?.id }),
+			);
 
-		if (projectId) {
-			await db.transact(db.tx.todos[todoId].link({ project: projectId }));
+			if (projectId) {
+				await db.transact(db.tx.todos[todoId].link({ project: projectId }));
+			}
+
+			setError('');
+			if (onSubmit) onSubmit();
+		} catch (e) {
+			if (getErrorMessage(e)?.startsWith('Permission denied')) {
+				setError('Permission denied. Check your plan limits.');
+			}
 		}
-
-		if (onSubmit) onSubmit();
 	};
 
 	const isValid = title.length !== 0;
@@ -93,6 +104,16 @@ export const TodoForm = ({
 				<Label htmlFor="status">Status</Label>
 				<PriorityDropdown priority={priority} idOrHandler={setPriority} />
 			</div>
+
+			{error && (
+				<Alert
+					variant="destructive"
+					className="col-span-2 dark:text-red-500 dark:border-red-500"
+				>
+					{error}
+				</Alert>
+			)}
+
 			<div className="grid w-full max-w-sm items-center gap-1.5">
 				<Button type="button" onClick={handleSave} disabled={!isValid}>
 					Save
