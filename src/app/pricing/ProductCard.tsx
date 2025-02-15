@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { API_URL, STRIPE_CUSTOMER_PORTAL_LINK } from '@/constants/app';
 import { db } from '@/lib/db';
 import { cn } from '@/lib/utils';
@@ -53,9 +52,11 @@ export function ProductCard({ product }: { product: Product }) {
 
 	return (
 		<div className="group flex flex-col gap-12 p-4 lg:p-8 border rounded-lg bg-muted/50">
-			<div>
+			<div className="grid gap-4">
 				<div className="flex gap-2 justify-between items-end">
-					<div className="text-4xl font-bold text-blue-500 mix">{product.name}</div>
+					<div className="font-bold text-blue-500 dark:text-blue-400">
+						{product.name}
+					</div>
 					<product.icon
 						className={cn('group-hover:animate-bounce', product.color)}
 					/>
@@ -63,9 +64,7 @@ export function ProductCard({ product }: { product: Product }) {
 				<PriceLine price={product.price} />
 			</div>
 
-			<Separator className="-my-4" />
 			<Features limits={product.limits} />
-			<Separator className="-my-4" />
 
 			<Button disabled={isCurrentPlan} onClick={handleClick}>
 				{isCurrentPlan ? 'Current Plan' : 'Get Started!'}

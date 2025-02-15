@@ -10,7 +10,7 @@ export function PriceLine({ price }: { price: Price }) {
 
 	return (
 		<div>
-			<span className="text-xl font-semibold">{amount}</span>
+			<span className="text-4xl font-semibold">{amount}</span>
 			{price.freq && (
 				<span className="text-sm text-muted-foreground">{price.freq}</span>
 			)}
