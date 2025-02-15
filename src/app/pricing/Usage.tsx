@@ -34,7 +34,6 @@ export function useUsage() {
 
 export function Usage() {
 	const usage = useUsage();
-	const activeProduct = useActiveProduct();
 
 	return (
 		<div className="grid gap-4">
@@ -60,7 +59,6 @@ export function Usage() {
 					))}
 				</div>
 			</div>
-			<pre>{JSON.stringify(activeProduct, null, 2)}</pre>
 		</div>
 	);
 }
