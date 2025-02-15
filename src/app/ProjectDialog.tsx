@@ -1,3 +1,4 @@
+import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -12,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { db } from '@/lib/db';
+import { getErrorMessage } from '@/lib/utils';
 import { id } from '@instantdb/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
@@ -24,16 +26,26 @@ export function ProjectDialog() {
 	const [icon, setIcon] = useState('scan');
 	const [color, setColor] = useState('blue');
 
+	const [error, setError] = useState('');
+
 	const { user } = db.useAuth();
 
 	const handleSave = async () => {
 		const projectId = id();
-		await db.transact(
-			db.tx.projects[projectId]
-				.update({ title, icon, color })
-				.link({ owner: user?.id }),
-		);
-		setIsOpen(false);
+
+		try {
+			await db.transact(
+				db.tx.projects[projectId]
+					.update({ title, icon, color })
+					.link({ owner: user?.id }),
+			);
+			setError('');
+			setIsOpen(false);
+		} catch (e) {
+			if (getErrorMessage(e)?.startsWith('Permission denied')) {
+				setError('Permission denied. Check your plan limits.');
+			}
+		}
 	};
 
 	const isValid = title.length > 0;
@@ -82,6 +94,15 @@ export function ProjectDialog() {
 						<ColorDropdown color={color} setColor={setColor} />
 					</div>
 				</div>
+
+				{error && (
+					<Alert
+						variant="destructive"
+						className="dark:text-red-500 dark:border-red-500"
+					>
+						{error}
+					</Alert>
+				)}
 
 				<DialogFooter>
 					<Button type="button" onClick={handleSave} disabled={!isValid}>
