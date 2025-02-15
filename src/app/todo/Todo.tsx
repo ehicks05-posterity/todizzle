@@ -7,7 +7,7 @@ import {
 	ProjectDropdown,
 	StatusDropdown,
 } from '../todos/TodoInputs';
-import { CreatedAt } from './CreatedAt';
+import { AddedOn } from './AddedOn';
 
 export function Todo({ id }: { id: string }) {
 	const { data } = db.useQuery({ todos: { $: { where: { id } }, project: {} } });
@@ -70,7 +70,7 @@ export function Todo({ id }: { id: string }) {
 					}}
 				/>
 				<Separator className="col-span-full" />
-				<CreatedAt date={todo.createdAt} />
+				<AddedOn date={todo.createdAt} />
 			</div>
 		</div>
 	);
