@@ -1,3 +1,4 @@
+import { Alert } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
@@ -37,24 +38,37 @@ export function Usage() {
 
 	return (
 		<div className="grid gap-4">
-			<div className="text-[17px] font-[700]">Usage</div>
+			<div className="text-[17px] font-[700] leading-6">Usage</div>
+			<Separator className="bg-white/7 h-[.667px]" />
 			<div className="flex gap-4 justify-start">
 				<div className="flex flex-col gap-2 justify-between w-full">
 					{usage.map((usage, i) => (
 						<Fragment key={usage.label}>
-							{i !== 0 && <Separator className="bg-white/7" />}
-							<div className="flex items-center justify-items-stretch gap-2">
+							{i !== 0 && <Separator className="bg-white/7 h-[.667px]" />}
+							<div className="flex items-baseline justify-items-stretch gap-2 py-2 text-[13px]">
 								<div className="flex flex-col w-44">
-									<div className="font-medium text-sm">{usage.label}</div>
-									<span className="text-sm">{usage.asFraction}</span>
+									<div className="font-medium">{usage.label}</div>
 								</div>
 								<div className="flex flex-col items-end w-full">
 									<Progress value={usage.asPercentRaw} />
-									<div className="flex gap-4 justify-between">
-										<span className="text-sm">{usage.asPercent}</span>
+									<div className="flex gap-4 justify-between w-full">
+										<span>{usage.asFraction}</span>
+										<span>{usage.asPercent}</span>
 									</div>
 								</div>
 							</div>
+							{usage.asPercentRaw >= 75 && (
+								<Alert
+									variant="destructive"
+									className="dark:text-red-500 dark:border-red-500"
+								>
+									{usage.asPercentRaw > 100
+										? 'Your limit has been exceeded!'
+										: usage.asPercentRaw === 100
+											? 'Your limit has been reached!'
+											: 'You are nearing your limit.'}
+								</Alert>
+							)}
 						</Fragment>
 					))}
 				</div>
