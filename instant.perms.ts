@@ -12,8 +12,12 @@ const rules = {
 		bind: [
 			"isOwner",
 			"auth.id != null && auth.id in data.ref('owner.id')",
+			"todoCount",
+			"size(data.ref('owner.todos.id'))",
+			"todoLimit",
+			"data.ref('owner.product.todoLimit').map(x, int(x))[0]",
 			"isUnderLimit",
-			"size(data.ref('owner.todos.id')) <= data.ref('owner.product.todoLimit')[0]"
+			"todoCount <= todoLimit"
 		],
 		allow: {
 			view: "isOwner",
