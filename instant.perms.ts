@@ -9,10 +9,15 @@ const rules = {
 		},
 	},
 	todos: {
-		bind: ["isOwner", "auth.id != null && auth.id in data.ref('owner.id')"],
+		bind: [
+			"isOwner",
+			"auth.id != null && auth.id in data.ref('owner.id')",
+			"isUnderLimit",
+			"size(data.ref('owner.todos.id')) <= data.ref('owner.product.todoLimit')[0]"
+		],
 		allow: {
 			view: "isOwner",
-			create: "isOwner",
+			create: "isOwner && isUnderLimit",
 			delete: "isOwner",
 			update: "isOwner",
 		},
