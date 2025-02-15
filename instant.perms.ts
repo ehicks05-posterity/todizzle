@@ -12,12 +12,12 @@ const rules = {
 		bind: [
 			"isOwner",
 			"auth.id != null && auth.id in data.ref('owner.id')",
-			"todoCount",
+			"count",
 			"size(data.ref('owner.todos.id'))",
-			"todoLimit",
+			"limit",
 			"data.ref('owner.product.todoLimit').map(x, int(x))[0]",
 			"isUnderLimit",
-			"todoCount <= todoLimit"
+			"count <= limit"
 		],
 		allow: {
 			view: "isOwner",
@@ -48,7 +48,16 @@ const rules = {
 		},
 	},
 	projects: {
-		bind: ["isOwner", "auth.id != null && auth.id in data.ref('owner.id')"],
+		bind: [
+			"isOwner",
+			"auth.id != null && auth.id in data.ref('owner.id')",
+			"count",
+			"size(data.ref('owner.projects.id'))",
+			"limit",
+			"data.ref('owner.product.projectLimit').map(x, int(x))[0]",
+			"isUnderLimit",
+			"count <= limit"
+		],
 		allow: {
 			view: "isOwner",
 			create: "isOwner",
