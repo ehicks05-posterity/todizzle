@@ -28,7 +28,7 @@ export default ({
 	const [initialContent] = useState<JSONContent | undefined>(
 		JSON.parse(content || '{}'),
 	);
-	const [saveStatus, setSaveStatus] = useState('Saved');
+	const [, setSaveStatus] = useState('Saved');
 	const [, setWordCount] = useState(0);
 
 	const [openNode, setOpenNode] = useState(false);
@@ -106,7 +106,7 @@ export default ({
 				</EditorContent>
 			</EditorRoot>
 			<div className="flex absolute right-5 top-5 z-10 mb-5 gap-2">
-				<SaveStatus status={saveStatus} />
+				{/* <SaveStatus status={saveStatus} /> */}
 				{/* TODO: fix word count not updating */}
 				{/* <WordCount count={wordCount} /> */}
 			</div>
@@ -114,7 +114,7 @@ export default ({
 	);
 };
 
-const SaveStatus = ({ status }: { status: string }) => (
+export const SaveStatus = ({ status }: { status: string }) => (
 	<div
 		className={`rounded-lg bg-accent px-2 py-1 text-sm ${status === 'Saved' ? 'text-green-500' : 'text-muted-foreground'}`}
 	>
