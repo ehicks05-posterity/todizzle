@@ -29,7 +29,7 @@ export default ({
 		JSON.parse(content || '{}'),
 	);
 	const [saveStatus, setSaveStatus] = useState('Saved');
-	// const [charsCount, setCharsCount] = useState();
+	const [, setWordCount] = useState(0);
 
 	const [openNode, setOpenNode] = useState(false);
 	const [openColor, setOpenColor] = useState(false);
@@ -40,7 +40,7 @@ export default ({
 		const json = editor.getJSON();
 		onUpdate(JSON.stringify(json));
 		setSaveStatus('Saved');
-		// setCharsCount(editor.storage.characterCount.words());
+		setWordCount(editor.storage.characterCount.words());
 	}, 500);
 
 	return (
@@ -53,9 +53,9 @@ export default ({
 						setSaveStatus('Unsaved');
 						debouncedUpdates(editor);
 					}}
-					// onCreate={({ editor }) => {
-					// 	setCharsCount(editor.storage.characterCount.words());
-					// }}
+					onCreate={({ editor }) => {
+						setWordCount(editor.storage.characterCount.words());
+					}}
 					editorProps={{
 						handleDOMEvents: {
 							keydown: (_view, event) => handleCommandNavigation(event),
@@ -107,22 +107,30 @@ export default ({
 				</EditorContent>
 			</EditorRoot>
 			<div className="flex absolute right-5 top-5 z-10 mb-5 gap-2">
-				<div
-					className={`rounded-lg bg-accent px-2 py-1 text-sm ${saveStatus === 'Saved' ? 'text-green-500' : 'text-muted-foreground'}`}
-				>
-					{saveStatus}
-				</div>
+				<SaveStatus status={saveStatus} />
 				{/* TODO: fix word count not updating */}
-				{/* <div
-					className={
-						charsCount
-							? 'rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground'
-							: 'hidden'
-					}
-				>
-					{charsCount} Words
-				</div> */}
+				{/* <WordCount count={wordCount} /> */}
 			</div>
 		</div>
 	);
 };
+
+const SaveStatus = ({ status }: { status: string }) => (
+	<div
+		className={`rounded-lg bg-accent px-2 py-1 text-sm ${status === 'Saved' ? 'text-green-500' : 'text-muted-foreground'}`}
+	>
+		{status}
+	</div>
+);
+
+export const WordCount = ({ count }: { count: number }) => (
+	<div
+		className={
+			count
+				? 'rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground'
+				: 'hidden'
+		}
+	>
+		{count} Words
+	</div>
+);
