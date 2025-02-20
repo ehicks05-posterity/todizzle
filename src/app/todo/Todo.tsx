@@ -40,24 +40,6 @@ export function Todo({ id }: { id: string }) {
 				}
 			/>
 
-			{/* <div
-				contentEditable
-				className={`focus:text-inherit bg-transparent outline-hidden ${!todo.description ? 'text-neutral-400' : ''}`}
-				onBlur={async (e) => {
-					const value = e.target.textContent || undefined;
-					await db.transact(db.tx.todos[todo.id].update({ description: value }));
-					e.target.textContent = value || 'Add a description...';
-				}}
-				onFocus={(e) => {
-					if (!todo.description) {
-						e.target.textContent = '';
-					}
-				}}
-				suppressContentEditableWarning
-			>
-				{todo.description || 'Add a description...'}
-			</div> */}
-
 			<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
 				<StatusDropdown status={todo.status} idOrHandler={todo.id} />
 				<PriorityDropdown priority={todo.priority} idOrHandler={todo.id} />
