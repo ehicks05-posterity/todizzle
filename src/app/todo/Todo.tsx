@@ -16,25 +16,36 @@ export function Todo({ id }: { id: string }) {
 	if (!todo) return null;
 
 	return (
-		<>
-			<div className="grid gap-4 p-4 bg-muted/50 rounded-lg">
-				<div
-					contentEditable
-					className="text-3xl font-bold bg-transparent outline-hidden"
-					onBlur={async (e) => {
-						const value = e.target.textContent;
-						if (value) {
-							await db.transact(db.tx.todos[todo.id].update({ title: value }));
-						} else {
-							e.target.textContent = todo.title;
-						}
-					}}
-					suppressContentEditableWarning
-				>
-					{todo.title}
-				</div>
+		<div className="flex flex-col md:flex-row gap-4">
+			<div className="w-full">
+				<div className="grid bg-muted/50 rounded-lg">
+					<div
+						contentEditable
+						className="p-4 text-3xl font-bold bg-transparent outline-hidden"
+						onBlur={async (e) => {
+							const value = e.target.textContent;
+							if (value) {
+								await db.transact(db.tx.todos[todo.id].update({ title: value }));
+							} else {
+								e.target.textContent = todo.title;
+							}
+						}}
+						suppressContentEditableWarning
+					>
+						{todo.title}
+					</div>
+					<Separator />
 
-				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+					<Novel
+						content={todo.description}
+						onUpdate={(content) =>
+							db.transact(db.tx.todos[todo.id].update({ description: content }))
+						}
+					/>
+				</div>
+			</div>
+			<div className="p-4 bg-muted/50 rounded-lg">
+				<div className="flex flex-col gap-4">
 					<StatusDropdown status={todo.status} idOrHandler={todo.id} />
 					<PriorityDropdown priority={todo.priority} idOrHandler={todo.id} />
 					<ProjectDropdown projectId={todo.project?.id} idOrHandler={todo.id} />
@@ -49,14 +60,6 @@ export function Todo({ id }: { id: string }) {
 					<AddedOn date={todo.createdAt} />
 				</div>
 			</div>
-			<div className="bg-muted/50 rounded-lg">
-				<Novel
-					content={todo.description}
-					onUpdate={(content) =>
-						db.transact(db.tx.todos[todo.id].update({ description: content }))
-					}
-				/>
-			</div>
-		</>
+		</div>
 	);
 }
