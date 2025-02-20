@@ -38,25 +38,24 @@ export const useParseLocation = () => {
 export const useEntityLabel = () => {
 	const { projectId, todoId } = useParseLocation();
 
-	const query =
+	const { data, isLoading } =
 		projectId || todoId
-			? {
+			? db.useQuery({
 					todos: { $: { where: { id: todoId || '' } } },
 					projects: { $: { where: { id: projectId || '' } } },
-				}
-			: null;
-
-	const { data } = db.useQuery(query);
+				})
+			: { data: null, isLoading: false };
 
 	const todo = data?.todos?.[0];
 	const project = data?.projects?.[0];
-	return { todo, project };
+	return { isLoading, todo, project };
 };
 
 export function Breadcrumbs() {
 	const [location] = useLocation();
 
-	const { todo, project } = useEntityLabel();
+	const { todo, project, isLoading } = useEntityLabel();
+	if (isLoading) return null;
 
 	const parts = location.split('/').filter(Boolean);
 
