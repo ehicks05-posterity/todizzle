@@ -87,19 +87,8 @@ const starterKit = StarterKit.configure({
 			class: cx('border-l-4 border-primary'),
 		},
 	},
-	codeBlock: {
-		HTMLAttributes: {
-			class: cx(
-				'rounded-md bg-muted text-muted-foreground border p-5 font-mono font-medium',
-			),
-		},
-	},
-	code: {
-		HTMLAttributes: {
-			class: cx('rounded-md bg-muted  px-1.5 py-1 font-mono font-medium'),
-			spellcheck: 'false',
-		},
-	},
+	codeBlock: false,
+	code: false,
 	horizontalRule: false,
 	dropcursor: {
 		color: '#DBEAFE',
