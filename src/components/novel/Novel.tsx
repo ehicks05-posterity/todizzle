@@ -34,7 +34,6 @@ export default ({
 	const [openNode, setOpenNode] = useState(false);
 	const [openColor, setOpenColor] = useState(false);
 	const [openLink, setOpenLink] = useState(false);
-	const [openAI] = useState(false);
 
 	const debouncedUpdates = useDebouncedCallback(async (editor: EditorInstance) => {
 		const json = editor.getJSON();
@@ -96,7 +95,7 @@ export default ({
 						</EditorCommandList>
 					</EditorCommand>
 					<EditorBubble
-						tippyOptions={{ placement: openAI ? 'bottom-start' : 'top' }}
+						tippyOptions={{ placement: 'top' }}
 						className="flex w-fit max-w-[90vw] overflow-hidden rounded border border-muted bg-background shadow-xl"
 					>
 						<NodeSelector open={openNode} onOpenChange={setOpenNode} />
