@@ -1,7 +1,7 @@
 import { ClerkProvider } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';
 import type { ReactNode } from 'react';
-import { useResolvedTheme } from './components/theme-provider';
+import { useResolvedTheme } from './theme-provider';
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

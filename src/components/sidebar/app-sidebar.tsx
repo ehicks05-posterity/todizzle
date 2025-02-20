@@ -7,10 +7,8 @@ import {
 } from 'lucide-react';
 import type * as React from 'react';
 
-import { InstantSignIn } from '@/InstantSignIn';
 import { Usage } from '@/app/pricing/Usage';
-import { NavProjects } from '@/components/nav-projects';
-import { TeamSwitcher } from '@/components/team-switcher';
+import { InstantSignIn } from '@/components/InstantSignIn';
 import {
 	Sidebar,
 	SidebarContent,
@@ -20,8 +18,10 @@ import {
 	SidebarRail,
 } from '@/components/ui/sidebar';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { NavProjects } from './nav-projects';
 import { NavSettings } from './nav-settings';
 import { NavTodos } from './nav-todos';
+import { TeamSwitcher } from './team-switcher';
 
 // This is sample data.
 const data = {
