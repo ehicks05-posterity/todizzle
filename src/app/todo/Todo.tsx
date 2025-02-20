@@ -2,6 +2,7 @@ import Novel from '@/components/novel/Novel';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
 import {
+	DeleteTodoButton,
 	DueDatePicker,
 	PriorityDropdown,
 	ProjectDropdown,
@@ -58,6 +59,7 @@ export function Todo({ id }: { id: string }) {
 					/>
 					<Separator className="col-span-full" />
 					<AddedOn date={todo.createdAt} />
+					<DeleteTodoButton id={todo.id} />
 				</div>
 			</div>
 		</div>

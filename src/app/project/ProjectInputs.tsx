@@ -1,3 +1,14 @@
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -8,6 +19,7 @@ import {
 import { THEMES } from '@/constants/colors';
 import { ICONS } from '@/constants/icons';
 import { db } from '@/lib/db';
+import { useState } from 'react';
 
 interface Props {
 	icon: string;
@@ -124,23 +136,55 @@ export const DeleteProjectButton = ({
 	id,
 	todoCount,
 }: { id: string; todoCount: number }) => {
+	const [open, setOpen] = useState(false);
+	const message = `This project contains ${todoCount} todo(s). Deleting this project will update those todos to no longer belong to any project.`;
+
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();
 
-		const message = `Are you sure? ${todoCount} linked todos will be removed from this project.`;
-		if (confirm(message)) {
-			db.transact(db.tx.projects[id].delete());
-		}
+		db.transact(db.tx.projects[id].delete());
 	};
 
 	return (
-		<Button
-			type="button"
-			size="sm"
-			variant="destructive"
-			onClick={(e) => handleClick(e)}
-		>
-			Delete
-		</Button>
+		<AlertDialog open={open} onOpenChange={setOpen}>
+			<AlertDialogTrigger>
+				<Button
+					type="button"
+					size="sm"
+					variant="destructive"
+					onClick={(e) => {
+						setOpen(true);
+						e.preventDefault();
+					}}
+				>
+					Delete
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+					<AlertDialogDescription>{message}</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel
+						onClick={(e) => {
+							setOpen(false);
+							e.preventDefault();
+						}}
+					>
+						Cancel
+					</AlertDialogCancel>
+					<AlertDialogAction
+						onClick={(e) => {
+							handleClick(e);
+							setOpen(false);
+							e.preventDefault();
+						}}
+					>
+						Continue
+					</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	);
 };

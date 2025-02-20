@@ -1,3 +1,14 @@
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -12,6 +23,7 @@ import { ICONS } from '@/constants/icons';
 import { db } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
+import { useState } from 'react';
 import { useLocation } from 'wouter';
 import type { Priority, Status, Todo } from '../../lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
@@ -215,22 +227,58 @@ export const ProjectDropdown = ({
 	);
 };
 
-export const DeleteTodoButton = ({ todo }: { todo: Todo }) => {
+export const DeleteTodoButton = ({ id }: { id: string }) => {
 	const [, navigate] = useLocation();
+	const [open, setOpen] = useState(false);
+	const message = 'This action cannot be undone.';
 
-	const handleDelete = async () => {
-		db.transact(db.tx.todos[todo.id].delete());
+	const handleClick = (e: React.MouseEvent) => {
+		e.preventDefault();
+		db.transact(db.tx.todos[id].delete());
 		navigate('/');
 	};
 
 	return (
-		<Button
-			type="button"
-			variant="destructive"
-			className="p-2 border border-black"
-			onClick={handleDelete}
-		>
-			Delete
-		</Button>
+		<AlertDialog open={open} onOpenChange={setOpen}>
+			<AlertDialogTrigger>
+				<Button
+					type="button"
+					size="sm"
+					variant="destructive"
+					className="w-full"
+					onClick={(e) => {
+						setOpen(true);
+						e.preventDefault();
+					}}
+				>
+					Delete
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+					<AlertDialogDescription>{message}</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel
+						onClick={(e) => {
+							setOpen(false);
+							e.preventDefault();
+						}}
+					>
+						Cancel
+					</AlertDialogCancel>
+					<AlertDialogAction
+						onClick={(e) => {
+							handleClick(e);
+							setOpen(false);
+							e.preventDefault();
+						}}
+					>
+						Continue
+					</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	);
 };
