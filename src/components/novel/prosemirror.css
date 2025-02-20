@@ -1,7 +1,7 @@
 @reference 'tailwindcss';
 
 .ProseMirror {
-  @apply p-6 px-4 sm:px-6 border rounded-lg;
+  @apply p-6 px-4 sm:px-6 rounded-lg;
 }
 
 .ProseMirror .is-editor-empty:first-child::before {
