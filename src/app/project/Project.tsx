@@ -1,8 +1,7 @@
-import { Badge } from '@/components/ui/badge';
 import { db } from '@/lib/db';
 import { TodoTable } from '../todos/TodoTable';
+import { Progress } from './Progress';
 import { IconAndColorDropdown } from './ProjectInputs';
-import { getCompletionPercent } from './utils';
 
 export function Project({ id }: { id: string }) {
 	const { data } = db.useQuery({
@@ -64,9 +63,7 @@ export function Project({ id }: { id: string }) {
 					)}
 				</div>
 			</div>
-			<div className="flex items-start justify-end w-full">
-				<Badge variant="outline">{getCompletionPercent(project.todos)}</Badge>
-			</div>
+			<Progress todos={project.todos} />
 		</div>
 	);
 }
