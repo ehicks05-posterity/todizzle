@@ -33,15 +33,15 @@ export function RadialChart({ value = 0, label }: { value: number; label: string
 					data={chartData}
 					startAngle={0}
 					endAngle={value * 360}
-					innerRadius={60}
-					outerRadius={80}
+					innerRadius={56}
+					outerRadius={76}
 				>
 					<PolarGrid
 						gridType="circle"
 						radialLines={false}
 						stroke="none"
 						className="first:fill-muted last:fill-background"
-						polarRadius={[64, 56]}
+						polarRadius={[60, 52]}
 					/>
 					<RadialBar dataKey="value" background cornerRadius={0} />
 					<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
