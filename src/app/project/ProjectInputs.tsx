@@ -120,10 +120,15 @@ export function IconAndColorDropdown({
 	);
 }
 
-export const DeleteProjectButton = ({ id }: { id: string }) => {
+export const DeleteProjectButton = ({
+	id,
+	todoCount,
+}: { id: string; todoCount: number }) => {
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();
-		if (confirm('Are you sure?')) {
+
+		const message = `Are you sure? ${todoCount} linked todos will be removed from this project.`;
+		if (confirm(message)) {
 			db.transact(db.tx.projects[id].delete());
 		}
 	};

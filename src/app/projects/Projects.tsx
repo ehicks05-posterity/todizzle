@@ -16,7 +16,7 @@ export const ProjectRow = ({ project }: { project: Project }) => {
 					<div>{project.title}</div>
 				</div>
 
-				<DeleteProjectButton id={project.id} />
+				<DeleteProjectButton id={project.id} todoCount={project.todos.length} />
 			</div>
 		</Link>
 	);
