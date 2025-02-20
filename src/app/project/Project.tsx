@@ -1,21 +1,8 @@
-import { db } from '@/lib/db';
 import { Badge } from '@/components/ui/badge';
-import type { Todo } from '@/lib/types';
+import { db } from '@/lib/db';
 import { TodoTable } from '../todos/TodoTable';
-import { ColorDropdown, IconDropdown } from './ProjectInputs';
-
-const getCompletion = (todos: Todo[]) => {
-	const denominator = todos.filter((todo) => todo.status !== 'canceled').length;
-	const numerator =
-		todos.filter((todo) => todo.status === 'done').length +
-		todos.filter((todo) => todo.status === 'inProgress').length * 0.5;
-
-	if (denominator === 0) return 0;
-	return numerator / denominator;
-};
-
-const getCompletionPercent = (todos: Todo[]) =>
-	Intl.NumberFormat('en-US', { style: 'percent' }).format(getCompletion(todos));
+import { IconAndColorDropdown } from './ProjectInputs';
+import { getCompletionPercent } from './utils';
 
 export function Project({ id }: { id: string }) {
 	const { data } = db.useQuery({
@@ -27,34 +14,26 @@ export function Project({ id }: { id: string }) {
 
 	return (
 		<div className="grid gap-4">
-			<div className="flex gap-4 max-w-sm">
-				<IconDropdown
-					icon={project.icon}
-					color={project.color}
-					idOrHandler={project.id}
-				/>
-				<ColorDropdown
-					color={project.color}
-					setColor={async (color: string) => {
-						await db.transact(db.tx.projects[project.id].update({ color }));
-					}}
-				/>
-			</div>
 			<div className="flex flex-col gap-2 p-4 bg-sidebar-accent/50 rounded-lg">
-				<div
-					contentEditable
-					className="text-3xl font-bold bg-transparent outline-hidden"
-					onBlur={async (e) => {
-						const value = e.target.textContent;
-						if (value) {
-							await db.transact(db.tx.projects[project.id].update({ title: value }));
-						} else {
-							e.target.textContent = project.title;
-						}
-					}}
-					suppressContentEditableWarning
-				>
-					{project.title}
+				<div className="flex justify-between items-center">
+					<div
+						contentEditable
+						className="text-3xl font-bold bg-transparent outline-hidden"
+						onBlur={async (e) => {
+							const value = e.target.textContent;
+							if (value) {
+								await db.transact(
+									db.tx.projects[project.id].update({ title: value }),
+								);
+							} else {
+								e.target.textContent = project.title;
+							}
+						}}
+						suppressContentEditableWarning
+					>
+						{project.title}
+					</div>
+					<IconAndColorDropdown project={project} />
 				</div>
 				<div
 					contentEditable

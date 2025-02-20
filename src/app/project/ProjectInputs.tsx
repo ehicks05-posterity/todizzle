@@ -85,6 +85,41 @@ export const ColorDropdown = ({ color, setColor }: ColorDropdownProps) => {
 	);
 };
 
+export function IconAndColorDropdown({
+	project,
+}: { project: { id: string; color: string; icon: string } }) {
+	const Icon = ICONS[project.icon as keyof typeof ICONS];
+
+	return (
+		<div className="flex gap-2">
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button size="icon" variant="outline">
+						<Icon className={THEMES[project.color as keyof typeof THEMES].primary} />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent className="flex justify-center">
+					<DropdownMenuItem>
+						<ColorDropdown
+							color={project.color}
+							setColor={async (color: string) => {
+								await db.transact(db.tx.projects[project.id].update({ color }));
+							}}
+						/>
+					</DropdownMenuItem>
+					<DropdownMenuItem>
+						<IconDropdown
+							icon={project.icon}
+							color={project.color}
+							idOrHandler={project.id}
+						/>
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+		</div>
+	);
+}
+
 export const DeleteProjectButton = ({ id }: { id: string }) => {
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();
