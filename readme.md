@@ -1,4 +1,4 @@
-# jobbies
+# todizzle
 
 ## Prereqs
 
@@ -10,49 +10,45 @@
 2. To install depenencies, run `npm i`.
 3. For local dev, run `npm run dev`.
 
-## Goals
+## Notes 2/19/2025
 
-### Primary Goals
+After some challenges with Nextjs/T3app, the initial goal here has been to 
+bootstrap a todo app going heavy in the SPA direction. Up front the plan was to
+leverage ShadCn and InstantDb. 
 
-Gather and summarize key features of a job listing. This includes data on the company, the job role, and levels within the role. This can help to stay organized but can also reveal how attractive each job is.
+Both have been great. ShadCN gives great starting points for common UI 
+components.
 
-What might factor into a job's attractiveness formula?
+InstantDB is giving me 'flow' benefits that remind me of Tailwind. I don't have
+to mess around with db connection strings, ORM particularities, a 
+data-access layer, an api-layer, figuring out how to approach authorization, 
+etc... Some of those concepts are still needed, but so far most of them have 
+been streamlined. For example auth can be basically a one-liner in your db 
+permissions and you're done. So overall it feels like much less task-switching.
+Leaving much more focus for building the app.
 
-1. compensation
-2. work life balance
-   1. 4-day-week will have obvious advantage
-3. engagingness
-   1. good projects
-      1. good level of challenge
-      2. can recognize the value of the project
-   2. good tech
-   3. good coworkers
-   4. good effect on society
-4. ego - does "i work for $foocorp" impress people?
-5. location - remote is ideal, but in person opportunity at some point would be nice
+Prototyping with this tech quickly felt very productive. Scope was expanded to
+include Stripe integration. This necessitated some server-side code so the next
+learning opportunity was deno + hono.
 
-How might we score this? One approach would be a separate score for each aspect.
+Deno experience was generally positive. I just don't know it's worth it to have
+another set of 'things' to learn and remember.
 
-1. compensation - score is literally the total comp
-2. work life balance - score is estimated days off, not including federal holidays
-3. engagingness - this one's tough. can factor in company's mission and industry, reputation scores from glassdoor, tech stacks if listed.
-4. ego - score could be isHouseholdName: yes or no, or maybe a 1-5 scale...no-name-startup, small-co, mid-co, huge-co, faang
-5. location - remote > nyc/philly > the rest
+Hono was also positive.
 
+After a bit of learning curve with Stripe setup and webhooks, scope was
+expanded again to add e2e testing with playwright. Hit a few more bumps, mainly
+getting env vars working in Github Actions but was able to get a 'hello world'
+test running in CI on day one of playing with playwright.
 
-these could be displayed in columns, and color-coded by how good they are.
+It is starting to get to the point where I need a better mindset for all the 
+moving pieces and env var management. Other than that, the main concern may be
+around the two-repo vs one-repo decision. Maybe T3 was the wrong approach for
+getting started with NextJs. There were too many interacting pieces that I
+didn't understand. Client-side vs server-side auth and context never really
+clicked. But having one repo and one deployment solution was very nice.
 
-We could try to fold it down to fewer scores but that'll involve figuring out how to weight features against each other.
+The next goal may be seeing how to gain one repo and one deployment solution
+without using nextjs, or using nextjs in a way that dodges the frustrations.
 
-### Secondary Goals
-
-Include some very simple features to track where in the application process you are.
-
-1. Jobs can start out as 'new'.
-   1. Can be flagged to show a recruiter reached out to you
-2. Jobs can be moved to 'in-progress'.
-   1. Could potentially hold events here but that's low priority.
-3. Jobs can be moved to 'concluded'. A result should be added:
-   1. Ghosted or Denied
-   2. Offer w/ offer details
-   3. Previous jobs or offers could sit here (or we can add another stage for 'previous')
+Leads so far include nitro / vinxi.
