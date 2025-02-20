@@ -1,7 +1,8 @@
 import { db } from '@/lib/db';
 import { TodoTable } from '../todos/TodoTable';
-import { Progress } from './Progress';
 import { IconAndColorDropdown } from './ProjectInputs';
+import { RadialChart } from './RadialChart';
+import { getCompletion, getCompletionPercent } from './utils';
 
 export function Project({ id }: { id: string }) {
 	const { data } = db.useQuery({
@@ -63,7 +64,12 @@ export function Project({ id }: { id: string }) {
 					)}
 				</div>
 			</div>
-			<Progress todos={project.todos} />
+			<div className="flex justify-end">
+				<RadialChart
+					value={getCompletion(project.todos)}
+					label={getCompletionPercent(project.todos)}
+				/>
+			</div>
 		</div>
 	);
 }

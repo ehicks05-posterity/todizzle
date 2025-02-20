@@ -1,6 +1,6 @@
 import type { Todo } from "@/lib/types";
 
-const getCompletion = (todos: Todo[]) => {
+export const getCompletion = (todos: Todo[]) => {
   const denominator = todos.filter((todo) => todo.status !== 'canceled').length;
   const numerator =
     todos.filter((todo) => todo.status === 'done').length +
