@@ -10,6 +10,10 @@
 2. To install depenencies, run `npm i`.
 3. For local dev, run `npm run dev`.
 
+## Retrospective Sep 2026
+
+Since last update, tried Tanstack Start (elsewhere) and found it works great.
+
 ## Notes 2/19/2025
 
 After some challenges with Nextjs/T3app, the initial goal here has been to 
