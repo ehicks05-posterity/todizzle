@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import type { Priority, Status, Todo } from '../../lib/types';
+import type { Priority, Status } from '../../lib/types';
 import { PRIORITIES, STATUSES } from '../constants';
 import { formatDate } from './utils';
 
