@@ -1,14 +1,6 @@
 # todizzle
 
-## Prereqs
-
-1. node
-
-## Getting Started
-
-1. Clone repo.
-2. To install depenencies, run `npm i`.
-3. For local dev, run `npm run dev`.
+An app for playing around with instantdb, shadcn, and stripe
 
 ## Retrospective Sep 2026
 
